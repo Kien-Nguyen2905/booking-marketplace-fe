@@ -1,0 +1,1 @@
+export { useTwoFactorAuthPage } from './useTwoFactorAuthPage';
