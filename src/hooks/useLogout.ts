@@ -15,7 +15,7 @@ import { useAppContext } from '@/context/AppProvider';
  */
 
 export const useLogout = () => {
-  const { setIsAuthenticated, setPayloadLogin } = useAppContext();
+  const { setIsAuthenticated, setProfile, setRole } = useAppContext();
   const router = useRouter();
   const handleLogout = async () => {
     try {
@@ -24,9 +24,10 @@ export const useLogout = () => {
         const { data } = await authServices.logout({ refreshToken });
         if (data.statusCode === 200) {
           setIsAuthenticated(false);
+          setProfile(null);
+          setRole('');
           removeTokensLocalStorage();
           removeRoleNameCookies();
-          setPayloadLogin(null);
           router.push(ROUTES.HOME);
         }
       } else {

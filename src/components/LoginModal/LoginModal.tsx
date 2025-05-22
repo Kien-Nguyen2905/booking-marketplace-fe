@@ -26,7 +26,7 @@ const LoginModal = () => {
         </div>
         <Button
           disabled={isLoading}
-          className="h-12 bg-primary relative w-full"
+          className="h-12 relative w-full"
           type="submit"
         >
           {isLoading ? <LoadingButton /> : 'Login'}

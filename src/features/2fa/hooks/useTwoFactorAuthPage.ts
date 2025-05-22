@@ -1,4 +1,5 @@
 import { useLogin } from '@/components/LoginModal/useLogin';
+import { ERROR_AUTH_MESSAGES, ERROR_MESSAGES } from '@/constants';
 import { useAppContext } from '@/context/AppProvider';
 import { useTimeCountdown } from '@/hooks';
 import { showToast } from '@/lib/toast';
@@ -32,7 +33,7 @@ export const useTwoFactorAuthPage = () => {
       await handleLogin({ ...payloadLogin, totpCode: otpValue });
       resetTimer();
     } catch {
-      setOtpError('Invalid OTP. Please try again.');
+      setOtpError(ERROR_AUTH_MESSAGES.totpCode.invalid);
     } finally {
       setIsSubmitting(false);
     }
@@ -62,7 +63,7 @@ export const useTwoFactorAuthPage = () => {
     } catch {
       showToast({
         type: 'error',
-        message: 'Failed to send 2FA code',
+        message: ERROR_MESSAGES.SEND_MAIL,
       });
     } finally {
       setIsForgot2FA(false);

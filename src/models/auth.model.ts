@@ -15,12 +15,16 @@ export const UserSchema = z.object({
   fullName: z
     .string({ required_error: ERROR_AUTH_MESSAGES.fullName.required })
     .trim()
-    .min(6, { message: ERROR_AUTH_MESSAGES.fullName.minLength })
+    .min(2, { message: ERROR_AUTH_MESSAGES.fullName.minLength })
     .max(100, { message: ERROR_AUTH_MESSAGES.fullName.maxLength })
     .regex(/^[A-Za-zÀ-ỹ\s]+$/, {
       message: ERROR_AUTH_MESSAGES.fullName.invalidCharacters,
     }),
-  phoneNumber: z.string().min(9).max(20).nullable(),
+  phoneNumber: z
+    .string()
+    .min(9, { message: ERROR_AUTH_MESSAGES.phoneNumber.minLength })
+    .max(20, { message: ERROR_AUTH_MESSAGES.phoneNumber.maxLength })
+    .nullable(),
   avatar: z.string().nullable(),
   totpSecret: z.string().max(255).nullable(),
   uriSecret: z.string().max(255).nullable(),
@@ -28,6 +32,9 @@ export const UserSchema = z.object({
   gender: z.string().max(20).nullable(),
   birthday: z.coerce.date().nullable(),
   earnPoint: z.number().nullable().default(0),
+  accountNumber: z.string().max(100).nullable(),
+  bankAccount: z.string().max(100).nullable(),
+  bankName: z.string().max(255).nullable(),
   roleId: z.number().int().positive(),
   status: z
     .enum([UserStatus.ACTIVE, UserStatus.INACTIVE])
@@ -101,17 +108,15 @@ export const LoginResSchema = z.object({
 
 export const RefreshTokenResSchema = LoginResSchema;
 
-export const VerifyRegisterResSchema = LoginResSchema;
-
 export const DeviceSchema = z.object({
   id: z.number(),
   userId: z.number(),
   userAgent: z.string(),
-  browser: z.string(),
-  os: z.string(),
-  deviceType: z.string(),
-  deviceVendor: z.string(),
-  deviceModel: z.string(),
+  browser: z.string().nullable(),
+  os: z.string().nullable(),
+  deviceType: z.string().nullable(),
+  deviceVendor: z.string().nullable(),
+  deviceModel: z.string().nullable(),
   ip: z.string(),
   lastActive: z.date().nullable(),
   createdAt: z.date().nullable(),

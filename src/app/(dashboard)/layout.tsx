@@ -3,6 +3,7 @@ import { Sidebar } from '@/layouts/Sidebar';
 import { DashboardHeader } from '@/layouts/DashboardHeader';
 import { cn } from '@/lib/utils';
 import { useAppContext } from '@/context/AppProvider';
+import { Card, CardContent } from '@/components/ui/card';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { toggleSidebar, isCollapsed } = useAppContext();
@@ -13,10 +14,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Sidebar isCollapsed={isCollapsed} toggleSidebar={toggleSidebar} />
         <div
           className={cn(
-            'transition-all duration-200 w-full h-full overflow-auto overflow-x-auto',
+            'transition-all duration-200 w-full h-full p-10 overflow-auto overflow-x-auto',
           )}
         >
-          <main className="px-6 py-6 h-full">{children}</main>
+          <Card x-chunk="dashboard-06-chunk-0" className="max-h-fit w-full">
+            <CardContent>
+              <main className="px-6 py-6">{children}</main>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>

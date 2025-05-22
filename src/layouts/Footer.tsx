@@ -12,7 +12,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-2">
           {/* About Section */}
           <div>
-            <h3 className="mb-5 text-lg font-bold text-gray-800 border-b pb-2 border-gray-200">
+            <h3 className="mb-5 text-lg w-max font-bold text-gray-800 border-b pb-2 border-gray-200">
               About Us
             </h3>
             <p className="text-sm text-gray-600 mb-4 leading-relaxed">
@@ -43,8 +43,8 @@ const Footer = () => {
           </div>
 
           {/* Services */}
-          <div>
-            <h3 className="mb-5 text-lg font-bold text-gray-800 border-b pb-2 border-gray-200">
+          <div className="text-right">
+            <h3 className="mb-5 text-lg font-bold text-gray-800 w-max ml-auto border-b pb-2 border-gray-200">
               Our Services
             </h3>
             <ul className="space-y-3">

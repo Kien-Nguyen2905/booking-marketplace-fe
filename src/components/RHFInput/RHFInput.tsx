@@ -14,6 +14,7 @@ const RHFInput: FC<TInputProps> = ({
   className = '',
   renderProp,
   component,
+  required,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -32,6 +33,7 @@ const RHFInput: FC<TInputProps> = ({
                 htmlFor={name}
               >
                 {label}
+                {required && <span className="text-red-500"> *</span>}
               </Label>
               <div className="relative flex items-center gap-[30px]">
                 <Input
@@ -57,7 +59,7 @@ const RHFInput: FC<TInputProps> = ({
                   }`}
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
                 </button>
               </div>
               <FormMessage />

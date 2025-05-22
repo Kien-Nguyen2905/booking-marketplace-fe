@@ -12,14 +12,14 @@ import { useRouter } from 'next/navigation';
 import { MANAGEMENT_NAV_LINKS, ROLE_NAME, ROUTES } from '@/constants';
 import { useModalAuth } from '@/components/ModalAuth/useModalAuth';
 import { useAppContext } from '@/context/AppProvider';
-import { useEffect } from 'react';
+import { useState } from 'react';
 
 export const useLogin = () => {
   const { setIsAuthenticated, setPayloadLogin, payloadLogin, setRole } =
     useAppContext();
   const { closeModal } = useModalAuth();
   const router = useRouter();
-  const { mutateAsync: login, isPending: isLoading } = useLoginMutation();
+  const { mutateAsync: login } = useLoginMutation();
   const form = useForm<LoginBodyType>({
     resolver: zodResolver(LoginBodySchema),
     defaultValues: {
@@ -27,8 +27,10 @@ export const useLogin = () => {
       password: '',
     },
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (value: LoginBodyType) => {
+    setIsLoading(true);
     try {
       const { data } = await login(value);
       const accessToken = data.data.accessToken;
@@ -49,22 +51,22 @@ export const useLogin = () => {
             : MANAGEMENT_NAV_LINKS[decodedAccessToken.roleName].ROOT.href;
         router.push(redirectPath || ROUTES.HOME);
         closeModal();
+        if (payloadLogin) {
+          setPayloadLogin(null);
+        }
       }
     } catch (error: any) {
-      console.log(error);
       if (error.response.data.message[0].message === 'TOTP code is required') {
-        closeModal();
+        router.push(ROUTES.TWO_FA_PAGE);
         setPayloadLogin(value);
       } else {
         handleErrorApi({ error, setError: form.setError });
       }
+    } finally {
+      setIsLoading(false);
     }
   };
-  useEffect(() => {
-    if (payloadLogin) {
-      router.push(ROUTES.TWO_FA_PAGE);
-    }
-  }, [payloadLogin, router]);
+
   return {
     form,
     isLoading,

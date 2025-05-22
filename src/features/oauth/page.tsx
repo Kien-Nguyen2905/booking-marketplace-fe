@@ -11,6 +11,7 @@ import {
 } from '@/lib/utils';
 import { MANAGEMENT_NAV_LINKS, ROLE_NAME, ROUTES } from '@/constants';
 import { useAppContext } from '@/context/AppProvider';
+import { ERROR_MESSAGES } from '@/constants';
 
 const OauthPage = () => {
   const { setIsAuthenticated, setRole } = useAppContext();
@@ -40,7 +41,7 @@ const OauthPage = () => {
     } else {
       showToast({
         type: 'error',
-        message: errorMessage || 'Failed',
+        message: errorMessage || ERROR_MESSAGES.SOMETHING_WRONG,
       });
       router.push('/');
     }

@@ -11,4 +11,5 @@ export type TInputProps = {
   min?: number;
   renderProp?: any;
   component?: React.ReactNode;
+  required?: boolean;
 };

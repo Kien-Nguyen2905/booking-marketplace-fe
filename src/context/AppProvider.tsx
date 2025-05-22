@@ -1,12 +1,14 @@
 'use client';
 import { MANAGEMENT_NAV_LINKS, ROLE_NAME, ROUTES } from '@/constants';
+import { useLogout } from '@/hooks';
 import {
   getAccessTokenLocalStorage,
   getEmailLocalStorage,
   getRoleLocalStorage,
 } from '@/lib/utils';
-import { LoginBodyType } from '@/models';
-import { useRouter } from 'next/navigation';
+import { GetUserProfileResType, LoginBodyType } from '@/models';
+import { useGetProfileQuery } from '@/queries';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   createContext,
   useCallback,
@@ -29,6 +31,8 @@ interface AppContextProps {
   setPayloadLogin: (payloadLogin: LoginBodyType | null) => void;
   email: string;
   setEmail: (value: string) => void;
+  profile: GetUserProfileResType | null;
+  setProfile: (profile: GetUserProfileResType | null) => void;
 }
 
 const defaultContext: AppContextProps = {
@@ -44,6 +48,8 @@ const defaultContext: AppContextProps = {
   setPayloadLogin: () => null,
   email: '',
   setEmail: () => null,
+  profile: null,
+  setProfile: () => null,
 };
 
 const AppContext = createContext<AppContextProps>(defaultContext);
@@ -52,6 +58,8 @@ export const useAppContext = () => useContext(AppContext);
 
 const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
+  const { handleLogout } = useLogout();
+  const pathname = usePathname();
 
   const [email, setEmail] = useState('');
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -59,8 +67,10 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [role, setRole] = useState('');
   const [payloadLogin, setPayloadLogin] = useState<LoginBodyType | null>(null);
-  // Get profile
+  const [profile, setProfile] = useState<GetUserProfileResType | null>(null);
 
+  // Get profile
+  const { data, error } = useGetProfileQuery(isAuthenticated);
   useEffect(() => {
     if (typeof window === 'undefined') return; // Ensure client-side execution
 
@@ -72,13 +82,20 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
     setIsAuthenticated(!!storedAccessToken);
   }, []);
 
+  // Update profile when query data changes
+  useEffect(() => {
+    if (isAuthenticated && data?.data?.data) {
+      setProfile(data.data.data);
+    }
+  }, [data, isAuthenticated]);
+
   // Handle navigation based on role
   useEffect(() => {
     if (!role || role === ROLE_NAME.CUSTOMER) return;
     if (!role || role === ROLE_NAME.PARTNER) return;
 
     const targetRoute = MANAGEMENT_NAV_LINKS[role]?.ROOT?.href || ROUTES.HOME;
-    if (targetRoute) {
+    if (targetRoute && !pathname.includes(targetRoute)) {
       router.push(targetRoute);
     }
   }, [role, router]);
@@ -90,6 +107,14 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const toggleSidebar = useCallback(() => {
     setIsCollapsed((prev) => !prev);
   }, []);
+
+  // Handle profile query errors
+  useEffect(() => {
+    // Log out if profile fetch fails
+    if (error) {
+      handleLogout();
+    }
+  }, [error, handleLogout]);
 
   const contextValue = useMemo(
     () => ({
@@ -105,6 +130,8 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
       setPayloadLogin,
       email,
       setEmail,
+      profile,
+      setProfile,
     }),
     [
       isOpenModal,
@@ -115,6 +142,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
       toggleSidebar,
       payloadLogin,
       email,
+      profile,
     ],
   );
   return (

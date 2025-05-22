@@ -1,12 +1,11 @@
 'use client';
-import { BellIcon, Menu, User } from 'lucide-react';
+import { BellIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useDashboardHeader } from './useDashboardHeader';
 import { motion, AnimatePresence } from 'motion/react';
 import { useHeader } from '@/layouts/Header/useHeader';
-import { DASHBOARD_NAV_LINKS } from '@/constants';
-import Link from 'next/link';
+import { Menu } from '@/layouts/Menu';
 
 const DashboardHeader = () => {
   const {
@@ -17,6 +16,7 @@ const DashboardHeader = () => {
     markAsRead,
     markAllAsRead,
     getUnreadCount,
+    profile,
   } = useDashboardHeader();
 
   const { isMenuOpen, toggleMenu, closeMenu, menuRef, handleLogout } =
@@ -118,58 +118,14 @@ const DashboardHeader = () => {
             </div>
           </div>
           {/* User Menu */}
-          <div className="relative" ref={menuRef}>
-            <Button
-              variant="outline"
-              className="flex items-center justify-center gap-2 rounded-full p-2 md:px-4"
-              onClick={toggleMenu}
-            >
-              <Menu size={16} />
-              <div className="h-7 w-7 rounded-full bg-gray-500 text-white flex items-center justify-center">
-                <User size={14} />
-              </div>
-            </Button>
-
-            {isMenuOpen && (
-              <div className="absolute right-0 top-full mt-2 w-48 bg-white shadow-md rounded-md overflow-hidden border border-gray-200 z-50">
-                {1 && (
-                  <>
-                    <div className="px-4 py-3 border-b border-gray-100">
-                      <p className="text-sm font-semibold">Admin</p>
-                      <p className="text-xs text-gray-500">admin@gmail.com</p>
-                    </div>
-                    <div className="py-1">
-                      {DASHBOARD_NAV_LINKS.map((link: any) =>
-                        link.href === null ? (
-                          <button
-                            key={link.name}
-                            className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left flex items-center"
-                            onClick={() => {
-                              handleLogout();
-                              closeMenu();
-                            }}
-                          >
-                            <link.icon size={14} className="mr-2" />
-                            {link.name}
-                          </button>
-                        ) : (
-                          <Link key={link.href} href={link.href}>
-                            <button
-                              className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left flex items-center"
-                              onClick={closeMenu}
-                            >
-                              <link.icon size={14} className="mr-2" />
-                              {link.name}
-                            </button>
-                          </Link>
-                        ),
-                      )}
-                    </div>
-                  </>
-                )}
-              </div>
-            )}
-          </div>
+          <Menu
+            menuRef={menuRef}
+            isMenuOpen={isMenuOpen}
+            toggleMenu={toggleMenu}
+            closeMenu={closeMenu}
+            profile={profile}
+            handleLogout={handleLogout}
+          />
         </div>
       </div>
     </header>

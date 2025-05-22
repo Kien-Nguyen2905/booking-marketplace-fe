@@ -1,3 +1,6 @@
+import { GetUserProfileResType, LoginBodyType } from '@/models';
+import { SetStateAction } from 'react';
+
 export type TMainContextProviderProps = {
   isOpenModal: boolean;
   setIsOpenModal: SetStateAction;
@@ -6,11 +9,13 @@ export type TMainContextProviderProps = {
   setIsCollapsed: SetStateAction;
   toggleSidebar: () => void;
   isAuthenticated: boolean;
-  setIsAuthenticated: SetStateAction;
+  setIsAuthenticated: SetStateAction<boolean>;
   role: string;
-  setRole: SetStateAction;
+  setRole: SetStateAction<string>;
   payloadLogin: LoginBodyType | null;
-  setPayloadLogin: SetStateAction;
+  setPayloadLogin: SetStateAction<LoginBodyType | null>;
   email: string;
-  setEmail: SetStateAction;
+  setEmail: SetStateAction<string>;
+  profile: GetUserProfileResType | null;
+  setProfile: SetStateAction<GetUserProfileResType | null>;
 };

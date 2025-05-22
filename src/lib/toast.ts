@@ -1,7 +1,7 @@
 import { JSX } from 'react';
 import { toast } from 'react-toastify';
 export type TToast = {
-  type: 'error' | 'success' | 'info';
+  type: 'error' | 'success' | 'info' | 'warning';
   message: string;
 };
 

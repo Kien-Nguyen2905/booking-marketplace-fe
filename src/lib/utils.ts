@@ -50,11 +50,12 @@ export const setRoleNameCookies = ({
 }) => {
   const decodedAccessToken = decodeToken(accessToken);
   const decodedRefreshToken = decodeToken(refreshToken);
+  const expiresDate = new Date(decodedRefreshToken.exp * 1000);
   Cookies.set(COOKIE_NAMES.ROLE, decodedAccessToken.roleName, {
     path: '/',
     sameSite: 'lax',
     secure: true,
-    expires: decodedRefreshToken.exp * 1000,
+    expires: expiresDate,
   });
 };
 
@@ -70,3 +71,14 @@ export const removeEmailLocalStorage = () =>
 
 export const getEmailLocalStorage = () =>
   localStorage.getItem(LOCAL_STORAGE.EMAIL);
+
+export const getInitials = (name: string) => {
+  const lengthArrayName = name.split(' ');
+  return lengthArrayName[lengthArrayName.length - 1][0];
+};
+
+export const convertBirthdayToUTC = (birthday: Date) => {
+  return `${birthday.getFullYear()}-${(birthday.getMonth() + 1)
+    .toString()
+    .padStart(2, '0')}-${birthday.getDate().toString().padStart(2, '0')}`;
+};

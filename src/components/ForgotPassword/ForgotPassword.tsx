@@ -21,7 +21,7 @@ const ForgotPassword = () => {
         <Button
           type="submit"
           disabled={isLoadingOTP}
-          className="w-full h-12 bg-primary relative"
+          className="w-full h-12 relative"
         >
           {isLoadingOTP ? <LoadingButton /> : 'Verify'}
         </Button>

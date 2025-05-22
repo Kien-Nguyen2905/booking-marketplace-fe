@@ -27,7 +27,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "tailwind.config.js"
+    "tailwind.config.js",
+    "src/features/profile/components/CropDialog/CropDialog.tsx"
   ],
   "exclude": ["node_modules"]
 }

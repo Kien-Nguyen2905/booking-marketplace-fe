@@ -1,6 +1,6 @@
 'use client';
 import { Loading } from '@/components';
-import { ROUTES } from '@/constants';
+import { ERROR_MESSAGES, ROUTES } from '@/constants';
 import { showToast } from '@/lib/toast';
 import { useUrlOauthQuery } from '@/queries';
 import { useRouter } from 'next/navigation';
@@ -14,7 +14,7 @@ const GooglePage = () => {
     router.push(ROUTES.HOME);
     showToast({
       type: 'error',
-      message: error.message,
+      message: error.message || ERROR_MESSAGES.SOMETHING_WRONG,
     });
   }
   useEffect(() => {

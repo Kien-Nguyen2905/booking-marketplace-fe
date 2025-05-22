@@ -58,7 +58,7 @@ const RegisterModal = () => {
                 <Button
                   onClick={handleSendOTP}
                   type="button"
-                  className="min-w-[100px] h-12 bg-primary relative text-white hover:bg-primary/90 rounded-lg"
+                  className="min-w-[100px] h-12 relative"
                   disabled={isLoadingOTP || time > 0}
                 >
                   {isLoadingOTP ? (
@@ -77,7 +77,7 @@ const RegisterModal = () => {
         <Button
           type="submit"
           disabled={isLoadingRegister}
-          className="w-full h-12 bg-primary relative text-white hover:bg-primary/90 rounded-lg"
+          className="w-full h-12 relative"
         >
           {isLoadingRegister ? <LoadingButton /> : 'Register'}
         </Button>

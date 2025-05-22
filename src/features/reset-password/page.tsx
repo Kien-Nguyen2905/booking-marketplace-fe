@@ -69,7 +69,7 @@ const ResetPasswordPage = () => {
               <Button
                 type="submit"
                 disabled={isLoadingPassword}
-                className="w-full h-12 bg-primary relative text-white hover:bg-primary/90 rounded-lg"
+                className="w-full h-12 relative"
               >
                 {isLoadingPassword ? <LoadingButton /> : 'Reset Password'}
               </Button>
@@ -88,7 +88,7 @@ const ResetPasswordPage = () => {
             <Button
               onClick={handleSendOTP}
               type="button"
-              className="min-w-[110px] h-10 bg-primary relative text-white hover:bg-primary/90 rounded-lg"
+              className="min-w-[110px] h-10 relative"
               disabled={isLoadingOTP || time > 0}
             >
               {isLoadingOTP ? (

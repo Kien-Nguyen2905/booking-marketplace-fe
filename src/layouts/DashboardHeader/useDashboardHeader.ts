@@ -1,7 +1,9 @@
+import { useAppContext } from '@/context/AppProvider';
 import { TNotification } from '@/layouts/DashboardHeader/type';
 import { useState, useRef, useEffect } from 'react';
 
 export const useDashboardHeader = () => {
+  const { profile } = useAppContext();
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [notifications, setNotifications] = useState<TNotification[]>([
     {
@@ -98,5 +100,6 @@ export const useDashboardHeader = () => {
     markAsRead,
     markAllAsRead,
     getUnreadCount,
+    profile,
   };
 };

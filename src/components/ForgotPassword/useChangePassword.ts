@@ -35,7 +35,7 @@ export const useForgotPassword = () => {
           type: TypeOfVerificationCode.FORGOT_PASSWORD,
         });
         if (data.data) {
-          router.push(ROUTES.RESET_PASSWORD_PAGE);
+          await router.push(ROUTES.RESET_PASSWORD_PAGE);
           showToast({
             type: 'success',
             message: data.message,
