@@ -92,6 +92,16 @@ export const SendOTPBodySchema = VerificationCodeSchema.pick({
 export const LoginBodySchema = UserSchema.pick({
   email: true,
   password: true,
+}).strict();
+
+export const LoginResSchema = z.object({
+  accessToken: z.string(),
+  refreshToken: z.string(),
+});
+
+export const LoginBodySchema2FA = UserSchema.pick({
+  email: true,
+  password: true,
 })
   .extend({
     totpCode: z
@@ -101,10 +111,9 @@ export const LoginBodySchema = UserSchema.pick({
   })
   .strict();
 
-export const LoginResSchema = z.object({
-  accessToken: z.string(),
-  refreshToken: z.string(),
-});
+export const LoginResSchema2FA = LoginResSchema;
+
+export const RegisterResSchema = LoginResSchema;
 
 export const RefreshTokenResSchema = LoginResSchema;
 
@@ -137,7 +146,6 @@ export const RefreshTokenBodySchema = z
   .strict();
 
 export const LogoutBodySchema = RefreshTokenBodySchema;
-export const RegisterResSchema = LoginResSchema;
 
 export const GetAuthorizationUrlResSchema = z.object({
   url: z.string().url(),
@@ -200,6 +208,8 @@ export type RegisterBodyType = z.infer<typeof RegisterBodySchema>;
 export type RegisterResType = z.infer<typeof RegisterResSchema>;
 export type LoginBodyType = z.infer<typeof LoginBodySchema>;
 export type LoginResType = z.infer<typeof LoginResSchema>;
+export type LoginBodyType2FA = z.infer<typeof LoginBodySchema2FA>;
+export type LoginResType2FA = z.infer<typeof LoginResSchema2FA>;
 export type LogoutBodyType = z.infer<typeof LogoutBodySchema>;
 export type DeviceType = z.infer<typeof DeviceSchema>;
 export type RefreshTokenType = z.infer<typeof RefreshTokenSchema>;

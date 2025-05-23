@@ -19,6 +19,12 @@ export const useLoginMutation = () => {
   });
 };
 
+export const useVerify2FAMutation = () => {
+  return useMutation({
+    mutationFn: authServices.verify2FA,
+  });
+};
+
 export const useUrlOauthQuery = () => {
   return useQuery({
     queryKey: ['google'],

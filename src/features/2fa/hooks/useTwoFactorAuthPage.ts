@@ -1,21 +1,29 @@
-import { useLogin } from '@/components/LoginModal/useLogin';
-import { ERROR_AUTH_MESSAGES, ERROR_MESSAGES } from '@/constants';
 import { useAppContext } from '@/context/AppProvider';
 import { useTimeCountdown } from '@/hooks';
+import { handleErrorApi, navigateWithLogin } from '@/lib/helper';
 import { showToast } from '@/lib/toast';
-import { useForgotTwoFactorAuthMutation } from '@/queries';
+import {
+  decodeToken,
+  setRoleNameCookies,
+  setTokensLocalStorage,
+} from '@/lib/utils';
+import {
+  useForgotTwoFactorAuthMutation,
+  useVerify2FAMutation,
+} from '@/queries';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export const useTwoFactorAuthPage = () => {
-  const { payloadLogin, setPayloadLogin } = useAppContext();
-  const { handleLogin, form } = useLogin();
-  const { mutateAsync: send2FA } = useForgotTwoFactorAuthMutation();
+  const { payloadLogin, setPayloadLogin, setIsAuthenticated, setRole } =
+    useAppContext();
+  const { mutateAsync: verify2FA, isPending: isVerifying } =
+    useVerify2FAMutation();
+  const { mutateAsync: send2FA, isPending: isSending } =
+    useForgotTwoFactorAuthMutation();
   const router = useRouter();
 
   const [otpValue, setOtpValue] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isForgot2FA, setIsForgot2FA] = useState(false);
   const [otpError, setOtpError] = useState('');
   const { time, startTimer, resetTimer } = useTimeCountdown();
 
@@ -25,17 +33,27 @@ export const useTwoFactorAuthPage = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitting(true);
     try {
       if (!payloadLogin) {
         return;
       }
-      await handleLogin({ ...payloadLogin, totpCode: otpValue });
+      const { data } = await verify2FA({ ...payloadLogin, totpCode: otpValue });
+      navigateWithLogin({
+        data: {
+          accessToken: data.data.accessToken,
+          refreshToken: data.data.refreshToken,
+        },
+        setIsAuthenticated,
+        setTokensLocalStorage,
+        setRoleNameCookies,
+        decodeToken,
+        setRole,
+        router,
+      });
       resetTimer();
-    } catch {
-      setOtpError(ERROR_AUTH_MESSAGES.totpCode.invalid);
-    } finally {
-      setIsSubmitting(false);
+      setPayloadLogin(null);
+    } catch (error: any) {
+      handleErrorApi({ error, setErrorText: setOtpError });
     }
   };
 
@@ -46,7 +64,6 @@ export const useTwoFactorAuthPage = () => {
   };
 
   const handleForgot2FA = async () => {
-    setIsForgot2FA(true);
     try {
       if (payloadLogin?.email) {
         const { data } = await send2FA({
@@ -60,31 +77,27 @@ export const useTwoFactorAuthPage = () => {
           startTimer();
         }
       }
-    } catch {
-      showToast({
-        type: 'error',
-        message: ERROR_MESSAGES.SEND_MAIL,
-      });
-    } finally {
-      setIsForgot2FA(false);
+    } catch (error: any) {
+      handleErrorApi({ error });
     }
   };
 
   useEffect(() => {
     if (!payloadLogin) {
-      router.push('/');
+      router.back();
+      resetTimer();
     }
   }, [payloadLogin, router]);
 
   return {
     otpValue,
-    error: otpError || form.formState.errors['totpCode']?.message,
+    error: otpError,
     handleOtpChange,
     handleSubmit,
     handleGoBack,
     handleForgot2FA,
-    isSubmitting,
-    isForgot2FA,
+    isVerifying,
+    isSending,
     time,
   };
 };

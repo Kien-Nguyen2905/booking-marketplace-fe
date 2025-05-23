@@ -13,8 +13,8 @@ const TwoFactorAuthPage = () => {
     handleSubmit,
     handleGoBack,
     handleForgot2FA,
-    isSubmitting,
-    isForgot2FA,
+    isVerifying,
+    isSending,
     time,
   } = useTwoFactorAuthPage();
 
@@ -25,17 +25,17 @@ const TwoFactorAuthPage = () => {
       otpValue={otpValue}
       handleOtpChange={handleOtpChange}
       error={error}
-      isSubmitting={isSubmitting}
+      isSubmitting={isVerifying}
       handleGoBack={handleGoBack}
       handleSubmit={handleSubmit}
     >
       <Button
         onClick={handleForgot2FA}
         type="button"
-        disabled={isForgot2FA || time > 0}
+        disabled={isSending || time > 0}
         className="min-w-[110px] h-10 relative"
       >
-        {isForgot2FA ? (
+        {isSending ? (
           <LoadingButton />
         ) : time > 0 ? (
           `Forgot 2FA ${time}s`

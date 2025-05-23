@@ -5,7 +5,7 @@ export const ERROR_MESSAGES = {
     CANVAS_EMPTY: 'Canvas is empty',
   },
   SOMETHING_WRONG: 'Something went wrong',
-  SEND_MAIL: 'Failed to send mail',
+  NEED_VERIFY_2FA: 'You need to verify two-factor authentication',
 };
 
 export const ERROR_AUTH_MESSAGES = {

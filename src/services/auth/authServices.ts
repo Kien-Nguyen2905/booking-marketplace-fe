@@ -8,7 +8,9 @@ import {
   GetAllDevicesResType,
   GetAuthorizationUrlResType,
   LoginBodyType,
+  LoginBodyType2FA,
   LoginResType,
+  LoginResType2FA,
   LogoutBodyType,
   RegisterBodyType,
   RegisterResType,
@@ -31,6 +33,13 @@ const authServices = {
 
   login: (body: LoginBodyType) => {
     return instance.post<SuccessResponse<LoginResType>>(`/auth/login`, body);
+  },
+
+  verify2FA: (body: LoginBodyType2FA) => {
+    return instance.post<SuccessResponse<LoginResType2FA>>(
+      `/auth/verify-2fa`,
+      body,
+    );
   },
 
   logout: (body: LogoutBodyType) => {
