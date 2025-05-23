@@ -98,7 +98,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
     if (targetRoute && !pathname.includes(targetRoute)) {
       router.push(targetRoute);
     }
-  }, [role, router]);
+  }, [role, router, pathname]);
 
   const toggleModal = useCallback(() => {
     setIsOpenModal((prev) => !prev);

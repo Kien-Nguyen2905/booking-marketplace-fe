@@ -9,12 +9,7 @@ import {
   setTokensLocalStorage,
 } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
-import {
-  ERROR_MESSAGES,
-  MANAGEMENT_NAV_LINKS,
-  ROLE_NAME,
-  ROUTES,
-} from '@/constants';
+import { ERROR_MESSAGES, ROUTES } from '@/constants';
 import { useModalAuth } from '@/components/ModalAuth/useModalAuth';
 import { useAppContext } from '@/context/AppProvider';
 import { useState } from 'react';

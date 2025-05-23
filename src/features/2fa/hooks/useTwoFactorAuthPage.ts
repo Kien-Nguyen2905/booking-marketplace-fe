@@ -84,10 +84,9 @@ export const useTwoFactorAuthPage = () => {
 
   useEffect(() => {
     if (!payloadLogin) {
-      router.back();
-      resetTimer();
+      handleGoBack();
     }
-  }, [payloadLogin, router]);
+  }, [payloadLogin, handleGoBack]);
 
   return {
     otpValue,
