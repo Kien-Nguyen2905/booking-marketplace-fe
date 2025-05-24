@@ -13,7 +13,8 @@ import { SUCCESS_PROFILE_MESSAGES } from '@/constants';
 
 export const useProfileHeader = () => {
   const { profile } = useAppContext();
-  const { mutateAsync: updateProfile } = useUpdateProfileMutation();
+  const { mutateAsync: updateProfile, isPending: isLoading } =
+    useUpdateProfileMutation();
   const { mutateAsync: presignedUploadImage } =
     usePresignedUploadImageMutation();
   const {
@@ -56,7 +57,9 @@ export const useProfileHeader = () => {
     if (!completedCrop || !imgRef.current || !images[0].file) {
       return;
     }
-
+    if (!profile) {
+      return;
+    }
     try {
       // Get the cropped image as a blob
       const croppedBlob = await getCroppedImg(imgRef.current, completedCrop);
@@ -122,5 +125,6 @@ export const useProfileHeader = () => {
     setIsHovered,
     profile,
     cropAvatarProps,
+    isLoading,
   };
 };

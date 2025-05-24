@@ -11,6 +11,7 @@ import 'react-image-crop/dist/ReactCrop.css';
 import { showToast } from '@/lib/toast';
 import CropAvatar from '@/features/profile/components/ProfileHeader/CropAvatar';
 import { ERROR_MESSAGES } from '@/constants';
+import { Loading, LoadingButton } from '@/components';
 
 const ProfileHeader: FC = () => {
   const {
@@ -20,6 +21,7 @@ const ProfileHeader: FC = () => {
     setIsHovered,
     profile,
     cropAvatarProps,
+    isLoading,
   } = useProfileHeader();
 
   return (
@@ -46,8 +48,12 @@ const ProfileHeader: FC = () => {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
-            <Avatar className="h-24 w-24 lg:h-28 lg:w-28 ring-1 ring-primary/80 ring-offset-2">
-              <AvatarImage src={profile?.avatar || ''} />
+            <Avatar className="h-24 w-24 bg-gray-300 relative lg:h-28 lg:w-28 ring-1 ring-primary/80 ring-offset-2">
+              {isLoading ? (
+                <LoadingButton />
+              ) : (
+                <AvatarImage src={profile?.avatar || ''} />
+              )}
               <AvatarFallback className="text-xl lg:text-2xl bg-[var(--brand)]/5 text-[var(--brand)]">
                 {profile?.fullName ? getInitials(profile.fullName) : 'U'}
               </AvatarFallback>
