@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { getInitials } from '@/lib/utils';
 import { DASHBOARD_NAV_LINKS, NAV_LINKS } from '@/constants';
 import { usePathname } from 'next/navigation';
+import { useAppContext } from '@/context/AppProvider';
 
 const Menu: FC<TMenuProps> = ({
   menuRef,
@@ -18,10 +19,11 @@ const Menu: FC<TMenuProps> = ({
   handleLogout,
   openLoginModal,
 }) => {
+  const { role } = useAppContext();
   const pathname = usePathname();
   const navLinks =
     pathname.includes('/partner') || pathname.includes('/admin')
-      ? DASHBOARD_NAV_LINKS
+      ? DASHBOARD_NAV_LINKS[role]
       : NAV_LINKS;
   return (
     <div className="relative" ref={menuRef}>
@@ -53,7 +55,7 @@ const Menu: FC<TMenuProps> = ({
                 <p className="text-sm font-semibold">{profile?.fullName}</p>
               </div>
               <div className="py-1">
-                {navLinks.map((link: any) =>
+                {navLinks?.map((link: any) =>
                   link.href === null ? (
                     <button
                       key={link.name}

@@ -170,15 +170,36 @@ export const NAV_LINKS = [
   },
 ];
 
-export const DASHBOARD_NAV_LINKS = [
-  {
-    href: ROUTES.ADMIN.PROFILE,
-    name: 'Profile',
-    icon: User,
-  },
-  {
-    href: null,
-    name: 'Logout',
-    icon: LogOut,
-  },
-];
+export const DASHBOARD_NAV_LINKS: Record<string, DashboardLink[]> = {
+  ADMIN: [
+    {
+      href: ROUTES.ADMIN.PROFILE,
+      name: 'Profile',
+      icon: User,
+    },
+    {
+      href: null,
+      name: 'Logout',
+      icon: LogOut,
+    },
+  ],
+  PARTNER: [
+    {
+      href: ROUTES.PARTNER.PROFILE,
+      name: 'Profile',
+      icon: User,
+    },
+    {
+      href: null,
+      name: 'Logout',
+      icon: LogOut,
+    },
+  ],
+  EMPLOYEE: [
+    {
+      href: null,
+      name: 'Logout',
+      icon: LogOut,
+    },
+  ],
+};

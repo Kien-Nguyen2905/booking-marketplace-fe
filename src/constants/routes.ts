@@ -25,6 +25,7 @@ export const ROUTES = {
   },
   PARTNER: {
     ROOT: '/partner',
+    PROFILE: '/partner/profile',
     HOTELS: '/partner/hotels',
     ROOMS: '/partner/rooms',
     ORDERS: '/partner/orders',

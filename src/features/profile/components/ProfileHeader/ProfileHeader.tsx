@@ -11,7 +11,7 @@ import 'react-image-crop/dist/ReactCrop.css';
 import { showToast } from '@/lib/toast';
 import CropAvatar from '@/features/profile/components/ProfileHeader/CropAvatar';
 import { ERROR_MESSAGES } from '@/constants';
-import { Loading, LoadingButton } from '@/components';
+import { LoadingButton } from '@/components';
 
 const ProfileHeader: FC = () => {
   const {
