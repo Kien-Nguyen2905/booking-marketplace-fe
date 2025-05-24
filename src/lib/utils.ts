@@ -2,7 +2,7 @@ import { AccessTokenPayload } from '@/types/jwt.type';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import jwt from 'jsonwebtoken';
-import { COOKIE_NAMES, LOCAL_STORAGE } from '@/constants';
+import { COOKIE_NAMES, LIMIT, LOCAL_STORAGE } from '@/constants';
 import Cookies from 'js-cookie';
 
 export function cn(...inputs: ClassValue[]) {
@@ -81,4 +81,11 @@ export const convertBirthdayToUTC = (birthday: Date) => {
   return `${birthday.getFullYear()}-${(birthday.getMonth() + 1)
     .toString()
     .padStart(2, '0')}-${birthday.getDate().toString().padStart(2, '0')}`;
+};
+
+export const setParamsDefault = (params: URLSearchParams) => {
+  params.set('limit', LIMIT);
+  params.set('page', '1');
+  const newQueryString = params.toString();
+  return newQueryString;
 };

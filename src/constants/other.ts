@@ -8,6 +8,34 @@ export const GENDER_VALUE = [
     label: 'Female',
   },
 ];
+export const ROLE_VALUE = [
+  {
+    value: 'admin',
+    label: 'Admin',
+  },
+  {
+    value: 'partner',
+    label: 'Partner',
+  },
+  {
+    value: 'employee',
+    label: 'Employee',
+  },
+  {
+    value: 'customer',
+    label: 'Customer',
+  },
+];
+export const STATUS_VALUE = [
+  {
+    value: 'active',
+    label: 'Active',
+  },
+  {
+    value: 'inactive',
+    label: 'Inactive',
+  },
+];
 export const BANK_ACCOUNT = [
   {
     value: 'BIDV',
@@ -134,3 +162,4 @@ export const BANK_ACCOUNT = [
     label: 'Ngân hàng TMCP Xăng dầu Petrolimex (PG Bank)',
   },
 ];
+export const LIMIT = '8';

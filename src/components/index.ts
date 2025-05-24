@@ -7,3 +7,5 @@ export { LoadingButton } from './LoadingButton';
 export { ForgotPassword } from './ForgotPassword';
 export { InputOTPCustom } from './InputOTPCustom';
 export { OtpCard } from './OtpCard';
+export { CPagination } from './CPagination';
+export { LoadingTable } from './LoadingTable';

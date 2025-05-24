@@ -19,7 +19,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         >
           <Card x-chunk="dashboard-06-chunk-0" className="max-h-fit w-full">
             <CardContent>
-              <main className="px-6 py-6">{children}</main>
+              <main className="px-2">{children}</main>
             </CardContent>
           </Card>
         </div>

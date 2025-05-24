@@ -15,6 +15,7 @@ const RHFInput: FC<TInputProps> = ({
   renderProp,
   component,
   required,
+  onChange,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -50,6 +51,10 @@ const RHFInput: FC<TInputProps> = ({
                   }  h-12 rounded-lg ${className}`}
                   {...field}
                   {...props}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    if (onChange) onChange(e.target.value);
+                  }}
                 />
                 {component}
                 <button

@@ -12,4 +12,5 @@ export type TInputProps = {
   renderProp?: any;
   component?: React.ReactNode;
   required?: boolean;
+  onChange?: (value: string) => void;
 };
