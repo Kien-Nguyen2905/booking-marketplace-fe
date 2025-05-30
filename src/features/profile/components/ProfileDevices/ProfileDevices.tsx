@@ -12,15 +12,10 @@ import { Badge } from '@/components/ui/badge';
 import { Laptop, ServerOff, SmartphoneIcon, TabletIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { GetAllDevicesResType } from '@/models';
-import { Loading } from '@/components';
 
 const ProfileDevices = () => {
-  const { data: devicesData, isLoading } = useGetAllDevicesQuery();
+  const { data: devicesData } = useGetAllDevicesQuery();
   const devices = (devicesData?.data?.data || []) as GetAllDevicesResType[];
-
-  if (isLoading) {
-    return <Loading />;
-  }
 
   return (
     <div className="p-4 lg:p-6 border-0 shadow-none">

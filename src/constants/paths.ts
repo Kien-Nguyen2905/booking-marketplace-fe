@@ -102,9 +102,9 @@ export const MANAGEMENT_NAV_LINKS: Dashboard = {
       name: 'Dashboard',
       icon: PanelsTopLeft,
     },
-    HOTELS: {
-      href: ROUTES.PARTNER.HOTELS,
-      name: 'Hotels',
+    HOTEL: {
+      href: ROUTES.PARTNER.HOTEL,
+      name: 'Hotel',
       icon: Hotel,
     },
     ROOMS: {
@@ -157,11 +157,6 @@ export const NAV_LINKS = [
     href: ROUTES.ACCOUNT.REFUND,
     name: 'Refund',
     icon: DollarSign,
-  },
-  {
-    href: ROUTES.ACCOUNT.APPLIED_PARTNER,
-    name: 'Applied Partner',
-    icon: Handshake,
   },
   {
     href: null,

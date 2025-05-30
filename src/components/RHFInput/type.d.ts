@@ -6,11 +6,12 @@ export type TInputProps = {
   label?: string;
   type?: string;
   placeholder?: string;
+  classNameInput?: string;
   className?: string;
   disabled?: boolean;
   min?: number;
   renderProp?: any;
   component?: React.ReactNode;
   required?: boolean;
-  onChange?: (value: string) => void;
+  onChange?: (value: string | number) => void;
 };

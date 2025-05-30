@@ -1,3 +1,4 @@
+import { SUCCESS_MESSAGES } from '@/constants';
 import { UserStatusType } from './../../../../../constants/auth';
 import { useAppContext } from '@/context/AppProvider';
 import { handleErrorApi } from '@/lib/helper';
@@ -30,7 +31,7 @@ export const useUserView = (selectedUser: GetUserProfileResType) => {
         onSuccess?.(false);
         showToast({
           type: 'success',
-          message: 'User updated successfully',
+          message: SUCCESS_MESSAGES.UPDATED,
         });
       }
     } catch (error) {

@@ -1,4 +1,4 @@
-import { ERROR_AUTH_MESSAGES } from '@/constants';
+import { ERROR_AUTH_MESSAGES, PartnerStatus } from '@/constants';
 import { UserSchema } from '@/models/auth.model';
 import { PermissionSchema } from '@/models/permission.model';
 import { RoleSchema } from '@/models/role.model';
@@ -58,6 +58,14 @@ export const GetUserProfileResSchema = UserSchema.omit({
       }),
     ),
   }),
+  partnerStatus: z
+    .enum([
+      PartnerStatus.PENDING,
+      PartnerStatus.ACCEPTED,
+      PartnerStatus.REJECTED,
+    ])
+    .nullable()
+    .default(PartnerStatus.PENDING),
 });
 export type GetUserProfileResType = z.infer<typeof GetUserProfileResSchema>;
 export type UpdateMeBodyType = z.infer<typeof UpdateMeBodySchema>;

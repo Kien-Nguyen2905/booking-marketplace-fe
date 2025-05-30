@@ -1,0 +1,1 @@
+export { usePartnerHotelPage } from './usePartnerHotelPage';

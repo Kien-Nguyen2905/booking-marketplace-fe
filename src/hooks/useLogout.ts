@@ -1,5 +1,5 @@
 import { authServices } from '@/services/auth';
-import { ROUTES } from '@/constants';
+import { ERROR_MESSAGES, ROUTES } from '@/constants';
 import { handleErrorApi } from '@/lib/helper';
 import { showToast } from '@/lib/toast';
 import {
@@ -33,7 +33,7 @@ export const useLogout = () => {
       } else {
         showToast({
           type: 'error',
-          message: 'Not found refresh token',
+          message: ERROR_MESSAGES.NOT_FOUND_REFRESH_TOKEN,
         });
       }
     } catch (error) {

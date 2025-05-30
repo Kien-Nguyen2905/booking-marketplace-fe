@@ -1,3 +1,4 @@
+import { ROUTES } from '@/constants';
 import { useAppContext } from '@/context/AppProvider';
 import { useTimeCountdown } from '@/hooks';
 import { handleErrorApi, navigateWithLogin } from '@/lib/helper';
@@ -58,7 +59,7 @@ export const useTwoFactorAuthPage = () => {
   };
 
   const handleGoBack = () => {
-    router.back();
+    router.push(ROUTES.HOME);
     setPayloadLogin(null);
     resetTimer();
   };

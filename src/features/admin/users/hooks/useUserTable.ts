@@ -2,7 +2,7 @@ import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { debounce } from 'lodash';
-import { useGetAllUsers } from '@/queries';
+import { useGetUsers } from '@/queries';
 import { useDebounce } from '@/hooks';
 import { useReactTable, getCoreRowModel } from '@tanstack/react-table';
 import { userColumns } from '@/features/admin/users/components/UserTable/UserColumn';
@@ -11,12 +11,12 @@ import { setParamsDefault } from '@/lib/utils';
 import { GetUserProfileResType } from '@/models';
 export const useUserTable = () => {
   const searchParams = useSearchParams();
-  const { data: allUserData, isLoading: isLoadingGetAllUsers } = useGetAllUsers(
+  const { data: allUserData, isLoading: isLoadingGetUsers } = useGetUsers(
     searchParams.toString() || `limit=${LIMIT}&page=1`,
   );
 
   const isLoading = useDebounce({
-    initialValue: isLoadingGetAllUsers,
+    initialValue: isLoadingGetUsers,
     delay: 700,
   });
 

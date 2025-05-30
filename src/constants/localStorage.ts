@@ -4,4 +4,5 @@ export const LOCAL_STORAGE = {
   EMAIL: 'email',
   ROLE: 'role',
   OTP_EXPIRY: 'otpExpiry',
+  IS_PENDING_PARTNER: 'isPendingPartner',
 };

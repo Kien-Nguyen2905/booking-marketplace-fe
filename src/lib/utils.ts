@@ -22,6 +22,9 @@ export const getRefreshTokenLocalStorage = () =>
 export const getRoleLocalStorage = () =>
   localStorage.getItem(LOCAL_STORAGE.ROLE);
 
+export const setRoleLocalStorage = (role: string) =>
+  localStorage.setItem(LOCAL_STORAGE.ROLE, role);
+
 export const setTokensLocalStorage = ({
   accessToken,
   refreshToken,
@@ -89,3 +92,21 @@ export const setParamsDefault = (params: URLSearchParams) => {
   const newQueryString = params.toString();
   return newQueryString;
 };
+
+export const isOnlyDigits = (input: string): boolean => {
+  return /^\d+$/.test(input);
+};
+
+export const isValidNumberString = (input: string): boolean => {
+  return /^(0|[1-9]\d*)$/.test(input);
+};
+
+export const setPartnerLocalStorage = (value: boolean) => {
+  localStorage.setItem(LOCAL_STORAGE.IS_PENDING_PARTNER, value.toString());
+};
+
+export const getPartnerLocalStorage = () =>
+  localStorage.getItem(LOCAL_STORAGE.IS_PENDING_PARTNER);
+
+export const removePartnerLocalStorage = () =>
+  localStorage.removeItem(LOCAL_STORAGE.IS_PENDING_PARTNER);

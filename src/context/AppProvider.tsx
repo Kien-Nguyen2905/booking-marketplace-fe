@@ -4,10 +4,17 @@ import { useLogout } from '@/hooks';
 import {
   getAccessTokenLocalStorage,
   getEmailLocalStorage,
+  getPartnerLocalStorage,
   getRoleLocalStorage,
+  removeEmailLocalStorage,
+  removePartnerLocalStorage,
 } from '@/lib/utils';
-import { GetUserProfileResType, LoginBodyType } from '@/models';
-import { useGetProfileQuery } from '@/queries';
+import {
+  GetPartnerByUserIdResType,
+  GetUserProfileResType,
+  LoginBodyType,
+} from '@/models';
+import { useGetPartnerByUserIdQuery, useGetProfileQuery } from '@/queries';
 import { usePathname, useRouter } from 'next/navigation';
 import {
   createContext,
@@ -33,6 +40,10 @@ interface AppContextProps {
   setEmail: (value: string) => void;
   profile: GetUserProfileResType | null;
   setProfile: (profile: GetUserProfileResType | null) => void;
+  isPendingPartner: boolean;
+  setIsPendingPartner: (value: boolean) => void;
+  partnerProfile: GetPartnerByUserIdResType | null;
+  setPartnerProfile: (partnerProfile: GetPartnerByUserIdResType | null) => void;
 }
 
 const defaultContext: AppContextProps = {
@@ -50,6 +61,10 @@ const defaultContext: AppContextProps = {
   setEmail: () => null,
   profile: null,
   setProfile: () => null,
+  isPendingPartner: false,
+  setIsPendingPartner: () => null,
+  partnerProfile: null,
+  setPartnerProfile: () => null,
 };
 
 const AppContext = createContext<AppContextProps>(defaultContext);
@@ -68,24 +83,54 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [role, setRole] = useState('');
   const [payloadLogin, setPayloadLogin] = useState<LoginBodyType | null>(null);
   const [profile, setProfile] = useState<GetUserProfileResType | null>(null);
-
-  // Get profile
+  const [partnerProfile, setPartnerProfile] =
+    useState<GetPartnerByUserIdResType | null>(null);
+  const [isPendingPartner, setIsPendingPartner] = useState(false);
   const { data, error } = useGetProfileQuery(isAuthenticated);
+  const profileData = data?.data?.data;
+
+  // The useGetPartnerByIdQuery will only run when id is truthy due to its internal 'enabled: !!id' config
+  const { data: partnerData } = useGetPartnerByUserIdQuery(
+    profileData?.role.name === ROLE_NAME.PARTNER,
+  );
+
+  // Update partner profile data when available
+  useEffect(() => {
+    if (partnerData?.data?.data) {
+      setPartnerProfile(partnerData.data.data);
+    }
+  }, [partnerData]);
   useEffect(() => {
     if (typeof window === 'undefined') return; // Ensure client-side execution
 
     const storedRole = getRoleLocalStorage();
     const storedAccessToken = getAccessTokenLocalStorage();
     const storedEmail = getEmailLocalStorage();
+    const storedIsPendingPartner = getPartnerLocalStorage();
     setEmail(storedEmail || '');
     setRole(storedRole || '');
     setIsAuthenticated(!!storedAccessToken);
+    setIsPendingPartner(!!storedIsPendingPartner);
   }, []);
 
   // Update profile when query data changes
   useEffect(() => {
-    if (isAuthenticated && data?.data?.data) {
-      setProfile(data.data.data);
+    if (isAuthenticated && profileData) {
+      setProfile(profileData);
+      if (profileData) {
+        if (
+          profileData.partnerStatus === null ||
+          role !== profileData.role.name
+        ) {
+          setIsPendingPartner(false);
+          removePartnerLocalStorage();
+        }
+        if (role !== data.data.data.role.name) {
+          handleLogout();
+          removeEmailLocalStorage();
+          window.location.reload();
+        }
+      }
     }
   }, [data, isAuthenticated]);
 
@@ -132,6 +177,10 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
       setEmail,
       profile,
       setProfile,
+      isPendingPartner,
+      setIsPendingPartner,
+      partnerProfile,
+      setPartnerProfile,
     }),
     [
       isOpenModal,
@@ -143,6 +192,8 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
       payloadLogin,
       email,
       profile,
+      isPendingPartner,
+      partnerProfile,
     ],
   );
   return (

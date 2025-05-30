@@ -6,7 +6,6 @@ export const ROUTES = {
     WISH_LIST: '/account/wishlist',
     ORDER: '/account/order',
     REFUND: '/account/refund',
-    APPLIED_PARTNER: '/account/applied-partner',
   },
   ADMIN: {
     ROOT: '/admin',
@@ -25,11 +24,17 @@ export const ROUTES = {
   },
   PARTNER: {
     ROOT: '/partner',
+    DASHBOARD: '/partner',
     PROFILE: '/partner/profile',
-    HOTELS: '/partner/hotels',
+    HOTEL: '/partner/hotel',
     ROOMS: '/partner/rooms',
     ORDERS: '/partner/orders',
   },
   TWO_FA_PAGE: '/2fa-page',
   RESET_PASSWORD_PAGE: '/reset-password',
+  BECOME_PARTNER: {
+    ROOT: '/become-partner',
+    PARTNER: '/become-partner/partner',
+    HOTEL: '/become-partner/hotel',
+  },
 };

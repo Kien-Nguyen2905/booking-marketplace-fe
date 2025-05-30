@@ -1,61 +1,74 @@
 'use client';
-import { TInputProps } from '@/components/RHFInput/tying';
-import { FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { RequiredField } from '@/components/RequiredField';
+import { TInputProps } from '@/components/RHFInput/type';
+import {
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  FormControl,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Eye, EyeOff } from 'lucide-react';
 import { FC, useState } from 'react';
 
 const RHFInput: FC<TInputProps> = ({
   form,
-  label,
-  name,
   type = 'text',
+  classNameInput = '',
   className = '',
   renderProp,
   component,
-  required,
   onChange,
+  required,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <FormField
       control={form.control}
-      name={name}
+      name={props.name}
       render={({ field }) => (
-        <FormItem>
+        <FormItem className={className}>
           {renderProp ? (
             renderProp(props, field)
           ) : (
             <div className="grid gap-1">
-              <Label
+              <FormLabel
                 className="block text-sm font-medium text-gray-700"
-                htmlFor={name}
+                htmlFor={props.name}
               >
-                {label}
-                {required && <span className="text-red-500"> *</span>}
-              </Label>
-              <div className="relative flex items-center gap-[30px]">
-                <Input
-                  id={name}
-                  type={
-                    type !== 'password'
-                      ? type
-                      : showPassword
-                      ? 'text'
-                      : 'password'
-                  }
-                  className={`w-full ${
-                    type === 'password' && 'pr-9'
-                  }  h-12 rounded-lg ${className}`}
-                  {...field}
-                  {...props}
-                  onChange={(e) => {
-                    field.onChange(e);
-                    if (onChange) onChange(e.target.value);
-                  }}
-                />
+                {props.label}
+                <RequiredField required={required} />
+              </FormLabel>
+              <div className="relative flex items-center gap-4">
+                <FormControl>
+                  <Input
+                    id={props.name}
+                    type={
+                      type !== 'password'
+                        ? type
+                        : showPassword
+                        ? 'text'
+                        : 'password'
+                    }
+                    className={`w-full ${
+                      type === 'password' && 'pr-9'
+                    }  h-12 rounded-lg ${classNameInput}`}
+                    {...field}
+                    {...props}
+                    onChange={(e) => {
+                      const value =
+                        type === 'number'
+                          ? e.target.valueAsNumber
+                          : e.target.value;
+                      field.onChange(value);
+                      if (onChange) {
+                        onChange(value);
+                      }
+                    }}
+                  />
+                </FormControl>
                 {component}
                 <button
                   type="button"

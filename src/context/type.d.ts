@@ -1,4 +1,8 @@
-import { GetUserProfileResType, LoginBodyType } from '@/models';
+import {
+  GetPartnerByUserIdResType,
+  GetUserProfileResType,
+  LoginBodyType,
+} from '@/models';
 import { SetStateAction } from 'react';
 
 export type TMainContextProviderProps = {
@@ -18,4 +22,8 @@ export type TMainContextProviderProps = {
   setEmail: SetStateAction<string>;
   profile: GetUserProfileResType | null;
   setProfile: SetStateAction<GetUserProfileResType | null>;
+  isPendingPartner: boolean;
+  setIsPendingPartner: SetStateAction<boolean>;
+  partnerProfile: GetPartnerByUserIdResType | null;
+  setPartnerProfile: SetStateAction<GetPartnerByUserIdResType | null>;
 };

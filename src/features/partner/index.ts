@@ -1,0 +1,1 @@
+export { PartnerHotelPage } from './hotel';

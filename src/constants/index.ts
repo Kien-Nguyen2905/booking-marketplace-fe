@@ -7,3 +7,5 @@ export * from './cookies';
 export * from './httpMethod';
 export * from './success';
 export * from './other';
+export * from './hotel';
+export * from './partner';

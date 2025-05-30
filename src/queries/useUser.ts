@@ -2,10 +2,10 @@ import { UpdateUserBodyType } from '@/models/user.model';
 import { userServices } from '@/services/user';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-export const useGetAllUsers = (queryString = '') => {
+export const useGetUsers = (queryString = '') => {
   return useQuery({
     queryKey: ['users', queryString],
-    queryFn: () => userServices.getAllUsers(queryString),
+    queryFn: () => userServices.getUsers(queryString),
   });
 };
 

@@ -64,7 +64,7 @@ export const UpdateUserBodySchema = CreateUserBodySchema.omit({
   password: true,
 });
 
-export type GetAllUsersResType = z.infer<typeof GetUsersResSchema>;
+export type GetUsersResType = z.infer<typeof GetUsersResSchema>;
 export type GetUsersQueryType = z.infer<typeof GetUsersQuerySchema>;
 export type GetUserResType = GetUserProfileResType;
 export type CreateUserBodyType = z.infer<typeof CreateUserBodySchema>;

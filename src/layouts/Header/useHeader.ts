@@ -4,7 +4,7 @@ import { useLogout } from '@/hooks';
 import { useAppContext } from '@/context/AppProvider';
 
 export const useHeader = () => {
-  const { role, isAuthenticated, profile } = useAppContext();
+  const { role, isAuthenticated, profile, isPendingPartner } = useAppContext();
   const { openLoginModal } = useModalAuth();
   const { handleLogout } = useLogout();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -66,5 +66,6 @@ export const useHeader = () => {
     role,
     isAuthenticated,
     profile,
+    isPendingPartner,
   };
 };

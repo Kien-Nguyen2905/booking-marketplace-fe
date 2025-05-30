@@ -65,11 +65,11 @@ const UserTable = () => {
           <div className="flex items-center justify-between">
             <div className="relative">
               <RHFInput
-                onChange={onSearch}
+                onChange={(value) => onSearch(value as string)}
                 form={form}
                 name="search"
                 placeholder="Search"
-                className="!py-[3px] pr-[20px] 2xl:!py-[9px] h-9"
+                classNameInput="!py-[3px] pr-[20px] 2xl:!py-[9px] !h-9"
               />
               <div className="absolute text-gray-400 w-[17px] h-[17px] 2xl:w-[30px] 2xl:h-[30px] flex justify-center items-center right-1 -translate-y-1/2 top-1/2">
                 <Search size={30} />

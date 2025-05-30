@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
       'images.unsplash.com',
       'plus.unsplash.com',
       'totp',
+      'booking-marketplace.s3.ap-southeast-1.amazonaws.com',
     ],
   },
 };

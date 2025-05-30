@@ -3,3 +3,6 @@ export * from './useAuth';
 export * from './useProfile';
 export * from './useMedia';
 export * from './useUser';
+export * from './usePartner';
+export * from './useAddress';
+export * from './useHotel';

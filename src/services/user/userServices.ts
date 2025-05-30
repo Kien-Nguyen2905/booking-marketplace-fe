@@ -3,13 +3,13 @@ import { SuccessResponse } from '@/services/type';
 
 import {
   GetUserResType,
-  GetAllUsersResType,
+  GetUsersResType,
   UpdateUserBodyType,
 } from '@/models/user.model';
 
 const userServices = {
-  getAllUsers: (queryString: string = '') => {
-    return instance.get<SuccessResponse<GetAllUsersResType>>(
+  getUsers: (queryString: string = '') => {
+    return instance.get<SuccessResponse<GetUsersResType>>(
       `/users${queryString ? `?${queryString}` : ''}`,
     );
   },
@@ -17,6 +17,7 @@ const userServices = {
   getUserById: (userId: string) => {
     return instance.get<SuccessResponse<GetUserResType>>(`/users/${userId}`);
   },
+
   updateUser: (userId: string, body: UpdateUserBodyType) => {
     return instance.put<SuccessResponse<GetUserResType>>(
       `/users/${userId}`,

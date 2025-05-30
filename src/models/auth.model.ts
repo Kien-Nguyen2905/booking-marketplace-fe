@@ -1,4 +1,4 @@
-import { ERROR_AUTH_MESSAGES } from '@/constants';
+import { ERROR_AUTH_MESSAGES, HOTEL_STATUS } from '@/constants';
 import { TypeOfVerificationCode, UserStatus } from '@/constants/auth';
 import { z } from 'zod';
 
@@ -45,6 +45,9 @@ export const UserSchema = z.object({
   deletedAt: z.date().nullable(),
   createdAt: z.date().nullable(),
   updatedAt: z.date().nullable(),
+  isPendingHotel: z
+    .enum([HOTEL_STATUS.PENDING, HOTEL_STATUS.ACTIVE])
+    .nullable(),
 });
 
 export type UserType = z.infer<typeof UserSchema>;

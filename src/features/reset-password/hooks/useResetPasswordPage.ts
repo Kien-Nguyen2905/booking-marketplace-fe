@@ -67,7 +67,7 @@ export const useResetPasswordPage = () => {
   };
 
   const handleGoBack = () => {
-    router.back();
+    router.push(ROUTES.HOME);
     removeEmailLocalStorage();
     resetTimer();
   };

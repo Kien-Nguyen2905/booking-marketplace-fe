@@ -25,7 +25,7 @@ const RegisterModal = () => {
           name="email"
           placeholder="Enter your email"
         />
-        <div className="flex flex-col md:flex-row w-full gap-[30px]">
+        <div className="flex flex-col md:flex-row w-full gap-4">
           <div className="relative md:w-1/2">
             <RHFInput
               form={form}

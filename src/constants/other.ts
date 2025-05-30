@@ -36,6 +36,7 @@ export const STATUS_VALUE = [
     label: 'Inactive',
   },
 ];
+
 export const BANK_ACCOUNT = [
   {
     value: 'BIDV',
@@ -162,4 +163,5 @@ export const BANK_ACCOUNT = [
     label: 'Ngân hàng TMCP Xăng dầu Petrolimex (PG Bank)',
   },
 ];
+
 export const LIMIT = '8';

@@ -12,3 +12,9 @@ export const useUploadImageWithPresignedUrlMutation = () => {
     mutationFn: mediaServices.uploadImageWithPresignedUrl,
   });
 };
+
+export const useDeleteFilesMutation = () => {
+  return useMutation({
+    mutationFn: mediaServices.deleteFiles,
+  });
+};

@@ -1,11 +1,12 @@
 'use client';
-import { MapPinHouse } from 'lucide-react';
+import { Handshake, MapPinHouse } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ModalAuth } from '@/components';
 import { useHeader } from './useHeader';
-import { ROLE_NAME } from '@/constants';
+import { ROLE_NAME, ROUTES } from '@/constants';
 import { Menu } from '@/layouts/Menu';
+import { Badge } from '@/components/ui/badge';
 
 const Header = () => {
   const {
@@ -17,6 +18,7 @@ const Header = () => {
     openLoginModal,
     role,
     profile,
+    isPendingPartner,
   } = useHeader();
   return (
     <>
@@ -35,13 +37,18 @@ const Header = () => {
             </div>
             {/* User Menu */}
             <div className="flex items-center gap-2">
-              {role === ROLE_NAME.CUSTOMER && (
-                <Link href="/become-partner" className="flex items-center">
+              {profile && isPendingPartner && (
+                <Badge variant="default" className="text-sm font-medium">
+                  <Handshake size={20} /> Applied Partner
+                </Badge>
+              )}
+              {role === ROLE_NAME.CUSTOMER && !isPendingPartner && (
+                <Link href={ROUTES.BECOME_PARTNER.PARTNER}>
                   <Button variant="link">Become to Partner</Button>
                 </Link>
               )}
               {role === ROLE_NAME.PARTNER && (
-                <Link href="/partner" className="flex items-center">
+                <Link href={ROUTES.PARTNER.ROOT} className="flex items-center">
                   <Button variant="link">Switch to hosting</Button>
                 </Link>
               )}

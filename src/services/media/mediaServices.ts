@@ -1,11 +1,13 @@
 import { instance } from '@/services/interceptor';
 import { SuccessResponse } from '@/services/type';
 import {
+  DeleteFilesBodyType,
   PresignedUploadFileBodyType,
   PresignedUploadFileResType,
   UploadImageWithPresignedUrlBodyType,
 } from '@/models/media.model';
 import axios, { AxiosResponse } from 'axios';
+import { EmptyDataResponse } from '@/models';
 
 const mediaServices = {
   presignedUploadImage: (body: PresignedUploadFileBodyType) => {
@@ -14,6 +16,7 @@ const mediaServices = {
       body,
     );
   },
+
   uploadImageWithPresignedUrl: ({
     croppedBlob,
     presignedUrl,
@@ -23,6 +26,15 @@ const mediaServices = {
         'Content-Type': croppedBlob.type || 'image/jpeg',
       },
     });
+  },
+
+  deleteFiles: (body: DeleteFilesBodyType) => {
+    return instance.delete<SuccessResponse<EmptyDataResponse>>(
+      `/media/images/delete`,
+      {
+        data: body,
+      },
+    );
   },
 };
 

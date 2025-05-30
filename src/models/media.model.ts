@@ -24,3 +24,9 @@ export type UploadImageWithPresignedUrlBodyType = {
   croppedBlob: Blob;
   presignedUrl: string;
 };
+
+export const DeleteFilesBodySchema = z.object({
+  oldFileKeys: z.array(z.string()),
+});
+
+export type DeleteFilesBodyType = z.infer<typeof DeleteFilesBodySchema>;
