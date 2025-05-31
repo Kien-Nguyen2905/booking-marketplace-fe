@@ -1,6 +1,7 @@
 'use client';
 import {
   AddressSelection,
+  Loading,
   LoadingButton,
   RHFInput,
   RHFPickDate,
@@ -23,9 +24,11 @@ const PartnerInformation: FC<TPartnerInformationProps> = ({ partner }) => {
     isLoadingOTP,
     handleUpdatePartner,
     isLoadingUpdate,
+    isLoadingNavigate,
   } = usePartnerInformation({
     partner,
   });
+  if (isLoadingNavigate) return <Loading />;
   return (
     <div>
       <Card className="border-0 shadow-none">

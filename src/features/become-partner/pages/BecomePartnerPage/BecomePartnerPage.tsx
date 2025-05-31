@@ -4,7 +4,7 @@ import { Loading, PartnerInformation } from '@/components';
 import { useGetPartnerByUserIdQuery } from '@/queries';
 
 const BecomePartnerPage = () => {
-  const { data: partner, isLoading } = useGetPartnerByUserIdQuery();
+  const { data: partner, isLoading } = useGetPartnerByUserIdQuery(true);
   if (isLoading) return <Loading />;
   return (
     <div className="container mx-auto px-10 pt-5 pb-100">

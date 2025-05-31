@@ -51,6 +51,7 @@ const AddressSelection: FC<TAddressSelectionProps> = ({
           label="Province"
           name="provinceCode"
           placeholder="Select province"
+          disabled={disabled || isLoadingProvinces}
           renderProp={(props: any, field: any) => {
             return (
               <>
@@ -62,7 +63,6 @@ const AddressSelection: FC<TAddressSelectionProps> = ({
                   <Select
                     value={field.value}
                     {...props}
-                    disabled={disabled || isLoadingProvinces}
                     open={openProvince}
                     onOpenChange={handleOpenChangeProvince}
                   >
@@ -124,7 +124,9 @@ const AddressSelection: FC<TAddressSelectionProps> = ({
           name="districtCode"
           required
           placeholder="Select district"
-          disabled={isLoadingDistricts || !form.watch('provinceCode')}
+          disabled={
+            disabled || isLoadingDistricts || !form.watch('provinceCode')
+          }
           renderProp={(props: any, field: any) => {
             return (
               <>
@@ -138,7 +140,6 @@ const AddressSelection: FC<TAddressSelectionProps> = ({
                     value={field.value}
                     open={openDistrict}
                     onOpenChange={handleOpenChangeDistrict}
-                    disabled={disabled}
                   >
                     <FormControl>
                       <SelectTrigger className="w-full h-12!">
@@ -196,7 +197,7 @@ const AddressSelection: FC<TAddressSelectionProps> = ({
           name="wardCode"
           required
           placeholder="Select ward"
-          disabled={isLoadingWards || !form.watch('districtCode')}
+          disabled={disabled || isLoadingWards || !form.watch('districtCode')}
           renderProp={(props: any, field: any) => {
             return (
               <>
@@ -210,7 +211,6 @@ const AddressSelection: FC<TAddressSelectionProps> = ({
                     {...props}
                     open={openWard}
                     onOpenChange={handleOpenChangeWard}
-                    disabled={disabled}
                   >
                     <FormControl>
                       <SelectTrigger className="w-full h-12!">

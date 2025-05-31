@@ -6,7 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export const useBecomePartnerHeader = () => {
-  const { data: partner } = useGetPartnerByUserIdQuery();
+  const { data: partner } = useGetPartnerByUserIdQuery(true);
   const router = useRouter();
   const pathname = usePathname();
   const [step, setStep] = useState(1);

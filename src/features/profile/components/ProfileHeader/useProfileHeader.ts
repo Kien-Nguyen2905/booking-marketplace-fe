@@ -4,6 +4,7 @@ import {
   useUpdateProfileMutation,
   usePresignedUploadImageMutation,
   useUploadImageWithPresignedUrlMutation,
+  useDeleteFilesMutation,
 } from '@/queries';
 import { useState, useRef, useEffect } from 'react';
 import { ImageListType } from 'react-images-uploading';
@@ -21,9 +22,10 @@ export const useProfileHeader = () => {
     mutateAsync: uploadImageWithPresignedUrl,
     isPending: isUploadingImage,
   } = useUploadImageWithPresignedUrlMutation();
+  const { mutateAsync: deleteFiles } = useDeleteFilesMutation();
   const [isHovered, setIsHovered] = useState(false);
   const [images, setImages] = useState<ImageListType>([]);
-
+  const [existImage, setExistImage] = useState('');
   // Crop related state
   const [showCrop, setShowCrop] = useState(false);
   const [crop, setCrop] = useState<Crop>();
@@ -89,6 +91,11 @@ export const useProfileHeader = () => {
           bankName: profile?.bankName || null,
         });
         if (response.data.data) {
+          if (existImage) {
+            await deleteFiles({
+              oldFileKeys: [existImage],
+            });
+          }
           showToast({
             type: 'success',
             message: SUCCESS_PROFILE_MESSAGES.AVATAR_UPDATED_SUCCESS,
@@ -104,7 +111,10 @@ export const useProfileHeader = () => {
     if (!showCrop && images.length > 0) {
       setImages([]);
     }
-  }, [showCrop, images.length]);
+    if (profile?.avatar) {
+      setExistImage(profile.avatar);
+    }
+  }, [showCrop, images.length, profile]);
 
   const cropAvatarProps = {
     showCrop,

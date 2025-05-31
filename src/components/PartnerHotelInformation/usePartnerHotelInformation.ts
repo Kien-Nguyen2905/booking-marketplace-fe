@@ -24,7 +24,6 @@ export const usePartnerHotelInformation = ({
   const partner = data?.data.data;
   const { mutateAsync: createHotel } = useCreateHotelMutation();
   const router = useRouter();
-
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<CreateHotelBodyType>({

@@ -19,7 +19,7 @@ import {
 } from '@/constants';
 import { useTimeCountdown } from '@/hooks';
 import { useBecomePartnerHeader } from '@/layouts/BecomePartnerHeader/useAccommodationHeader';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { isOnlyDigits } from '@/lib/utils';
 import { useAppContext } from '@/context/AppProvider';
 import { useRouter } from 'next/navigation';
@@ -38,7 +38,7 @@ export const usePartnerInformation = ({
     useCreatePartnerMutation();
   const { mutateAsync: updatePartner, isPending: isLoadingUpdate } =
     useUpdatePartnerMutation();
-
+  const [isLoadingNavigate, setIsLoadingNavigate] = useState(false);
   const router = useRouter();
   const form = useForm<CreatePartnerBodyType>({
     resolver: zodResolver(CreatePartnerBodySchema),
@@ -72,6 +72,7 @@ export const usePartnerInformation = ({
       }
       const { data } = await createPartner(value);
       if (data.data.id) {
+        setIsLoadingNavigate(true);
         onNavigateNextStep();
         showToast({
           type: 'success',
@@ -165,5 +166,6 @@ export const usePartnerInformation = ({
     handleUpdatePartner,
     isLoadingUpdate,
     partner,
+    isLoadingNavigate,
   };
 };

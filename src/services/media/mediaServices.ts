@@ -29,11 +29,9 @@ const mediaServices = {
   },
 
   deleteFiles: (body: DeleteFilesBodyType) => {
-    return instance.delete<SuccessResponse<EmptyDataResponse>>(
+    return instance.post<SuccessResponse<EmptyDataResponse>>(
       `/media/images/delete`,
-      {
-        data: body,
-      },
+      body,
     );
   },
 };
