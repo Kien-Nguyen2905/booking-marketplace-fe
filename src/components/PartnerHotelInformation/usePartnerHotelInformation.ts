@@ -12,13 +12,11 @@ import { useRouter } from 'next/navigation';
 import { useCreateHotelMutation, useGetPartnerByUserIdQuery } from '@/queries';
 import { setPartnerLocalStorage } from '@/lib/utils';
 import { useAppContext } from '@/context/AppProvider';
+import { useMultipleUploading } from '@/components/MultipleUploading/useMultipleUploading';
 
-export const usePartnerHotelInformation = ({
-  uploadAllImages,
-}: {
-  uploadAllImages: (minNumber: number) => Promise<string[] | undefined>;
-}) => {
+export const usePartnerHotelInformation = () => {
   const { setIsPendingPartner, isPendingPartner } = useAppContext();
+  const uploader = useMultipleUploading(3);
   const { data, isLoading: isLoadingPartner } =
     useGetPartnerByUserIdQuery(true);
   const partner = data?.data.data;
@@ -47,7 +45,7 @@ export const usePartnerHotelInformation = ({
     setIsLoading(true);
     try {
       // // First upload all images
-      const imageUrls = await uploadAllImages(3);
+      const imageUrls = await uploader.uploadAllImages();
       if (imageUrls) {
         // Then create hotel with the image URLs
         const hotelData = {
@@ -101,5 +99,6 @@ export const usePartnerHotelInformation = ({
     isLoadingPartner,
     handleCreateHotel,
     isLoading,
+    uploader,
   };
 };

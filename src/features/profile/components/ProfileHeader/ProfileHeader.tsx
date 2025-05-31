@@ -52,7 +52,9 @@ const ProfileHeader: FC = () => {
               {isLoading ? (
                 <LoadingButton />
               ) : (
-                <AvatarImage src={profile?.avatar || ''} />
+                <AvatarImage
+                  src={profile?.avatar || images[0]?.dataURL || ''}
+                />
               )}
               <AvatarFallback className="text-xl lg:text-2xl bg-[var(--brand)]/5 text-[var(--brand)]">
                 {profile?.fullName ? getInitials(profile.fullName) : 'U'}

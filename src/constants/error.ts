@@ -1,6 +1,6 @@
 export const ERROR_MESSAGES = {
   FILE: {
-    SIZE_EXCEEDS_LIMIT: 'File size exceeds the limit of 3MB',
+    SIZE_EXCEEDS_LIMIT: 'File size must be less than 1MB',
     NO_2D_CONTEXT: 'No 2d context',
     CANVAS_EMPTY: 'Canvas is empty',
     MAX_NUMBER_EXCEEDED: 'Maximum number of files exceeded',

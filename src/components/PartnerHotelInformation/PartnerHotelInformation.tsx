@@ -20,13 +20,10 @@ import { HOTEL_TYPE_LIST } from '@/constants';
 import React from 'react';
 import { usePartnerHotelInformation } from './usePartnerHotelInformation';
 import { Textarea } from '@/components/ui/textarea';
-import { useMultipleUploading } from '@/components/MultipleUploading/useMultipleUploading';
 
 const PartnerHotelInformation = () => {
-  const uploader = useMultipleUploading({ maxNumber: 3 });
-  const { uploadAllImages } = uploader;
-  const { form, isLoadingPartner, handleCreateHotel, isLoading } =
-    usePartnerHotelInformation({ uploadAllImages });
+  const { form, isLoadingPartner, handleCreateHotel, isLoading, uploader } =
+    usePartnerHotelInformation();
 
   if (isLoadingPartner) return <Loading />;
 
@@ -122,7 +119,6 @@ const PartnerHotelInformation = () => {
                   placeholder="Upload hotel images"
                   required
                   maxNumber={3}
-                  maxFileSize={3}
                   uploader={uploader}
                   className="h-40"
                 />

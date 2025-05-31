@@ -1,6 +1,5 @@
 'use client';
 import { TMultipleUploadingProps } from '@/components/MultipleUploading/type';
-import { useMultipleUploading } from '@/components/MultipleUploading/useMultipleUploading';
 import { RequiredField } from '@/components/RequiredField';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -15,20 +14,14 @@ const MultipleUploading: FC<TMultipleUploadingProps> = ({
   label,
   required,
   description,
-  maxNumber,
-  maxFileSize,
+  maxFileSize = 1,
   initialImages = [],
   uploader,
   className = '',
   isButton = true,
+  maxNumber,
 }) => {
-  // Always create an internal uploader to satisfy hook rules
-  const internalUploader = useMultipleUploading({ initialImages, maxNumber });
-
-  // Decide which uploader to use in the UI
-  const usedUploader = uploader ?? internalUploader;
-  const { images, onImageChange, error, setImages } = usedUploader as any;
-
+  const { images, onImageChange, error, setImages } = uploader;
   // If external uploader starts empty but we have initialImages, hydrate it once
   useEffect(() => {
     if (initialImages.length && images.length === 0) {
@@ -129,7 +122,7 @@ const MultipleUploading: FC<TMultipleUploadingProps> = ({
                 )}
 
                 {/* Show add more button if less than max images */}
-                {imageList.length < maxNumber && (
+                {imageList.length < (maxNumber ?? 0) && (
                   <div
                     className="flex flex-col items-center justify-center h-32 border-2 border-dashed rounded-lg cursor-pointer hover:border-primary/50"
                     onClick={onImageUpload}

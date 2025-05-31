@@ -5,24 +5,19 @@ import {
   UpdateHotelBodySchema,
   UpdateHotelBodyType,
 } from '@/models/hotel.model';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { HOTEL_STATUS, HOTEL_TYPE, SUCCESS_MESSAGES } from '@/constants';
 import { useUpdateHotelMutation } from '@/queries';
 import { handleErrorApi } from '@/lib/helper';
 import { showToast } from '@/lib/toast';
+import { useMultipleUploading } from '@/components/MultipleUploading/useMultipleUploading';
 
-type TUsePartnerHotelPageProps = {
-  uploadAllImages: (minNumber?: number) => Promise<string[] | undefined>;
-};
-
-export const usePartnerHotelPage = ({
-  uploadAllImages,
-}: TUsePartnerHotelPageProps) => {
+export const usePartnerHotelPage = () => {
   const { partnerProfile } = useAppContext();
+  const uploader = useMultipleUploading(3);
   const hotel = partnerProfile?.hotel;
-  const { mutateAsync, isPending: isSubmitting } = useUpdateHotelMutation(
-    hotel?.id || '',
-  );
+  const { mutateAsync } = useUpdateHotelMutation(hotel?.id || '');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const form = useForm({
     resolver: zodResolver(UpdateHotelBodySchema),
     defaultValues: {
@@ -60,8 +55,9 @@ export const usePartnerHotelPage = ({
   }, [hotel, form]);
 
   const handleUpdateHotel = async (values: UpdateHotelBodyType) => {
+    setIsSubmitting(true);
     try {
-      const imageUrls = await uploadAllImages();
+      const imageUrls = await uploader.uploadAllImages();
       if (imageUrls) {
         // Then create hotel with the image URLs
         console.log('imageUrls', imageUrls);
@@ -82,6 +78,8 @@ export const usePartnerHotelPage = ({
       }
     } catch (error) {
       handleErrorApi({ error, setError: form.setError });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -90,5 +88,6 @@ export const usePartnerHotelPage = ({
     hotel,
     handleUpdateHotel,
     isSubmitting,
+    uploader,
   };
 };

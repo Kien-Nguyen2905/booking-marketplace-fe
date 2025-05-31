@@ -18,14 +18,10 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { usePartnerHotelPage } from './hooks/usePartnerHotelPage';
-import { useMultipleUploading } from '@/components/MultipleUploading/useMultipleUploading';
 
 const PartnerHotelPage = () => {
-  const uploader = useMultipleUploading();
-  const uploadAtLeastThree = () => uploader.uploadAllImages(3);
-  const { form, hotel, handleUpdateHotel, isSubmitting } = usePartnerHotelPage({
-    uploadAllImages: uploadAtLeastThree,
-  });
+  const { form, hotel, handleUpdateHotel, isSubmitting, uploader } =
+    usePartnerHotelPage();
   if (!hotel) {
     return <Loading />;
   }
@@ -55,7 +51,6 @@ const PartnerHotelPage = () => {
           <div className="h-max">
             <MultipleUploading
               maxNumber={10}
-              maxFileSize={3}
               className="h-max"
               uploader={uploader}
               isButton={false}

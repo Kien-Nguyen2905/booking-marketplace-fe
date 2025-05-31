@@ -4,6 +4,8 @@ export type TUploader = {
   images: ImageListType;
   onImageChange: (imageList: ImageListType) => void;
   error?: string | undefined;
+  setImages?: (images: ImageListType) => void;
+  maxNumber?: number;
 };
 
 export type TMultipleUploadingProps = {
@@ -12,9 +14,9 @@ export type TMultipleUploadingProps = {
   placeholder?: string;
   required?: boolean;
   maxNumber: number;
-  maxFileSize: number;
+  maxFileSize?: number;
   initialImages?: TItemExist[] | [];
-  uploader?: TUploader;
+  uploader: TUploader;
   className?: string;
   isButton?: boolean;
 };
@@ -25,6 +27,5 @@ export type TItemExist = {
   file: File | null;
 };
 export type TUseMultipleUploading = {
-  initialImages?: TItemExist[] | [];
   maxNumber?: number;
 };
