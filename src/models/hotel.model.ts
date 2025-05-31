@@ -119,6 +119,25 @@ export const UpdateHotelBodySchema = HotelSchema.omit({
   });
 export const UpdateHotelResSchema = HotelSchema;
 
+export const HotelAmenitySchema = z.object({
+  id: z.number(),
+  hotelId: z.number(),
+  amenityId: z.number(),
+});
+
+export const GetHotelAmenitiesResSchema = z.array(HotelAmenitySchema);
+
+export const UpdateHotelAmenitiesBodySchema = HotelAmenitySchema.omit({
+  id: true,
+  amenityId: true,
+})
+  .extend({
+    amenities: z.array(z.number()),
+  })
+  .strict();
+
+export const UpdateHotelAmenitiesResSchema = GetHotelAmenitiesResSchema;
+
 export type GetHotelsQueryType = z.infer<typeof GetHotelsQuerySchema>;
 export type GetHotelsResType = z.infer<typeof GetHotelsResSchema>;
 export type CreateHotelBodyType = z.infer<typeof CreateHotelBodySchema>;
@@ -126,3 +145,13 @@ export type CreateHotelResType = z.infer<typeof CreateHotelResSchema>;
 export type GetHotelResType = z.infer<typeof GetHotelResSchema>;
 export type UpdateHotelBodyType = z.infer<typeof UpdateHotelBodySchema>;
 export type UpdateHotelResType = z.infer<typeof UpdateHotelResSchema>;
+export type HotelAmenityType = z.infer<typeof HotelAmenitySchema>;
+export type GetHotelAmenitiesResType = z.infer<
+  typeof GetHotelAmenitiesResSchema
+>;
+export type UpdateHotelAmenitiesBodyType = z.infer<
+  typeof UpdateHotelAmenitiesBodySchema
+>;
+export type UpdateHotelAmenitiesResType = z.infer<
+  typeof UpdateHotelAmenitiesResSchema
+>;

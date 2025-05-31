@@ -10,6 +10,7 @@ import {
   Handshake,
   Heart,
   Hotel,
+  List,
   LogOut,
   PanelsTopLeft,
   Percent,
@@ -106,6 +107,11 @@ export const MANAGEMENT_NAV_LINKS: Dashboard = {
       href: ROUTES.PARTNER.HOTEL,
       name: 'Hotel',
       icon: Hotel,
+    },
+    AMENITIES: {
+      href: ROUTES.PARTNER.AMENITIES,
+      name: 'Amenities',
+      icon: List,
     },
     ROOMS: {
       href: ROUTES.PARTNER.ROOMS,

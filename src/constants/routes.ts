@@ -27,6 +27,7 @@ export const ROUTES = {
     DASHBOARD: '/partner',
     PROFILE: '/partner/profile',
     HOTEL: '/partner/hotel',
+    AMENITIES: '/partner/amenities',
     ROOMS: '/partner/rooms',
     ORDERS: '/partner/orders',
   },

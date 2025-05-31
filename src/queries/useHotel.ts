@@ -1,6 +1,9 @@
-import { UpdateHotelBodyType } from '@/models/hotel.model';
+import {
+  UpdateHotelAmenitiesBodyType,
+  UpdateHotelBodyType,
+} from '@/models/hotel.model';
 import hotelServices from '@/services/hotel/hotelServices';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const useGetHotelsQuery = (queryString = '') => {
   return useQuery({
@@ -27,5 +30,26 @@ export const useUpdateHotelMutation = (id: string | number) => {
   return useMutation({
     mutationFn: (body: UpdateHotelBodyType) =>
       hotelServices.updateHotel(id, body),
+  });
+};
+
+export const useGetHotelAmenitiesQuery = (id: string | number) => {
+  return useQuery({
+    queryKey: ['hotel-amenities', id],
+    queryFn: () => hotelServices.getHotelAmenities(id),
+    enabled: !!id,
+  });
+};
+
+export const useUpdateHotelAmenitiesMutation = (id: string | number) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (body: UpdateHotelAmenitiesBodyType) =>
+      hotelServices.updateHotelAmenities(id, body),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['hotel-amenities', id],
+      });
+    },
   });
 };

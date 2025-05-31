@@ -1,0 +1,1 @@
+export { usePartnerAmenitiesPage } from './usePartnerAmenitiesPage';

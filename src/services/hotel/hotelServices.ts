@@ -5,9 +5,12 @@ import {
   CreateHotelResType,
   GetHotelResType,
   GetHotelsResType,
+  UpdateHotelAmenitiesBodyType,
+  UpdateHotelAmenitiesResType,
   UpdateHotelBodyType,
   UpdateHotelResType,
 } from '@/models/hotel.model';
+import { GetAmenitiesResType } from '@/models/amenity.mode';
 
 const hotelServices = {
   getHotels: (queryString: string = '') => {
@@ -27,6 +30,22 @@ const hotelServices = {
   updateHotel: (id: string | number, body: UpdateHotelBodyType) => {
     return instance.put<SuccessResponse<UpdateHotelResType>>(
       `/hotels/${id}`,
+      body,
+    );
+  },
+
+  getHotelAmenities: (hotelId: string | number) => {
+    return instance.get<SuccessResponse<GetAmenitiesResType>>(
+      `/hotels/amenities/${hotelId}`,
+    );
+  },
+
+  updateHotelAmenities: (
+    hotelId: string | number,
+    body: UpdateHotelAmenitiesBodyType,
+  ) => {
+    return instance.put<SuccessResponse<UpdateHotelAmenitiesResType>>(
+      `/hotels/amenities/${hotelId}`,
       body,
     );
   },

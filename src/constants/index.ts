@@ -9,3 +9,4 @@ export * from './success';
 export * from './other';
 export * from './hotel';
 export * from './partner';
+export * from './amenity';
