@@ -4,6 +4,7 @@ import {
   HOTEL_STATUS,
   HOTEL_TYPE,
 } from '@/constants';
+import { AmenitySchema } from '@/models/amenity.mode';
 import { z } from 'zod';
 export const HotelSchema = z.object({
   id: z.number(),
@@ -125,13 +126,17 @@ export const HotelAmenitySchema = z.object({
   amenityId: z.number(),
 });
 
-export const GetHotelAmenitiesResSchema = z.array(HotelAmenitySchema);
+export const GetHotelAmenitiesResSchema = z.array(AmenitySchema);
 
-export const UpdateHotelAmenitiesBodySchema = HotelAmenitySchema.omit({
-  id: true,
-  amenityId: true,
-})
-  .extend({
+export const CreateHotelAmenitiesBodySchema = z
+  .object({
+    amenities: z.array(z.number()),
+    hotelId: z.number(),
+  })
+  .strict();
+
+export const UpdateHotelAmenitiesBodySchema = z
+  .object({
     amenities: z.array(z.number()),
   })
   .strict();
@@ -147,6 +152,12 @@ export type UpdateHotelBodyType = z.infer<typeof UpdateHotelBodySchema>;
 export type UpdateHotelResType = z.infer<typeof UpdateHotelResSchema>;
 export type HotelAmenityType = z.infer<typeof HotelAmenitySchema>;
 export type GetHotelAmenitiesResType = z.infer<
+  typeof GetHotelAmenitiesResSchema
+>;
+export type CreateHotelAmenitiesBodyType = z.infer<
+  typeof CreateHotelAmenitiesBodySchema
+>;
+export type CreateHotelAmenitiesResType = z.infer<
   typeof GetHotelAmenitiesResSchema
 >;
 export type UpdateHotelAmenitiesBodyType = z.infer<

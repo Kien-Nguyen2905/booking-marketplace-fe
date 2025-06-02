@@ -19,7 +19,6 @@ export const useGetHotelByIdQuery = (id: string | number) => {
     enabled: !!id,
   });
 };
-
 export const useCreateHotelMutation = () => {
   return useMutation({
     mutationFn: hotelServices.createHotel,
@@ -46,6 +45,18 @@ export const useUpdateHotelAmenitiesMutation = (id: string | number) => {
   return useMutation({
     mutationFn: (body: UpdateHotelAmenitiesBodyType) =>
       hotelServices.updateHotelAmenities(id, body),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['hotel-amenities', id],
+      });
+    },
+  });
+};
+
+export const useCreateHotelAmenitiesMutation = (id: string | number) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: hotelServices.createHotelAmenities,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['hotel-amenities', id],

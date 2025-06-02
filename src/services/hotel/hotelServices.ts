@@ -1,12 +1,14 @@
 import { instance } from '@/services/interceptor';
 import { SuccessResponse } from '@/services/type';
 import {
+  UpdateHotelAmenitiesBodyType,
+  UpdateHotelAmenitiesResType,
+  CreateHotelAmenitiesBodyType,
+  CreateHotelAmenitiesResType,
   CreateHotelBodyType,
   CreateHotelResType,
   GetHotelResType,
   GetHotelsResType,
-  UpdateHotelAmenitiesBodyType,
-  UpdateHotelAmenitiesResType,
   UpdateHotelBodyType,
   UpdateHotelResType,
 } from '@/models/hotel.model';
@@ -46,6 +48,13 @@ const hotelServices = {
   ) => {
     return instance.put<SuccessResponse<UpdateHotelAmenitiesResType>>(
       `/hotels/amenities/${hotelId}`,
+      body,
+    );
+  },
+
+  createHotelAmenities: (body: CreateHotelAmenitiesBodyType) => {
+    return instance.post<SuccessResponse<CreateHotelAmenitiesResType>>(
+      `/hotels/amenities`,
       body,
     );
   },

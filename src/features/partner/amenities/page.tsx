@@ -15,8 +15,8 @@ const PartnerAmenitiesPage = () => {
     allAmenities,
     addAmenity,
     removeAmenity,
-    handleUpdateHotelAmenities,
-    isUpdating,
+    handleSubmit,
+    isSubmitting,
     open,
     setOpen,
     selectedType,
@@ -56,11 +56,11 @@ const PartnerAmenitiesPage = () => {
           </div>
           <div className="flex gap-2">
             <Button
-              onClick={handleUpdateHotelAmenities}
-              disabled={isUpdating}
+              onClick={() => handleSubmit()}
+              disabled={isSubmitting}
               className="w-[90px] h-9 relative"
             >
-              {isUpdating ? <LoadingButton /> : 'Update'}
+              {isSubmitting ? <LoadingButton /> : 'Save'}
             </Button>
           </div>
         </div>

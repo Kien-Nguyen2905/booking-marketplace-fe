@@ -5,6 +5,7 @@ export const SUCCESS_MESSAGES = {
   UPDATED: 'Updated successfully',
   CREATED: 'Created successfully',
   DELETED: 'Deleted successfully',
+  SAVED: 'Saved successfully',
 };
 export const SUCCESS_PROFILE_MESSAGES = {
   AVATAR_UPDATED_SUCCESS: 'Avatar updated successfully',

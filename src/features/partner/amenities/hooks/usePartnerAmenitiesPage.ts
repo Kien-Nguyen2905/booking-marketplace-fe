@@ -1,4 +1,5 @@
 import {
+  useCreateHotelAmenitiesMutation,
   useGetAmenitiesQuery,
   useGetHotelAmenitiesQuery,
   useUpdateHotelAmenitiesMutation,
@@ -22,15 +23,19 @@ export const usePartnerAmenitiesPage = () => {
   const { data } = useGetAmenitiesQuery();
 
   const { data: amenitiesData, isLoading } = useGetHotelAmenitiesQuery(hotelId);
+  const amenities = amenitiesData?.data?.data || [];
 
   const { mutateAsync: updateHotelAmenities, isPending: isUpdating } =
     useUpdateHotelAmenitiesMutation(hotelId);
+
+  const { mutateAsync: createHotelAmenities, isPending: isCreating } =
+    useCreateHotelAmenitiesMutation(hotelId);
 
   const allAmenities =
     data?.data.data.filter((item) => item.category !== 'ROOM') || [];
 
   const [hotelAmenities, setHotelAmenities] = useState<GetAmenityResType[]>(
-    amenitiesData?.data?.data || [],
+    amenities || [],
   );
 
   const [open, setOpen] = useState(false);
@@ -57,15 +62,13 @@ export const usePartnerAmenitiesPage = () => {
 
   const handleUpdateHotelAmenities = async () => {
     try {
-      const amenityIds = hotelAmenities.map((amenity) => amenity.id);
       const { data } = await updateHotelAmenities({
-        amenities: amenityIds,
-        hotelId,
+        amenities: hotelAmenities.map((amenity) => amenity.id),
       });
-      if (data.data) {
+      if (data?.data) {
         showToast({
           type: 'success',
-          message: SUCCESS_MESSAGES.UPDATED,
+          message: SUCCESS_MESSAGES.SAVED,
         });
       }
     } catch (error) {
@@ -73,7 +76,24 @@ export const usePartnerAmenitiesPage = () => {
     }
   };
 
-  // Filter available amenities based on selected type
+  const handleAddAmenity = async () => {
+    try {
+      if (amenities.length > 0) return;
+      const { data } = await createHotelAmenities({
+        amenities: hotelAmenities.map((amenity) => amenity.id),
+        hotelId,
+      });
+      if (data?.data) {
+        showToast({
+          type: 'success',
+          message: SUCCESS_MESSAGES.SAVED,
+        });
+      }
+    } catch (error) {
+      handleErrorApi({ error });
+    }
+  };
+
   const filteredAvailableAmenities = getAvailableAmenities().filter(
     (amenity) => {
       if (selectedType === 'ALL') return true;
@@ -90,14 +110,17 @@ export const usePartnerAmenitiesPage = () => {
     return () => clearTimeout(timer);
   }, [amenitiesData]);
 
+  const handleSubmit = () =>
+    amenities?.length > 0 ? handleUpdateHotelAmenities() : handleAddAmenity();
+
   return {
     allAmenities,
     hotelAmenities,
     availableAmenities: getAvailableAmenities(),
     addAmenity,
     removeAmenity,
-    handleUpdateHotelAmenities,
-    isUpdating,
+    handleSubmit,
+    isSubmitting: isUpdating || isCreating,
     open,
     setOpen,
     selectedType,
