@@ -7,3 +7,4 @@ export * from './usePartner';
 export * from './useAddress';
 export * from './useHotel';
 export * from './useAmenity';
+export * from './useRoomType';

@@ -10,3 +10,4 @@ export * from './other';
 export * from './hotel';
 export * from './partner';
 export * from './amenity';
+export * from './room';

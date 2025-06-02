@@ -134,3 +134,31 @@ export const ERROR_HOTEL_MESSAGES = {
     required: 'Type is required',
   },
 };
+
+export const ERROR_ROOM_TYPE_MESSAGES = {
+  type: {
+    required: 'Type is required',
+    maxLength: 'Type must not exceed 100 characters',
+  },
+  adults: {
+    required: 'Adults is required',
+    min: 'Adults must be a than 0 number',
+  },
+  child: {
+    required: 'Child is required',
+    min: 'Child must be a than 0 number',
+  },
+  area: {
+    required: 'Area is required',
+    min: 'Area must be a than 10',
+  },
+  description: {
+    required: 'Description is required',
+    maxLength: 'Description must not exceed 255 characters',
+  },
+  serviceFeeRate: {
+    required: 'Service fee rate is required',
+    min: 'Service fee rate must be a than 0 number',
+    max: 'Service fee rate must not exceed 100 percent',
+  },
+};

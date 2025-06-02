@@ -28,6 +28,8 @@ export const ROUTES = {
     PROFILE: '/partner/profile',
     HOTEL: '/partner/hotel',
     AMENITIES: '/partner/amenities',
+    ROOM_TYPES: '/partner/room-types',
+    ROOM_TYPES_CREATE: '/partner/room-types/create',
     ROOMS: '/partner/rooms',
     ORDERS: '/partner/orders',
   },

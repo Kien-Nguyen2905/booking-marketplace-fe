@@ -26,7 +26,8 @@ export const usePartnerAmenitiesPage = () => {
   const { mutateAsync: updateHotelAmenities, isPending: isUpdating } =
     useUpdateHotelAmenitiesMutation(hotelId);
 
-  const allAmenities = data?.data.data || [];
+  const allAmenities =
+    data?.data.data.filter((item) => item.category !== 'ROOM') || [];
 
   const [hotelAmenities, setHotelAmenities] = useState<GetAmenityResType[]>(
     amenitiesData?.data?.data || [],

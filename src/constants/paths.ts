@@ -11,6 +11,7 @@ import {
   Heart,
   Hotel,
   List,
+  ListEnd,
   LogOut,
   PanelsTopLeft,
   Percent,
@@ -112,6 +113,11 @@ export const MANAGEMENT_NAV_LINKS: Dashboard = {
       href: ROUTES.PARTNER.AMENITIES,
       name: 'Amenities',
       icon: List,
+    },
+    ROOM_TYPES: {
+      href: ROUTES.PARTNER.ROOM_TYPES,
+      name: 'Room Types',
+      icon: ListEnd,
     },
     ROOMS: {
       href: ROUTES.PARTNER.ROOMS,

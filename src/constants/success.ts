@@ -3,6 +3,8 @@ export const SUCCESS_MESSAGES = {
   ACCEPTED: 'Accepted successfully',
   REJECTED: 'Rejected successfully',
   UPDATED: 'Updated successfully',
+  CREATED: 'Created successfully',
+  DELETED: 'Deleted successfully',
 };
 export const SUCCESS_PROFILE_MESSAGES = {
   AVATAR_UPDATED_SUCCESS: 'Avatar updated successfully',

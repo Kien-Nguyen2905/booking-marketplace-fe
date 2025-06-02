@@ -20,6 +20,7 @@ const MultipleUploading: FC<TMultipleUploadingProps> = ({
   className = '',
   isButton = true,
   maxNumber,
+  classNamePreview = '',
 }) => {
   const { images, onImageChange, error, setImages } = uploader;
   // If external uploader starts empty but we have initialImages, hydrate it once
@@ -36,7 +37,7 @@ const MultipleUploading: FC<TMultipleUploadingProps> = ({
   }, [initialImages, images.length, setImages]);
 
   return (
-    <div>
+    <div className="space-y-1">
       <Label className={`${error && 'text-destructive'}`}>
         {label} <RequiredField required={required} />
         {description && (
@@ -77,7 +78,9 @@ const MultipleUploading: FC<TMultipleUploadingProps> = ({
           <div className={`${className} space-y-4`}>
             {/* Image previews */}
             {imageList.length > 0 ? (
-              <div className="grid pt-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+              <div
+                className={`${classNamePreview} grid pt-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4`}
+              >
                 {imageList.map(
                   (image: ImageListType[number], index: number) => (
                     <div

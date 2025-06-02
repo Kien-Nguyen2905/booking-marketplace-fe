@@ -19,6 +19,7 @@ export type TMultipleUploadingProps = {
   uploader: TUploader;
   className?: string;
   isButton?: boolean;
+  classNamePreview?: string;
 };
 
 export type TItemExist = {
