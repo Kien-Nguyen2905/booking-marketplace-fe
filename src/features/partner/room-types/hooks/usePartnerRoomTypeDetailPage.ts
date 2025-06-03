@@ -46,7 +46,7 @@ export const usePartnerRoomTypeDetailPage = () => {
     amenitiesData?.data.data.filter((item) => item.category === 'ROOM') || [];
 
   const [amenities, setAmenities] = useState<GetAmenityResType[]>(
-    roomType?.roomTypeAmenity || [],
+    roomType?.amenities || [],
   );
   const [openAmenity, setOpenAmenity] = useState(false);
   const [openRoom, setOpenRoom] = useState(false);
@@ -245,7 +245,7 @@ export const usePartnerRoomTypeDetailPage = () => {
           description: roomType?.description || '',
           images: roomType?.images || [],
         });
-        setAmenities(roomType?.roomTypeAmenity || []);
+        setAmenities(roomType?.amenities || []);
         setRoomBeds(
           roomType?.roomBed?.map((item) => ({
             roomBedType: item.roomBedType,

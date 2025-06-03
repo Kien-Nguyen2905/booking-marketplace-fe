@@ -1,5 +1,6 @@
 import { ERROR_ROOM_TYPE_MESSAGES, ROOM_BED_TYPE } from '@/constants';
 import { AmenitySchema } from '@/models/amenity.mode';
+import { RoomSchema } from '@/models/room.model';
 import { z } from 'zod';
 
 export const RoomTypeSchema = z.object({
@@ -25,7 +26,6 @@ export const RoomTypeSchema = z.object({
     .max(100, { message: ERROR_ROOM_TYPE_MESSAGES.serviceFeeRate.max }),
   description: z
     .string()
-    .max(255, { message: ERROR_ROOM_TYPE_MESSAGES.description.maxLength })
     .nonempty({ message: ERROR_ROOM_TYPE_MESSAGES.description.required }),
   images: z.array(z.string()),
   createdAt: z.date().nullable(),
@@ -59,10 +59,22 @@ export type RoomBedType = z.infer<typeof RoomBedSchema>;
 
 export const GetRoomTypeByIdResSchema = RoomTypeSchema.extend({
   roomBed: z.array(RoomBedSchema),
-  roomTypeAmenity: z.array(AmenitySchema),
-}).strict();
+  amenities: z.array(AmenitySchema),
+});
 
-export const GetRoomTypeByHotelIdResSchema = z.array(RoomTypeSchema);
+export const GetRoomTypeByHotelIdResSchema = z.array(
+  RoomTypeSchema.extend({
+    roomBed: z.array(RoomBedSchema),
+    amenities: z.array(AmenitySchema),
+    room: z.array(RoomSchema),
+  }),
+);
+
+export const RoomTypeByHotelIdSchema = RoomTypeSchema.extend({
+  roomBed: z.array(RoomBedSchema),
+  roomTypeAmenity: z.array(AmenitySchema),
+  room: z.array(RoomSchema),
+});
 
 export const CreateRoomTypeBodySchema = RoomTypeSchema.omit({
   id: true,
@@ -131,6 +143,8 @@ export type GetRoomTypeByIdResType = z.infer<typeof GetRoomTypeByIdResSchema>;
 export type GetRoomTypeByHotelIdResType = z.infer<
   typeof GetRoomTypeByHotelIdResSchema
 >;
+
+export type RoomTypeByHotelIdType = z.infer<typeof RoomTypeByHotelIdSchema>;
 
 export type CreateRoomTypeBodyType = z.infer<typeof CreateRoomTypeBodySchema>;
 export type CreateRoomTypeResType = z.infer<typeof CreateRoomTypeResSchema>;

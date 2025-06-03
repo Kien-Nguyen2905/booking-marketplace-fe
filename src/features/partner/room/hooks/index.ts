@@ -1,0 +1,1 @@
+export { usePartnerRoom } from './usePartnerRoom';

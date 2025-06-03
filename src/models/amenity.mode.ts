@@ -10,6 +10,7 @@ export const AmenitySchema = z.object({
   ]),
   createdAt: z.date().nullable(),
 });
+export type AmenityType = z.infer<typeof AmenitySchema>;
 
 export const GetAmenitiesResSchema = z.array(AmenitySchema);
 

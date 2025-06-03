@@ -162,3 +162,19 @@ export const ERROR_ROOM_TYPE_MESSAGES = {
     max: 'Service fee rate must not exceed 100 percent',
   },
 };
+
+export const ERROR_ROOM_MESSAGES = {
+  price: {
+    min: 'Price must be a than 0',
+    invalidNumber: 'Invalid price',
+  },
+  quantity: {
+    min: 'Quantity must be a than 0',
+    invalidNumber: 'Invalid quantity',
+  },
+  rangeLimitDate: {
+    invalidNumber: 'Invalid range limit date',
+    max: 'Range limit date must not exceed 7 days',
+    min: 'Range limit date must be a than 0',
+  },
+};

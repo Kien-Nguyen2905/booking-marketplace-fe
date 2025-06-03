@@ -19,3 +19,5 @@ export { RequiredField } from './RequiredField';
 export { MultipleUploading } from './MultipleUploading';
 export { ButtonBack } from './ButtonBack';
 export { ConfirmDialog } from './ConfirmDialog';
+export { RoomDetailModal } from './RoomDetailModal';
+export { RoomCarousel } from './RoomCarousel';

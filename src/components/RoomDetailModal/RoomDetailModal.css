@@ -1,0 +1,74 @@
+.swiper-hotel-room-card {
+  .swiper-button-next {
+    color: white !important;
+    padding: 20px !important;
+  }
+  .swiper-button-next:after {
+    font-size: 22px !important;
+  }
+  .swiper-button-prev {
+    color: white !important;
+    padding: 20px !important;
+  }
+  .swiper-button-prev:after {
+    font-size: 22px !important;
+  }
+  .swiper-pagination-bullet.swiper-pagination-bullet-active {
+    background-color: var(--blue-primary) !important;
+  }
+  .swiper-pagination-bullet {
+    background-color: white !important;
+    opacity: 1 !important;
+    transition: opacity 0.3s ease-in-out !important;
+  }
+}
+
+/* Thumbnail Swiper Styles */
+.thumbnails-swiper {
+  padding: 5px 0;
+}
+
+.thumbnails-swiper .swiper-slide {
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.thumbnails-swiper .swiper-slide-thumb-active {
+  opacity: 1;
+  position: relative;
+}
+
+.thumbnails-swiper .swiper-slide-thumb-active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid var(--blue-primary);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+/* Custom Scrollbar for Description */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 2px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}

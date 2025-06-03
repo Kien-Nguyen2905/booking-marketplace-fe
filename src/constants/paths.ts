@@ -7,11 +7,11 @@ import {
   Calendar,
   CalendarFold,
   DollarSign,
+  Grid2x2Plus,
   Handshake,
   Heart,
   Hotel,
-  List,
-  ListEnd,
+  ListPlus,
   LogOut,
   PanelsTopLeft,
   Percent,
@@ -112,12 +112,12 @@ export const MANAGEMENT_NAV_LINKS: Dashboard = {
     AMENITIES: {
       href: ROUTES.PARTNER.AMENITIES,
       name: 'Amenities',
-      icon: List,
+      icon: Grid2x2Plus,
     },
     ROOM_TYPES: {
       href: ROUTES.PARTNER.ROOM_TYPES,
       name: 'Room Types',
-      icon: ListEnd,
+      icon: ListPlus,
     },
     ROOMS: {
       href: ROUTES.PARTNER.ROOMS,

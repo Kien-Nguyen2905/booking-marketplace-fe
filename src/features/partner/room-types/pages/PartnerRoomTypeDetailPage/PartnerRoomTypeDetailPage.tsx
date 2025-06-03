@@ -165,7 +165,6 @@ const PartnerRoomTypeDetailPage = () => {
                         <Textarea
                           onChange={field.onChange}
                           value={field.value}
-                          className="h-24"
                           {...props}
                         />
                       </FormControl>

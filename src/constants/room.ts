@@ -13,3 +13,16 @@ export const ROOM_BED_TYPE_LIST = Object.values(ROOM_BED_TYPE).map((value) => ({
   value: value,
   label: value.toLowerCase(),
 }));
+
+export const POLICY_TYPE = {
+  NON_REFUNDABLE: 'NON_REFUNDABLE',
+  FREE_CANCELLATION: 'FREE_CANCELLATION',
+  PAY_AT_HOTEL: 'PAY_AT_HOTEL',
+} as const;
+
+export type PolicyType = (typeof POLICY_TYPE)[keyof typeof POLICY_TYPE];
+
+export const POLICY_TYPE_LIST = Object.values(POLICY_TYPE).map((value) => ({
+  value: value,
+  label: value.toLowerCase(),
+}));

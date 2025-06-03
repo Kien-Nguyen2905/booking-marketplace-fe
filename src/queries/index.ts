@@ -8,3 +8,4 @@ export * from './useAddress';
 export * from './useHotel';
 export * from './useAmenity';
 export * from './useRoomType';
+export * from './useRoom';
