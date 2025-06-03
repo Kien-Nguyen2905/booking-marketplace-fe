@@ -111,7 +111,7 @@ const PartnerRoomPage = () => {
                                 </Badge>
                               )}
                             </div>
-                            {item.rangeLimitDate && item.rangeLimitDate > 0 && (
+                            {(item?.rangeLimitDate || 0) > 0 && (
                               <span className="text-xs text-gray-500 mt-1">
                                 Limit range booking: {item.rangeLimitDate} days
                               </span>

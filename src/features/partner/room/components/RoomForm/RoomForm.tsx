@@ -46,6 +46,7 @@ const RoomForm = ({
                 required
                 type="number"
                 label="Quantity"
+                min={1}
               />
               <RHFInput
                 form={form}
@@ -53,6 +54,7 @@ const RoomForm = ({
                 required
                 type="number"
                 label="Price"
+                min={1}
               />
               <RHFSelection
                 form={form}
@@ -70,6 +72,7 @@ const RoomForm = ({
                   name="rangeLimitDate"
                   type="number"
                   label="Range Limit Date"
+                  min={0}
                 />
               )}
               <RHFInput

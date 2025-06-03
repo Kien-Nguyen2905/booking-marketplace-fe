@@ -7,8 +7,8 @@ import {
 import { AmenitySchema } from '@/models/amenity.mode';
 import { z } from 'zod';
 export const HotelSchema = z.object({
-  id: z.number(),
-  partnerId: z.number(),
+  id: z.number().int().positive(),
+  partnerId: z.number().int().positive(),
   name: z
     .string()
     .max(255, { message: ERROR_HOTEL_MESSAGES.name.maxLength })
@@ -23,7 +23,7 @@ export const HotelSchema = z.object({
       HOTEL_TYPE.HOSTEL,
       HOTEL_TYPE.APARTMENT,
       HOTEL_TYPE.GUESTHOUSE,
-      HOTEL_TYPE.HOMESTAY,
+      HOTEL_TYPE.HOME_STAY,
       HOTEL_TYPE.VILLA,
       HOTEL_TYPE.RESORT,
     ],
@@ -31,7 +31,7 @@ export const HotelSchema = z.object({
       message: ERROR_HOTEL_MESSAGES.type.required,
     },
   ),
-  reputationScore: z.number().default(100),
+  reputationScore: z.number().int().default(100),
   rating: z.number().default(0),
   vat: z
     .number({ message: ERROR_HOTEL_MESSAGES.vat.required })
@@ -40,13 +40,19 @@ export const HotelSchema = z.object({
   address: z
     .string()
     .nonempty({ message: ERROR_PARTNER_MESSAGES.address.required }),
-  provinceCode: z.number({
-    message: ERROR_PARTNER_MESSAGES.provinceCode.required,
-  }),
-  districtCode: z.number({
-    message: ERROR_PARTNER_MESSAGES.districtCode.required,
-  }),
-  wardCode: z.number({ message: ERROR_PARTNER_MESSAGES.wardCode.required }),
+  provinceCode: z
+    .number({
+      message: ERROR_PARTNER_MESSAGES.provinceCode.required,
+    })
+    .int({ message: ERROR_PARTNER_MESSAGES.provinceCode.invalidNumber }),
+  districtCode: z
+    .number({
+      message: ERROR_PARTNER_MESSAGES.districtCode.required,
+    })
+    .int({ message: ERROR_PARTNER_MESSAGES.districtCode.invalidNumber }),
+  wardCode: z
+    .number({ message: ERROR_PARTNER_MESSAGES.wardCode.required })
+    .int({ message: ERROR_PARTNER_MESSAGES.wardCode.invalidNumber }),
   description: z
     .string()
     .nonempty({ message: ERROR_HOTEL_MESSAGES.description.required }),

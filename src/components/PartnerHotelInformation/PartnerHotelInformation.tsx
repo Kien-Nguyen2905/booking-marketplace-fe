@@ -118,7 +118,7 @@ const PartnerHotelInformation = () => {
                   description="Upload at least 3 images"
                   placeholder="Upload hotel images"
                   required
-                  maxNumber={3}
+                  maxNumber={5}
                   uploader={uploader}
                   className="h-40"
                 />

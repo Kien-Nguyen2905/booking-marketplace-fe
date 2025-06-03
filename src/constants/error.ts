@@ -89,12 +89,15 @@ export const ERROR_PARTNER_MESSAGES = {
   },
   provinceCode: {
     required: 'Province code is required',
+    invalidNumber: 'Invalid province code',
   },
   districtCode: {
     required: 'District code is required',
+    invalidNumber: 'Invalid district code',
   },
   wardCode: {
     required: 'Ward code is required',
+    invalidNumber: 'Invalid ward code',
   },
   companyName: {
     maxLength: 'Company name must not exceed 255 characters',

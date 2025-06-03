@@ -3,8 +3,8 @@ import { HotelSchema } from '@/models/hotel.model';
 import { z } from 'zod';
 
 export const PartnerSchema = z.object({
-  id: z.number(),
-  userId: z.number(),
+  id: z.number().int().positive(),
+  userId: z.number().int().positive(),
   fullName: z
     .string({ required_error: ERROR_AUTH_MESSAGES.fullName.required })
     .nonempty({ message: ERROR_AUTH_MESSAGES.fullName.required })
