@@ -1,0 +1,32 @@
+import { useState } from 'react';
+import { POPULAR_ACCOMMODATION_LIST } from '@/constants';
+import { useGetHotelsByProvinceCodeQuery } from '@/queries/useHotel';
+import { useRef } from 'react';
+
+export const useRecommendedAccommodations = () => {
+  const [activeTab, setActiveTab] = useState<string>(
+    POPULAR_ACCOMMODATION_LIST[0]?.provinceCode || '',
+  );
+
+  const { data: hotelsData } = useGetHotelsByProvinceCodeQuery(activeTab);
+
+  const [isBeginning, setIsBeginning] = useState(true);
+  const [isEnd, setIsEnd] = useState(false);
+  const [_, setSwiper] = useState<any>(null);
+
+  const nextBtnRef = useRef<HTMLButtonElement>(null);
+  const prevBtnRef = useRef<HTMLButtonElement>(null);
+
+  return {
+    activeTab,
+    setActiveTab,
+    setIsBeginning,
+    isBeginning,
+    setIsEnd,
+    isEnd,
+    setSwiper,
+    hotelsData,
+    nextBtnRef,
+    prevBtnRef,
+  };
+};

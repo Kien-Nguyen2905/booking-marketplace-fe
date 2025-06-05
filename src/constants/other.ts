@@ -165,3 +165,11 @@ export const BANK_ACCOUNT = [
 ];
 
 export const LIMIT = '8';
+
+export const POPULAR_ACCOMMODATION_LIST = [
+  { provinceCode: '79', name: 'Hồ Chí Minh' },
+  { provinceCode: '77', name: 'Vũng Tàu' },
+  { provinceCode: '48', name: 'Đà Nẵng' },
+  { provinceCode: '1', name: 'Hà Nội' },
+  { provinceCode: '68', name: 'Đà Lạt' },
+];

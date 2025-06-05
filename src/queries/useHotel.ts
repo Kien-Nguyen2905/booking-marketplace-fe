@@ -64,3 +64,31 @@ export const useCreateHotelAmenitiesMutation = (id: string | number) => {
     },
   });
 };
+
+export const useGetHotelsByProvinceCodeQuery = (
+  provinceCode: string | number,
+) => {
+  return useQuery({
+    queryKey: ['hotels-by-province-code', provinceCode],
+    queryFn: () => hotelServices.getHotelsByProvinceCode(provinceCode),
+    enabled: !!provinceCode,
+  });
+};
+
+export const useGetQuantityHotelsByProvinceCodeQuery = (provinceCode: {
+  provinceCodes: number[];
+}) => {
+  return useQuery({
+    queryKey: ['quantity-hotels-by-province-code'],
+    queryFn: () => hotelServices.getQuantityHotelsByProvinceCode(provinceCode),
+    enabled: !!provinceCode,
+  });
+};
+
+export const useGetFindHotelsQuery = (queryString: string = '') => {
+  return useQuery({
+    queryKey: ['find-hotels', queryString],
+    queryFn: () => hotelServices.getFindHotels(queryString),
+    enabled: !!queryString,
+  });
+};

@@ -122,10 +122,10 @@ const PartnerCreateRoomTypesPage = () => {
               </div>
               <RHFInput
                 form={form}
-                label="Hotel Description"
+                label="Room Type Description"
                 name="description"
                 required
-                placeholder="Enter your hotel description"
+                placeholder="Enter your room type description"
                 renderProp={(props: any, field: any) => (
                   <div className="grid gap-1">
                     <FormLabel

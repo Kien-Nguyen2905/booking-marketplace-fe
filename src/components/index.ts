@@ -21,3 +21,6 @@ export { ButtonBack } from './ButtonBack';
 export { ConfirmDialog } from './ConfirmDialog';
 export { RoomDetailModal } from './RoomDetailModal';
 export { RoomCarousel } from './RoomCarousel';
+export { LocationSelector } from './LocationSelector';
+export { PeopleSelector } from './PeopleSelector';
+export { DatePickerWithRange } from './DatePickerWithRange';

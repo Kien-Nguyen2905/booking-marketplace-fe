@@ -11,6 +11,10 @@ import {
   GetHotelsResType,
   UpdateHotelBodyType,
   UpdateHotelResType,
+  GetHotelsByProvinceCodeResType,
+  GetQuantityHotelsByProvinceCodeBodyType,
+  GetQuantityHotelsByProvinceCodeResType,
+  GetFindHotelsResType,
 } from '@/models/hotel.model';
 import { GetAmenitiesResType } from '@/models/amenity.mode';
 
@@ -56,6 +60,26 @@ const hotelServices = {
     return instance.post<SuccessResponse<CreateHotelAmenitiesResType>>(
       `/hotels/amenities`,
       body,
+    );
+  },
+
+  getHotelsByProvinceCode: (provinceCode: string | number) => {
+    return instance.get<SuccessResponse<GetHotelsByProvinceCodeResType>>(
+      `/hotels/province/${provinceCode}`,
+    );
+  },
+
+  getQuantityHotelsByProvinceCode: (
+    body: GetQuantityHotelsByProvinceCodeBodyType,
+  ) => {
+    return instance.post<
+      SuccessResponse<GetQuantityHotelsByProvinceCodeResType>
+    >(`/hotels/province/count`, body);
+  },
+
+  getFindHotels: (queryString: string = '') => {
+    return instance.get<SuccessResponse<GetFindHotelsResType>>(
+      `/hotels/find-hotels${queryString ? `?${queryString}` : ''}`,
     );
   },
 };

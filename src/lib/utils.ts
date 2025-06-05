@@ -4,6 +4,8 @@ import { twMerge } from 'tailwind-merge';
 import jwt from 'jsonwebtoken';
 import { COOKIE_NAMES, LIMIT, LOCAL_STORAGE } from '@/constants';
 import Cookies from 'js-cookie';
+import { format } from 'date-fns';
+import { DateRange } from 'react-day-picker';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -110,3 +112,67 @@ export const getPartnerLocalStorage = () =>
 
 export const removePartnerLocalStorage = () =>
   localStorage.removeItem(LOCAL_STORAGE.IS_PENDING_PARTNER);
+
+export const formatCurrency = (
+  value: number,
+  currencyCode: string = 'VND',
+): string => {
+  if (!value && value !== 0) return '';
+
+  // Handle different currency formatting cases
+  switch (currencyCode) {
+    case 'VND': {
+      // Format VND without decimal places and with dot as thousands separator
+      return new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+        maximumFractionDigits: 0,
+      }).format(value);
+    }
+    case 'USD': {
+      // Format USD with 2 decimal places
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      }).format(value);
+    }
+    default: {
+      // Default formatting with the specified currency
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: currencyCode,
+      }).format(value);
+    }
+  }
+};
+
+// Format display strings
+export const formattedDateDisplay = (
+  selectedDateRange: DateRange | undefined,
+) => {
+  if (!selectedDateRange?.from) return 'Select dates';
+
+  if (!selectedDateRange.to) {
+    return format(selectedDateRange.from, 'dd MMM yyyy');
+  }
+
+  return `${format(selectedDateRange.from, 'dd MMM yyyy')} - ${format(
+    selectedDateRange.to,
+    'dd MMM yyyy',
+  )}`;
+};
+
+export const formattedPeopleDisplay = (
+  selectedPeople: {
+    id: string;
+    count: number;
+  }[],
+) => {
+  const adults = selectedPeople.find((p) => p.id === 'adults')?.count || 0;
+  const children = selectedPeople.find((p) => p.id === 'children')?.count || 0;
+  const rooms = selectedPeople.find((p) => p.id === 'rooms')?.count || 0;
+
+  return `${adults} ${adults === 1 ? 'adult' : 'adults'}${
+    children > 0 ? `, ${children} ${children === 1 ? 'child' : 'children'}` : ''
+  }, ${rooms} ${rooms === 1 ? 'room' : 'rooms'}`;
+};
