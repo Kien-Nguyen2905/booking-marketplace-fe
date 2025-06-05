@@ -2,9 +2,9 @@ import { AccessTokenPayload } from '@/types/jwt.type';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import jwt from 'jsonwebtoken';
-import { COOKIE_NAMES, LIMIT, LOCAL_STORAGE } from '@/constants';
+import { COOKIE_NAMES, LIMIT, LOCAL_STORAGE, ROUTES } from '@/constants';
 import Cookies from 'js-cookie';
-import { format } from 'date-fns';
+import { addDays, format } from 'date-fns';
 import { DateRange } from 'react-day-picker';
 
 export function cn(...inputs: ClassValue[]) {
@@ -146,7 +146,6 @@ export const formatCurrency = (
   }
 };
 
-// Format display strings
 export const formattedDateDisplay = (
   selectedDateRange: DateRange | undefined,
 ) => {
@@ -175,4 +174,39 @@ export const formattedPeopleDisplay = (
   return `${adults} ${adults === 1 ? 'adult' : 'adults'}${
     children > 0 ? `, ${children} ${children === 1 ? 'child' : 'children'}` : ''
   }, ${rooms} ${rooms === 1 ? 'room' : 'rooms'}`;
+};
+
+export const getHotelUrl = ({
+  hotelId,
+  provinceCode,
+  startDate = new Date(),
+  endDate = addDays(new Date(), 1),
+  adult = 1,
+  available = 1,
+}: {
+  hotelId?: string | number;
+  provinceCode?: string | number;
+  startDate?: Date;
+  endDate?: Date;
+  adult?: number;
+  available?: number;
+}) => {
+  // Base URL - either hotel listing or specific hotel
+  const baseUrl = hotelId ? `${ROUTES.HOTEL}/${hotelId}` : ROUTES.HOTEL;
+
+  // Build query parameters
+  const params = new URLSearchParams();
+
+  // Add dates and guest info
+  params.set('start', format(startDate, 'dd-MM-yyyy'));
+  params.set('end', format(endDate, 'dd-MM-yyyy'));
+  params.set('adult', adult.toString());
+  params.set('available', available.toString());
+
+  // Add province filter if provided
+  if (provinceCode) {
+    params.set('province', provinceCode.toString());
+  }
+
+  return `${baseUrl}?${params.toString()}`;
 };

@@ -1,0 +1,1 @@
+export { useHotelPage } from './useHotelPage';

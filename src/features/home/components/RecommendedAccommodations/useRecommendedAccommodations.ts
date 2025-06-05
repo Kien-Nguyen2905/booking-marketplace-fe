@@ -12,7 +12,8 @@ export const useRecommendedAccommodations = () => {
 
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
-  const [_, setSwiper] = useState<any>(null);
+  // @ts-ignore
+  const [_swiper, setSwiper] = useState<any>(null);
 
   const nextBtnRef = useRef<HTMLButtonElement>(null);
   const prevBtnRef = useRef<HTMLButtonElement>(null);

@@ -114,7 +114,7 @@ const PromoCodeSlider = () => {
             swiperInstance.params.navigation.nextEl = navigationNextRef.current;
             // @ts-ignore
             swiperInstance.params.pagination.el = paginationRef.current;
-            // Initialise modules with the new elements
+            // Initialize modules with the new elements
             swiperInstance.navigation.init();
             swiperInstance.navigation.update();
             swiperInstance.pagination.init();

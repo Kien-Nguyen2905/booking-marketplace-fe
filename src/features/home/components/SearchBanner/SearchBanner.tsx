@@ -4,9 +4,8 @@ import dynamic from 'next/dynamic';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { LocationSelector, PeopleSelector } from '@/components';
-import { Search, MapPin, Calendar, Users, X } from 'lucide-react';
+import { Search, MapPin, Calendar, Users, X, Loader2 } from 'lucide-react';
 import { useSearchBanner } from './useSearchBanner';
-import { TSearchBannerProps } from '@/features/home/components/SearchBanner/type';
 // Dynamically import DatePickerWithRange to avoid SSR issues
 const DatePickerWithRange = dynamic(
   () => import('@/components/DatePickerWithRange/DatePickerWithRange'),
@@ -15,7 +14,7 @@ const DatePickerWithRange = dynamic(
   },
 );
 
-const SearchBanner: React.FC<TSearchBannerProps> = ({ onSearch }) => {
+const SearchBanner = () => {
   const {
     activeSelector,
     selectedLocation,
@@ -35,7 +34,8 @@ const SearchBanner: React.FC<TSearchBannerProps> = ({ onSearch }) => {
     locationContainerRef,
     dateContainerRef,
     peopleContainerRef,
-  } = useSearchBanner(onSearch);
+    isLoading,
+  } = useSearchBanner();
 
   return (
     <div className="w-full relative h-[550px]">
@@ -181,9 +181,16 @@ const SearchBanner: React.FC<TSearchBannerProps> = ({ onSearch }) => {
             <Button
               className="w-[200px] absolute -bottom-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[60px] mx-auto bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-medium text-base shadow-md transition-all"
               onClick={handleSearch}
+              disabled={isLoading}
             >
-              <Search className="mr-2 h-4 w-4" />
-              SEARCH
+              {isLoading ? (
+                <Loader2 className="h-5 w-5 animate-spin" />
+              ) : (
+                <>
+                  <Search className="mr-2 h-4 w-4" />
+                  SEARCH
+                </>
+              )}
             </Button>
           </div>
         </div>

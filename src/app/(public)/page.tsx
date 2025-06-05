@@ -1,5 +1,7 @@
 import { HomePage } from '@/features';
 import { Metadata } from 'next';
+import { Suspense } from 'react';
+import { Loading } from '@/components';
 
 export const metadata: Metadata = {
   title: 'Booking',
@@ -8,5 +10,9 @@ export const metadata: Metadata = {
   },
 };
 export default function Page() {
-  return <HomePage />;
+  return (
+    <Suspense fallback={<Loading></Loading>}>
+      <HomePage />
+    </Suspense>
+  );
 }

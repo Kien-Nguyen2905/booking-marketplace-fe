@@ -4,3 +4,4 @@ export { HomePage } from './home';
 export { TwoFactorAuthPage } from './2fa';
 export { ResetPasswordPage } from './reset-password';
 export { ProfilePage } from './profile';
+export { HotelPage } from './hotel';

@@ -5,7 +5,8 @@ export const usePromoCodeSlider = () => {
   const [copiedCodeId, setCopiedCodeId] = useState<string | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
-  const [_, setSwiper] = useState<any>(null);
+  // @ts-ignore
+  const [_swiper, setSwiper] = useState<any>(null);
   const navigationPrevRef = useRef<HTMLButtonElement>(null);
   const navigationNextRef = useRef<HTMLButtonElement>(null);
   const paginationRef = useRef<HTMLDivElement>(null);

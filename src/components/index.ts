@@ -24,3 +24,5 @@ export { RoomCarousel } from './RoomCarousel';
 export { LocationSelector } from './LocationSelector';
 export { PeopleSelector } from './PeopleSelector';
 export { DatePickerWithRange } from './DatePickerWithRange';
+export { SearchHorizontalBar } from './SearchHorizontalBar';
+export { StartRating } from './StartRating';

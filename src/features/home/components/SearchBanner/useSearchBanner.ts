@@ -3,16 +3,24 @@ import { useState, useRef, useEffect } from 'react';
 import { DateRange } from 'react-day-picker';
 import { format } from 'date-fns';
 import { OptionType } from '@/components/PeopleSelector/type';
-import {
-  PEOPLE_SELECTOR_OPTIONS,
-  DEFAULT_PEOPLE_COUNT,
-} from '@/components/PeopleSelector/constants';
+import { PEOPLE_SELECTOR_OPTIONS, DEFAULT_PEOPLE_COUNT } from '@/constants';
 import queryString from 'query-string';
 import { formattedDateDisplay, formattedPeopleDisplay } from '@/lib/utils';
-import { useRouter } from 'next/navigation';
-import { LIMIT } from '@/constants';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { LIMIT, ROUTES } from '@/constants';
+import { useGetProvincesQuery } from '@/queries';
 
 export const useSearchBanner = () => {
+  const { data: provincesData } = useGetProvincesQuery();
+  const provinces =
+    provincesData?.data?.data?.map((province) => ({
+      id: province.code,
+      name: province.name,
+      code: province.code,
+    })) || [];
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+
   const router = useRouter();
   // Refs for positioning dropdowns
   const locationContainerRef = useRef<HTMLDivElement>(null);
@@ -35,6 +43,8 @@ export const useSearchBanner = () => {
         0,
     })),
   );
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLocationClick = () => {
     setActiveSelector(activeSelector === 'location' ? null : 'location');
@@ -83,6 +93,7 @@ export const useSearchBanner = () => {
     )
       return;
 
+    setIsLoading(true);
     if (selectedLocation?.code) {
       query.province = selectedLocation.code;
     }
@@ -107,9 +118,96 @@ export const useSearchBanner = () => {
 
     const queryStr = queryString.stringify({ ...query, page: 1, limit: LIMIT });
 
-    router.push(`hotels?${queryStr}`);
-  };
+    // Navigate to hotel page with search parameters
+    if (pathname === ROUTES.HOTEL) {
+      // If already on hotel page, update URL without full page refresh
+      router.push(`${ROUTES.HOTEL}?${queryStr}`, { scroll: false });
+    } else {
+      // If coming from another page, navigate to hotel page
+      router.push(`${ROUTES.HOTEL}?${queryStr}`);
+    }
 
+    // Clear loading state after navigation
+    setTimeout(() => setIsLoading(false), 300);
+  };
+  useEffect(() => {
+    if (pathname === ROUTES.HOTEL) {
+      const query = queryString.parse(searchParams.toString());
+      // Process query parameters
+      // Set location if available
+      if (query.province && provinces.length > 0) {
+        setSelectedLocation({
+          code: query.province,
+          name: provinces.find(
+            (province: any) => province.code.toString() === query.province,
+          )?.name,
+        });
+      }
+
+      // Parse dates using date-fns parse function
+      if (query.start || query.end) {
+        try {
+          let from: Date | undefined = undefined;
+          let to: Date | undefined = undefined;
+
+          if (query.start) {
+            // Convert dd-MM-yyyy to Date object
+            const startParts = (query.start as string).split('-');
+            if (startParts.length === 3) {
+              const day = parseInt(startParts[0]);
+              const month = parseInt(startParts[1]) - 1; // Month is 0-indexed
+              const year = parseInt(startParts[2]);
+              from = new Date(year, month, day);
+            }
+          }
+
+          if (query.end) {
+            // Convert dd-MM-yyyy to Date object
+            const endParts = (query.end as string).split('-');
+            if (endParts.length === 3) {
+              const day = parseInt(endParts[0]);
+              const month = parseInt(endParts[1]) - 1; // Month is 0-indexed
+              const year = parseInt(endParts[2]);
+              to = new Date(year, month, day);
+            }
+          }
+
+          // Only set the date range if we have at least a from date
+          if (from) {
+            setSelectedDateRange({ from, to });
+          }
+        } catch (err) {
+          console.error('Error parsing dates:', err);
+        }
+      }
+
+      // Set people options
+      const newOptions = PEOPLE_SELECTOR_OPTIONS.map((option) => {
+        let count =
+          DEFAULT_PEOPLE_COUNT[
+            option.id as keyof typeof DEFAULT_PEOPLE_COUNT
+          ] || 0;
+
+        // Override with URL params if available
+        if (option.id === 'adults' && query.adult) {
+          count = parseInt(query.adult as string) || count;
+        }
+        if (option.id === 'children' && query.child) {
+          count = parseInt(query.child as string) || count;
+        }
+        if (option.id === 'rooms' && query.available) {
+          count = parseInt(query.available as string) || count;
+        }
+
+        return {
+          ...option,
+          count,
+        };
+      });
+
+      setSelectedPeople(newOptions);
+    }
+  }, [pathname, searchParams, provincesData]);
   // Set up click outside handler
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -126,7 +224,6 @@ export const useSearchBanner = () => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [activeSelector, closeSelectors]);
-
   return {
     activeSelector,
     selectedLocation,
@@ -146,5 +243,6 @@ export const useSearchBanner = () => {
     locationContainerRef,
     dateContainerRef,
     peopleContainerRef,
+    isLoading,
   };
 };

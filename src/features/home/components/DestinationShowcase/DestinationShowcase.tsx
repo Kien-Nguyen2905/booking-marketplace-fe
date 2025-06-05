@@ -8,6 +8,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'motion/react';
 import { useDestinationShowcase } from '@/features/home/components/DestinationShowcase/useDestinationShowcase';
+import { getHotelUrl } from '@/lib/utils';
 
 const DestinationShowcase = () => {
   const {
@@ -71,7 +72,7 @@ const DestinationShowcase = () => {
             swiperInstance.params.navigation.nextEl = nextBtnRef.current;
             // @ts-ignore
             swiperInstance.params.pagination.el = paginationRef.current;
-            // Initialise modules with the new elements
+            // Initialize modules with the new elements
             swiperInstance.navigation.init();
             swiperInstance.navigation.update();
             swiperInstance.pagination.init();
@@ -83,7 +84,12 @@ const DestinationShowcase = () => {
         >
           {destinations?.map((destination) => (
             <SwiperSlide key={destination?.provinceCode}>
-              <Link href="#" className="group">
+              <Link
+                href={getHotelUrl({
+                  provinceCode: destination?.provinceCode || '',
+                })}
+                className="group"
+              >
                 <div className="relative rounded-lg overflow-hidden mb-3 aspect-[1/1]">
                   <Image
                     src={destination?.imageUrl || ''}

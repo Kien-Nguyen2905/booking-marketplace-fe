@@ -1,3 +1,5 @@
+import { OptionType } from '@/components/PeopleSelector/type';
+
 export const HOTEL_STATUS = {
   PENDING: 'PENDING',
   ACTIVE: 'ACTIVE',
@@ -88,4 +90,75 @@ export const DESTINATIONS = [
     imageUrl:
       'https://images.unsplash.com/photo-1676438859721-5508a3ca00db?q=80&w=3174&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
+];
+
+export const RATING_LIST = [1, 2, 3, 4, 5];
+
+export const SORT_OPTIONS_HOTEL = [
+  {
+    value: 'price-asc',
+    label: 'Price: Low to High',
+    orderBy: 'price',
+    order: 'asc',
+  },
+  {
+    value: 'price-desc',
+    label: 'Price: High to Low',
+    orderBy: 'price',
+    order: 'desc',
+  },
+  {
+    value: 'rating-desc',
+    label: 'Highest Rated',
+    orderBy: 'rating',
+    order: 'desc',
+  },
+  {
+    value: 'rating-asc',
+    label: 'Lowest Rated',
+    orderBy: 'rating',
+    order: 'asc',
+  },
+];
+
+export const PEOPLE_SELECTOR_OPTIONS: Readonly<Omit<OptionType, 'count'>[]> = [
+  {
+    id: 'adults',
+    label: 'Adult',
+    min: 1,
+    max: 30,
+    description: 'Ages 18+',
+  },
+  {
+    id: 'children',
+    label: 'Child',
+    min: 0,
+    max: 30,
+    description: 'Ages 1-12',
+  },
+  {
+    id: 'rooms',
+    label: 'Room',
+    min: 1,
+    max: 30,
+  },
+] as const;
+
+export const DEFAULT_PEOPLE_COUNT = {
+  adults: 1,
+  children: 0,
+  rooms: 1,
+} as const;
+
+export const HOTEL_PARAMS = [
+  'province',
+  'start',
+  'end',
+  'adult',
+  'child',
+  'available',
+  'type',
+  'orderBy',
+  'order',
+  'rating',
 ];

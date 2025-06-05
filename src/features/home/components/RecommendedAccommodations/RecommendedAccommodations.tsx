@@ -11,6 +11,7 @@ import { motion } from 'motion/react';
 import { MAP_HOTEL_TYPE, POPULAR_ACCOMMODATION_LIST } from '@/constants';
 import { useRecommendedAccommodations } from './useRecommendedAccommodations';
 import { HotelByIdProvinceCodeResType } from '@/models/hotel.model';
+import { getHotelUrl } from '@/lib/utils';
 
 const RecommendedAccommodations = () => {
   const {
@@ -27,7 +28,7 @@ const RecommendedAccommodations = () => {
   } = useRecommendedAccommodations();
 
   return (
-    <div className="w-full relative py-8">
+    <div className="w-full relative pt-8 pb-10">
       <div className="container mx-auto px-4">
         <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-6">
           The recommended popular accommodations
@@ -74,7 +75,7 @@ const RecommendedAccommodations = () => {
                   swiperInstance.params.navigation.prevEl = prevBtnRef.current;
                   // @ts-ignore
                   swiperInstance.params.navigation.nextEl = nextBtnRef.current;
-                  // Initialise modules with the new elements
+                  // Initialize modules with the new elements
                   swiperInstance.navigation.init();
                   swiperInstance.navigation.update();
                 }}
@@ -94,7 +95,9 @@ const RecommendedAccommodations = () => {
                               transition={{ duration: 0.3 }}
                             >
                               <Link
-                                href={'#'}
+                                href={getHotelUrl({
+                                  hotelId: hotel.id || '',
+                                })}
                                 className="flex flex-col group rounded-lg overflow-hidden border border-gray-200 hover:shadow-md transition-shadow duration-200"
                               >
                                 <div className="relative h-48 overflow-hidden">
@@ -162,20 +165,12 @@ const RecommendedAccommodations = () => {
                   </Button>
                 )}
               </Swiper>
-              {!hotelsData?.data || hotelsData.data.data.length === 0 ? (
-                <div className="text-center py-10 text-gray-500">
-                  Not found any popular accommodations in {location.name}
-                </div>
-              ) : (
-                <Link href="#" className="flex justify-center mt-6">
-                  <Button
-                    variant="outline"
-                    className="border-[var(--blue-primary)] text-[var(--blue-primary)] hover:bg-[var(--blue-light)] hover:text-[var(--blue-primary)]"
-                  >
-                    View more in {location.name}
-                  </Button>
-                </Link>
-              )}
+              {!hotelsData?.data ||
+                (hotelsData.data.data.length === 0 && (
+                  <div className="text-center py-10 text-gray-500">
+                    Not found any popular accommodations in {location.name}
+                  </div>
+                ))}
             </TabsContent>
           ))}
         </Tabs>

@@ -5,7 +5,7 @@ import {
   HOTEL_TYPE,
 } from '@/constants';
 import { AmenitySchema } from '@/models/amenity.mode';
-import { RoomBedSchema, RoomTypeSchema } from '@/models/room-type.model';
+import { RoomTypeSchema } from '@/models/room-type.model';
 import { RoomSchema } from '@/models/room.model';
 import { z } from 'zod';
 export const HotelSchema = z.object({
@@ -105,6 +105,7 @@ export const GetFindHotelsQuerySchema = z
 export const GetFindHotelsResSchema = z.object({
   data: z.array(
     HotelSchema.extend({
+      hotelAmenity: z.array(z.object({ amenity: AmenitySchema })),
       roomType: z.array(
         RoomTypeSchema.extend({
           room: z.array(RoomSchema),
@@ -116,6 +117,15 @@ export const GetFindHotelsResSchema = z.object({
   page: z.number(),
   limit: z.number(),
   totalPages: z.number(),
+});
+
+export const FindHotelResSchema = HotelSchema.extend({
+  hotelAmenity: z.array(z.object({ amenity: AmenitySchema })),
+  roomType: z.array(
+    RoomTypeSchema.extend({
+      room: z.array(RoomSchema),
+    }),
+  ),
 });
 
 export const CreateHotelBodySchema = HotelSchema.omit({
@@ -185,12 +195,6 @@ export const GetHotelsByProvinceCodeResSchema = z.array(
     roomType: z.array(
       RoomTypeSchema.extend({
         room: z.array(RoomSchema),
-        roomBed: z.array(RoomBedSchema),
-        roomTypeAmenity: z.array(
-          z.object({
-            amenity: AmenitySchema,
-          }),
-        ),
       }),
     ),
   }),
@@ -200,12 +204,6 @@ export const HotelByIdProvinceCodeResSchema = HotelSchema.extend({
   roomType: z.array(
     RoomTypeSchema.extend({
       room: z.array(RoomSchema),
-      roomBed: z.array(RoomBedSchema),
-      roomTypeAmenity: z.array(
-        z.object({
-          amenity: AmenitySchema,
-        }),
-      ),
     }),
   ),
 });
@@ -258,3 +256,5 @@ export type GetQuantityHotelsByProvinceCodeResType = z.infer<
 
 export type GetFindHotelsQueryType = z.infer<typeof GetFindHotelsQuerySchema>;
 export type GetFindHotelsResType = z.infer<typeof GetFindHotelsResSchema>;
+
+export type FindHotelResType = z.infer<typeof FindHotelResSchema>;

@@ -3,7 +3,7 @@ import { useGetProvincesQuery } from '@/queries';
 import { useEffect, useRef, useState } from 'react';
 
 export const useLocationSelector = (
-  onChange: (location: LocationType) => void,
+  onChange?: (location: LocationType) => void,
 ) => {
   const { data: provincesData, isLoading } = useGetProvincesQuery();
 
@@ -23,7 +23,7 @@ export const useLocationSelector = (
   });
 
   const handleSelectLocation = (province: LocationType) => {
-    onChange({
+    onChange?.({
       id: province.code,
       name: province.name,
       code: province.code,
@@ -38,6 +38,7 @@ export const useLocationSelector = (
     }
   }, []);
   return {
+    provinces,
     filteredProvinces,
     handleSelectLocation,
     isLoading,

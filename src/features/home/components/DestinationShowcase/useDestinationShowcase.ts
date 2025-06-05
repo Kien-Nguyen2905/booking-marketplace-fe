@@ -17,7 +17,7 @@ export const useDestinationShowcase = () => {
     return destinationItem;
   });
   const [isBeginning, setIsBeginning] = useState(true);
-  const [_, setSwiper] = useState<any>(null);
+  const [_swiper, setSwiper] = useState<any>(null);
   const paginationRef = useRef<HTMLDivElement>(null);
   const nextBtnRef = useRef<HTMLButtonElement>(null);
   const prevBtnRef = useRef<HTMLButtonElement>(null);
