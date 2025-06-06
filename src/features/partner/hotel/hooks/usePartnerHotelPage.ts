@@ -33,6 +33,7 @@ export const usePartnerHotelPage = () => {
       districtCode: hotel?.districtCode || 0,
       wardCode: hotel?.wardCode || 0,
       address: hotel?.address || '',
+      rating: hotel?.rating || 0,
     },
   });
   useEffect(() => {
@@ -50,6 +51,7 @@ export const usePartnerHotelPage = () => {
         districtCode: hotel?.districtCode,
         wardCode: hotel?.wardCode,
         address: hotel?.address,
+        rating: hotel?.rating,
       });
     }
   }, [hotel, form]);
@@ -59,15 +61,12 @@ export const usePartnerHotelPage = () => {
     try {
       const imageUrls = await uploader.uploadAllImages();
       if (imageUrls) {
-        // Then create hotel with the image URLs
-        console.log('imageUrls', imageUrls);
         const hotelData = {
           ...values,
           partnerId: partnerProfile?.id as number,
           id: hotel?.id as number,
           images: imageUrls as [string, ...string[]],
         };
-        console.log('hotelData', hotelData);
         const { data } = await mutateAsync(hotelData);
         if (data.data) {
           showToast({

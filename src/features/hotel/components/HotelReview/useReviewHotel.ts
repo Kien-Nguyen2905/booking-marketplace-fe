@@ -1,0 +1,30 @@
+import { TReviewData } from './type';
+
+/**
+ * Custom hook for ReviewHotel component
+ * Handles business logic for the hotel reviews section
+ */
+export default function useReviewHotel(reviews: TReviewData[] = []) {
+  /**
+   * Calculate average rating from reviews
+   */
+  const calculateAverageRating = (): number => {
+    if (reviews.length === 0) return 0;
+    const sum = reviews.reduce((acc, review) => acc + review.rating, 0);
+    return sum / reviews.length;
+  };
+
+  const averageRating = calculateAverageRating();
+  const totalReviews = reviews.length;
+
+  /**
+   * Get displayed reviews based on current display count
+   */
+  const displayedReviews = reviews.slice(0, reviews.length);
+
+  return {
+    displayedReviews,
+    averageRating,
+    totalReviews,
+  };
+}

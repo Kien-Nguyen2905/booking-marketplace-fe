@@ -1,6 +1,11 @@
 import { CreateRoomBodyType, UpdateRoomBodyType } from '@/models/room.model';
 import roomServices from '@/services/room/roomServices';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQueries,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 export const useGetRoomsByHotelIdQuery = (hotelId: string | number) => {
   return useQuery({
@@ -57,5 +62,19 @@ export const useDeleteRoomMutation = () => {
         queryKey: ['room-types'],
       });
     },
+  });
+};
+
+export const useAvailableRoomsByRoomIds = (
+  roomIds: (string | number)[],
+  queryString: string = '',
+) => {
+  return useQueries({
+    queries: roomIds.map((roomId) => ({
+      queryKey: ['room', roomId],
+      queryFn: () =>
+        roomServices.getAvailableRoomsByRoomId(roomId, queryString),
+      enabled: !!roomId,
+    })),
   });
 };

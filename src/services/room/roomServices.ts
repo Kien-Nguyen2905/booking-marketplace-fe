@@ -2,6 +2,7 @@ import {
   CreateRoomBodyType,
   CreateRoomResType,
   DeleteRoomResType,
+  GetAvailableRoomsByRoomIdResType,
   GetRoomByIdResType,
   GetRoomsByHotelIdResType,
   UpdateRoomBodyType,
@@ -37,6 +38,15 @@ const roomServices = {
   deleteRoom: (roomId: string | number) => {
     return instance.delete<SuccessResponse<DeleteRoomResType>>(
       `/rooms/${roomId}`,
+    );
+  },
+
+  getAvailableRoomsByRoomId: (
+    roomId: string | number,
+    queryString: string = '',
+  ) => {
+    return instance.get<SuccessResponse<GetAvailableRoomsByRoomIdResType>>(
+      `/rooms/available/${roomId}${queryString ? `?${queryString}` : ''}`,
     );
   },
 };

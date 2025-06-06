@@ -41,4 +41,5 @@ export const ROUTES = {
     HOTEL: '/become-partner/hotel',
   },
   HOTEL: '/hotel',
+  HOTEL_DETAIL: '/hotel/:id',
 };

@@ -1,0 +1,63 @@
+import { useParams } from 'next/navigation';
+import { useAvailableRoomsByRoomIds, useGetHotelByIdQuery } from '@/queries';
+import { AMENITY_CATEGORY } from '@/constants';
+import { useState } from 'react';
+import { GetRoomTypeByIdResType } from '@/models/room-type.model';
+import { useSearchParams } from 'next/navigation';
+
+export const useHotelDetailPage = () => {
+  const params = useParams();
+  const searchParams = useSearchParams();
+  const id = params.id as string;
+  const startDateParams = searchParams.get('start');
+  const endDateParams = searchParams.get('end');
+  const availableParam = Number(searchParams.get('available')) || 0;
+  const adultParam = Number(searchParams.get('adult')) || 0;
+  const childParam = Number(searchParams.get('child')) || 0;
+  const { data: hotelData } = useGetHotelByIdQuery(id);
+  const hotel = hotelData?.data.data;
+  const roomTypeList = hotel?.roomType || [];
+  const roomIdList =
+    roomTypeList.flatMap((roomType) => roomType.room.map((room) => room.id)) ||
+    [];
+  console.log(roomIdList);
+  const amenityServices = hotel?.hotelAmenity.filter(
+    (amenity) => amenity.amenity.category === AMENITY_CATEGORY.SERVICE,
+  );
+  const amenityPublic = hotel?.hotelAmenity.filter(
+    (amenity) => amenity.amenity.category === AMENITY_CATEGORY.PUBLIC,
+  );
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedRoomType, setSelectedRoomType] =
+    useState<GetRoomTypeByIdResType | null>(null);
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+  const handleOpenRoomDetails = (room: GetRoomTypeByIdResType) => {
+    setSelectedRoomType(room);
+    setIsModalOpen(true);
+  };
+  const results = useAvailableRoomsByRoomIds(
+    roomIdList,
+    `start=${startDateParams}&end=${endDateParams}`,
+  );
+  const availableRooms = results.map((result) => result.data?.data.data);
+  console.log(availableRooms);
+  return {
+    hotelId: id,
+    hotel,
+    amenityServices,
+    amenityPublic,
+    isModalOpen,
+    handleCloseModal,
+    handleOpenRoomDetails,
+    selectedRoomType,
+    startDateParams,
+    endDateParams,
+    availableParam,
+    adultParam,
+    childParam,
+    availableRooms,
+  };
+};

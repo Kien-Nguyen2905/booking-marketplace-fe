@@ -26,3 +26,4 @@ export { PeopleSelector } from './PeopleSelector';
 export { DatePickerWithRange } from './DatePickerWithRange';
 export { SearchHorizontalBar } from './SearchHorizontalBar';
 export { StartRating } from './StartRating';
+export { Gallery } from './Gallery';

@@ -26,9 +26,9 @@ const RoomCarousel: FC<TRoomCarouselProps> = ({
           navigation
           pagination={{ clickable: true }}
           className="h-full w-full swiper-hotel-room-card"
-          loop={room.images.length > 1}
+          loop={room?.images?.length > 1}
         >
-          {room.images.map((image: string, index: number) => (
+          {room?.images?.map((image: string, index: number) => (
             <SwiperSlide key={index}>
               <div
                 className="relative w-full h-full cursor-pointer"

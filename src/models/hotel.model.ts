@@ -5,7 +5,8 @@ import {
   HOTEL_TYPE,
 } from '@/constants';
 import { AmenitySchema } from '@/models/amenity.mode';
-import { RoomTypeSchema } from '@/models/room-type.model';
+import { ReviewSchema } from '@/models/review.model';
+import { RoomBedSchema, RoomTypeSchema } from '@/models/room-type.model';
 import { RoomSchema } from '@/models/room.model';
 import { z } from 'zod';
 export const HotelSchema = z.object({
@@ -76,7 +77,17 @@ export const GetHotelsResSchema = z.object({
   totalPages: z.number(),
 });
 
-export const GetHotelResSchema = HotelSchema;
+export const GetHotelResSchema = HotelSchema.extend({
+  hotelAmenity: z.array(z.object({ amenity: AmenitySchema })),
+  roomType: z.array(
+    RoomTypeSchema.extend({
+      room: z.array(RoomSchema),
+      roomBed: z.array(RoomBedSchema),
+      roomTypeAmenity: z.array(z.object({ amenity: AmenitySchema })),
+    }),
+  ),
+  review: z.array(z.object({ review: ReviewSchema })),
+});
 
 export const GetHotelsQuerySchema = z
   .object({

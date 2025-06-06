@@ -30,62 +30,73 @@ const SearchHorizontalBar = () => {
     handleLocationClick,
     handleDateClick,
     handlePeopleClick,
-    handleSearch,
     closeSelectors,
     locationContainerRef,
     dateContainerRef,
     peopleContainerRef,
     isLoading,
+    query,
+    handleSearchHorizontalBar,
   } = useSearchBanner();
 
   return (
-    <div className="w-full h-max bg-white border-t shadow-lg p-2 fixed top-[76px] left-0 right-0 z-50">
-      <div className="flex h-[80px] items-center justify-center mx-auto relative container">
+    <div className="w-full h-max bg-white border-t shadow-lg p-2 fixed top-[76px] left-0 right-0 z-30">
+      <div
+        className={`flex h-[80px] items-center justify-between mx-auto relative container ${
+          query.province ? 'w-full' : 'w-[960px]'
+        }`}
+      >
         {/* Location Input */}
-        <div className="relative w-[380px]" ref={locationContainerRef}>
-          <div
-            className={cn(
-              'flex items-center bg-white border rounded-l-lg p-3 cursor-pointer group transition-all',
-            )}
-            onClick={handleLocationClick}
-          >
-            <MapPin className="h-5 w-5 text-gray-400 group-hover:text-blue-500 mr-3 flex-shrink-0" />
-            <div className="flex-1">
-              <div className="text-xs font-medium text-gray-500 mb-0.5">
-                Destination
+        {query.province && (
+          <div className="relative w-[380px]" ref={locationContainerRef}>
+            <div
+              className={cn(
+                'flex items-center bg-white border rounded-l-lg p-2 cursor-pointer group transition-all',
+              )}
+              onClick={handleLocationClick}
+            >
+              <MapPin className="h-5 w-5 text-gray-400 group-hover:text-blue-500 mr-3 flex-shrink-0" />
+              <div className="flex-1">
+                <div className="text-xs font-medium text-gray-500 mb-0.5">
+                  Destination
+                </div>
+                <div className="text-sm font-medium truncate text-gray-900">
+                  {selectedLocation
+                    ? selectedLocation.name
+                    : 'Where are you going?'}
+                </div>
               </div>
-              <div className="text-sm font-medium truncate text-gray-900">
-                {selectedLocation
-                  ? selectedLocation.name
-                  : 'Where are you going?'}
-              </div>
+              {activeSelector === 'location' && (
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="h-6 w-6 rounded-full"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    closeSelectors();
+                  }}
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              )}
             </div>
             {activeSelector === 'location' && (
-              <Button
-                size="icon"
-                variant="ghost"
-                className="h-6 w-6 rounded-full"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  closeSelectors();
-                }}
-              >
-                <X className="h-4 w-4" />
-              </Button>
+              <div className="absolute left-0 right-0 mt-2 z-50 bg-white shadow-xl rounded-lg overflow-hidden">
+                <LocationSelector onChange={handleLocationChange} />
+              </div>
             )}
           </div>
-          {activeSelector === 'location' && (
-            <div className="absolute left-0 right-0 mt-2 z-50 bg-white shadow-xl rounded-lg overflow-hidden">
-              <LocationSelector onChange={handleLocationChange} />
-            </div>
-          )}
-        </div>
+        )}
 
         {/* Date Range Picker */}
-        <div className="relative w-[540px]" ref={dateContainerRef}>
+        <div
+          className={`relative w-[540px] ${query.province ? '' : 'w-full'}`}
+          ref={dateContainerRef}
+        >
           <div
             className={cn(
-              'flex items-center bg-white border-y p-3 cursor-pointer group transition-all',
+              'flex items-center bg-white border-y p-2 cursor-pointer group transition-all',
+              !query.province && 'border-l rounded-l-lg',
             )}
             onClick={handleDateClick}
           >
@@ -123,10 +134,13 @@ const SearchHorizontalBar = () => {
         </div>
 
         {/* People Selector */}
-        <div className="relative w-[220px]" ref={peopleContainerRef}>
+        <div
+          className={`relative w-[220px] ${query.province ? '' : 'w-[440px]'}`}
+          ref={peopleContainerRef}
+        >
           <div
             className={cn(
-              'flex items-center bg-white border p-3 cursor-pointer group transition-all',
+              'flex items-center bg-white border p-2 cursor-pointer group transition-all',
             )}
             onClick={handlePeopleClick}
           >
@@ -166,8 +180,8 @@ const SearchHorizontalBar = () => {
 
         {/* Search Button */}
         <Button
-          className="w-full flex-1 flex items-center rounded-l-none h-[64px] text-white py-3 px-6 font-medium text-base"
-          onClick={handleSearch}
+          className="w-[150px] flex items-center rounded-l-none h-[56px] text-white py-3 px-6 font-medium text-base"
+          onClick={handleSearchHorizontalBar}
           disabled={isLoading}
         >
           {isLoading ? (

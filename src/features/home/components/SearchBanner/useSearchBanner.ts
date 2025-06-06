@@ -21,6 +21,8 @@ export const useSearchBanner = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
+  const query = queryString.parse(searchParams.toString());
+
   const router = useRouter();
   // Refs for positioning dropdowns
   const locationContainerRef = useRef<HTMLDivElement>(null);
@@ -84,7 +86,6 @@ export const useSearchBanner = () => {
 
   const handleSearch = () => {
     const query: Record<string, any> = {};
-
     if (
       !selectedLocation?.code ||
       !selectedDateRange?.from ||
@@ -130,10 +131,46 @@ export const useSearchBanner = () => {
     // Clear loading state after navigation
     setTimeout(() => setIsLoading(false), 300);
   };
+
+  const handleSearchDetail = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (query.province) return;
+    setIsLoading(true);
+
+    // Set date parameters regardless of location
+    if (selectedDateRange?.from) {
+      params.set('start', format(selectedDateRange.from, 'dd-MM-yyyy'));
+    }
+
+    if (selectedDateRange?.to) {
+      params.set('end', format(selectedDateRange.to, 'dd-MM-yyyy'));
+    }
+
+    // Extract counts from selectedPeople
+    const adults = selectedPeople.find((p) => p.id === 'adults')?.count || 0;
+    const children =
+      selectedPeople.find((p) => p.id === 'children')?.count || 0;
+    const rooms = selectedPeople.find((p) => p.id === 'rooms')?.count || 0;
+
+    if (adults) params.set('adult', adults.toString());
+    if (children) params.set('child', children.toString());
+    if (rooms) params.set('available', rooms.toString());
+
+    // Create a new URL with the updated parameters
+    const newUrl = `${pathname}?${params.toString()}`;
+
+    // Navigate to the new URL
+    router.push(newUrl);
+
+    setTimeout(() => setIsLoading(false), 300);
+  };
+
+  const handleSearchHorizontalBar = query.province
+    ? handleSearch
+    : handleSearchDetail;
+
   useEffect(() => {
-    if (pathname === ROUTES.HOTEL) {
-      const query = queryString.parse(searchParams.toString());
-      // Process query parameters
+    if (pathname.includes(ROUTES.HOTEL)) {
       // Set location if available
       if (query.province && provinces.length > 0) {
         setSelectedLocation({
@@ -208,6 +245,7 @@ export const useSearchBanner = () => {
       setSelectedPeople(newOptions);
     }
   }, [pathname, searchParams, provincesData]);
+
   // Set up click outside handler
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -224,6 +262,7 @@ export const useSearchBanner = () => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [activeSelector, closeSelectors]);
+
   return {
     activeSelector,
     selectedLocation,
@@ -244,5 +283,7 @@ export const useSearchBanner = () => {
     dateContainerRef,
     peopleContainerRef,
     isLoading,
+    query,
+    handleSearchHorizontalBar,
   };
 };
