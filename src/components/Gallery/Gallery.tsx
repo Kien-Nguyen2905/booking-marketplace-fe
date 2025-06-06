@@ -9,6 +9,7 @@ import Fullscreen from 'yet-another-react-lightbox/plugins/fullscreen';
 import Slideshow from 'yet-another-react-lightbox/plugins/slideshow';
 import { TGalleryProps } from '@/components/Gallery/type';
 import { useGallery } from '@/components/Gallery/useGallery';
+import Image from 'next/image';
 
 const Gallery: FC<TGalleryProps> = ({ images }) => {
   const slides = images.map((src) => ({ src }));
@@ -25,10 +26,11 @@ const Gallery: FC<TGalleryProps> = ({ images }) => {
             className="relative col-span-1 md:col-span-2 md:row-span-2 overflow-hidden cursor-pointer transform hover:opacity-70 transition-transform duration-800"
             onClick={() => openLightbox(0)}
           >
-            <img
+            <Image
               src={images[0]}
               alt="Hotel view"
               className="w-full h-full object-cover"
+              fill
             />
           </div>
         )}

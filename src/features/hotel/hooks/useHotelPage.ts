@@ -5,17 +5,9 @@ import { useState, useEffect } from 'react';
 import { useDebounce } from '@/hooks';
 export const useHotelPage = () => {
   const searchParams = useSearchParams();
-
   const [queryString, setQueryString] = useState(
     searchParams.toString() || `limit=${LIMIT}&page=1`,
   );
-
-  useEffect(() => {
-    if (typeof window !== 'undefined' && searchParams) {
-      const params = searchParams.toString();
-      setQueryString(params);
-    }
-  }, [searchParams]);
 
   const queryStringEnabled = HOTEL_PARAMS.some((param) =>
     queryString.includes(param),
@@ -46,6 +38,12 @@ export const useHotelPage = () => {
 
   const queryStringDetail = detailParams.toString();
 
+  useEffect(() => {
+    if (typeof window !== 'undefined' && searchParams) {
+      const params = searchParams.toString();
+      setQueryString(params);
+    }
+  }, [searchParams]);
   return {
     hotels,
     pagination: hotelsData?.data?.data,

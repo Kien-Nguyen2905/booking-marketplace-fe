@@ -1,14 +1,31 @@
 import { useParams } from 'next/navigation';
-import { useAvailableRoomsByRoomIds, useGetHotelByIdQuery } from '@/queries';
-import { AMENITY_CATEGORY } from '@/constants';
+import {
+  useAvailableRoomsByRoomIds,
+  useGetHotelByIdQuery,
+  useGetWishlistsByUserIdQuery,
+  useDeleteWishlistMutation,
+} from '@/queries';
+import { AMENITY_CATEGORY, SUCCESS_MESSAGES } from '@/constants';
 import { useState } from 'react';
 import { GetRoomTypeByIdResType } from '@/models/room-type.model';
 import { useSearchParams } from 'next/navigation';
+import { useCreateWishlistMutation } from '@/queries';
+import { showToast } from '@/lib/toast';
+import { handleErrorApi } from '@/lib/helper';
 
 export const useHotelDetailPage = () => {
   const params = useParams();
   const searchParams = useSearchParams();
   const id = params.id as string;
+
+  const { data: wishlistData } = useGetWishlistsByUserIdQuery();
+  const { mutateAsync: createWishlist } = useCreateWishlistMutation();
+  const { mutateAsync: deleteWishlist } = useDeleteWishlistMutation();
+  const wishlists = wishlistData?.data.data;
+  const wishlist = wishlists?.find(
+    (wishlist) => wishlist.hotelId === Number(id),
+  );
+
   const startDateParams = searchParams.get('start');
   const endDateParams = searchParams.get('end');
   const availableParam = Number(searchParams.get('available')) || 0;
@@ -20,7 +37,6 @@ export const useHotelDetailPage = () => {
   const roomIdList =
     roomTypeList.flatMap((roomType) => roomType.room.map((room) => room.id)) ||
     [];
-  console.log(roomIdList);
   const amenityServices = hotel?.hotelAmenity.filter(
     (amenity) => amenity.amenity.category === AMENITY_CATEGORY.SERVICE,
   );
@@ -43,7 +59,43 @@ export const useHotelDetailPage = () => {
     `start=${startDateParams}&end=${endDateParams}`,
   );
   const availableRooms = results.map((result) => result.data?.data.data);
-  console.log(availableRooms);
+
+  const handleCreateWishlist = async () => {
+    if (wishlist) return;
+    try {
+      const { data } = await createWishlist({ hotelId: +id });
+      if (data?.data) {
+        showToast({
+          type: 'success',
+          message: SUCCESS_MESSAGES.ADDED,
+        });
+      }
+    } catch (error: any) {
+      handleErrorApi({
+        error,
+      });
+    }
+  };
+
+  const handleDeleteWishlist = async () => {
+    if (!wishlist) return;
+    try {
+      const { data } = await deleteWishlist(wishlist.id);
+      if (data?.data) {
+        showToast({
+          type: 'success',
+          message: SUCCESS_MESSAGES.REMOVED,
+        });
+      }
+    } catch (error: any) {
+      handleErrorApi({
+        error,
+      });
+    }
+  };
+
+  const handleWishlist = wishlist ? handleDeleteWishlist : handleCreateWishlist;
+
   return {
     hotelId: id,
     hotel,
@@ -59,5 +111,7 @@ export const useHotelDetailPage = () => {
     adultParam,
     childParam,
     availableRooms,
+    wishlist,
+    handleWishlist,
   };
 };

@@ -1,0 +1,1 @@
+export { useWishListPage } from './useWishListPage';

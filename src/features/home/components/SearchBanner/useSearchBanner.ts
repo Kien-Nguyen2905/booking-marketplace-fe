@@ -183,38 +183,34 @@ export const useSearchBanner = () => {
 
       // Parse dates using date-fns parse function
       if (query.start || query.end) {
-        try {
-          let from: Date | undefined = undefined;
-          let to: Date | undefined = undefined;
+        let from: Date | undefined = undefined;
+        let to: Date | undefined = undefined;
 
-          if (query.start) {
-            // Convert dd-MM-yyyy to Date object
-            const startParts = (query.start as string).split('-');
-            if (startParts.length === 3) {
-              const day = parseInt(startParts[0]);
-              const month = parseInt(startParts[1]) - 1; // Month is 0-indexed
-              const year = parseInt(startParts[2]);
-              from = new Date(year, month, day);
-            }
+        if (query.start) {
+          // Convert dd-MM-yyyy to Date object
+          const startParts = (query.start as string).split('-');
+          if (startParts.length === 3) {
+            const day = parseInt(startParts[0]);
+            const month = parseInt(startParts[1]) - 1; // Month is 0-indexed
+            const year = parseInt(startParts[2]);
+            from = new Date(year, month, day);
           }
+        }
 
-          if (query.end) {
-            // Convert dd-MM-yyyy to Date object
-            const endParts = (query.end as string).split('-');
-            if (endParts.length === 3) {
-              const day = parseInt(endParts[0]);
-              const month = parseInt(endParts[1]) - 1; // Month is 0-indexed
-              const year = parseInt(endParts[2]);
-              to = new Date(year, month, day);
-            }
+        if (query.end) {
+          // Convert dd-MM-yyyy to Date object
+          const endParts = (query.end as string).split('-');
+          if (endParts.length === 3) {
+            const day = parseInt(endParts[0]);
+            const month = parseInt(endParts[1]) - 1; // Month is 0-indexed
+            const year = parseInt(endParts[2]);
+            to = new Date(year, month, day);
           }
+        }
 
-          // Only set the date range if we have at least a from date
-          if (from) {
-            setSelectedDateRange({ from, to });
-          }
-        } catch (err) {
-          console.error('Error parsing dates:', err);
+        // Only set the date range if we have at least a from date
+        if (from) {
+          setSelectedDateRange({ from, to });
         }
       }
 

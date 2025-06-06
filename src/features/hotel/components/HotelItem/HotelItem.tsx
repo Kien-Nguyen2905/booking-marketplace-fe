@@ -3,7 +3,7 @@ import { THotelItemProps } from '@/features/hotel/components/HotelItem/type';
 import React, { FC } from 'react';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
-import { BookmarkPlus, House, MapPinned } from 'lucide-react';
+import { CalendarFold, House, MapPinned } from 'lucide-react';
 import { MAP_HOTEL_TYPE } from '@/constants';
 import { StartRating } from '@/components';
 import { Button } from '@/components/ui/button';
@@ -94,7 +94,7 @@ const HotelItem: FC<THotelItemProps> = ({ hotel, queryStringDetail }) => {
           </div>
           <div className="flex flex-col items-end gap-2">
             <div className="text-primary p-1 cursor-pointer">
-              <BookmarkPlus />
+              <CalendarFold />
             </div>
             <div className="text-right">
               <div className="mb-2 flex flex-col items-end">

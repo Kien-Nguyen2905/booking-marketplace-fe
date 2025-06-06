@@ -11,6 +11,8 @@ import {
 import { MAP_HOTEL_TYPE } from '@/constants';
 import { Badge } from '@/components/ui/badge';
 import {
+  BookmarkCheck,
+  BookmarkPlus,
   CalendarOff,
   CheckCircle2,
   HandCoins,
@@ -37,6 +39,8 @@ const HotelDetailPage = () => {
     availableParam,
     adultParam,
     childParam,
+    handleWishlist,
+    wishlist,
   } = useHotelDetailPage();
 
   if (!hotel) return <Loading />;
@@ -47,8 +51,8 @@ const HotelDetailPage = () => {
       <div className="w-full mb-8">
         <Card className="overflow-hidden !pt-0 border-[1px] border-gray-100 shadow-sm mb-8">
           <CardContent className="p-0">
-            <div className="bg-gradient-to-r from-[var(--blue-primary)] to-[var(--blue-second)] p-6 md:p-8">
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div className="bg-gradient-to-r flex justify-between items-start from-[var(--blue-primary)] to-[var(--blue-second)] p-6 md:p-8">
+              <div className="flex flex-col  md:flex-row justify-between items-start md:items-center gap-4">
                 <div className="space-y-1">
                   <h1 className="text-2xl md:text-3xl font-bold text-white">
                     {hotel?.name}
@@ -67,6 +71,17 @@ const HotelDetailPage = () => {
                     </span>
                   </div>
                 </div>
+              </div>
+
+              <div
+                onClick={handleWishlist}
+                className="text-white cursor-pointer "
+              >
+                {wishlist ? (
+                  <BookmarkCheck className="h-9 w-9" />
+                ) : (
+                  <BookmarkPlus className="h-9 w-9" />
+                )}
               </div>
             </div>
             <div className="px-8 pt-8 space-y-3">
@@ -256,7 +271,6 @@ const HotelDetailPage = () => {
           })}
         </div>
       </div>
-
       <RoomDetailModal
         open={isModalOpen}
         onOpenChange={handleCloseModal}
