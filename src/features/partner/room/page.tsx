@@ -26,7 +26,7 @@ import {
 } from '@/components';
 import { RoomForm } from '@/features/partner/room/components';
 import { Separator } from '@/components/ui/separator';
-import { ROUTES } from '@/constants';
+import { POLICY_TYPE_LIST, ROUTES } from '@/constants';
 
 const PartnerRoomPage = () => {
   const {
@@ -63,8 +63,11 @@ const PartnerRoomPage = () => {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <h2 className="font-bold text-xl">{room.type}</h2>
-                <Button onClick={() => onOpenForm(room.id)}>Add Room</Button>
+                {room.room.length < POLICY_TYPE_LIST.length && (
+                  <Button onClick={() => onOpenForm(room.id)}>Add Room</Button>
+                )}
               </div>
+
               <div className="flex flex-col lg:flex-row gap-6">
                 {/* Left side - Room image and amenities */}
                 <RoomCarousel

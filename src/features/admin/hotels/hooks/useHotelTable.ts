@@ -68,15 +68,29 @@ export const useHotelTable = () => {
   };
 
   const onOrderByChange = (value: string) => {
-    setOrderBy(value);
-    params.set('orderBy', value);
-    if (order === 'asc') {
-      setOrder('desc');
-      params.set('order', 'desc');
-    } else {
+    if (orderBy === value) {
+      // If current order is asc, change to desc
+      if (order === 'asc') {
+        setOrder('desc');
+        params.set('order', 'desc');
+        params.set('orderBy', value);
+      }
+      // If current order is desc, reset sorting
+      else if (order === 'desc') {
+        setOrderBy('');
+        setOrder('');
+        params.delete('orderBy');
+        params.delete('order');
+      }
+    }
+    // If different column is clicked, set to asc by default
+    else {
+      setOrderBy(value);
       setOrder('asc');
+      params.set('orderBy', value);
       params.set('order', 'asc');
     }
+
     const newQueryString = setParamsDefault(params);
     router.push(`${pathname}?${newQueryString}`);
   };
@@ -107,6 +121,7 @@ export const useHotelTable = () => {
     onReset,
     onOrderByChange,
     orderBy,
+    order,
     pagination: hotelsData?.data.data,
     table,
   };

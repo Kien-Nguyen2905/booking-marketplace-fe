@@ -18,6 +18,8 @@ export const HOTEL_TYPE = {
   RESORT: 'RESORT',
 } as const;
 
+export type HotelTypeType = (typeof HOTEL_TYPE)[keyof typeof HOTEL_TYPE];
+
 export const HOTEL_TYPE_LIST = Object.values(HOTEL_TYPE).map((value) => ({
   value,
   label: value,

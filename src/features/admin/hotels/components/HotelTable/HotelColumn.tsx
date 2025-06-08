@@ -1,9 +1,17 @@
 import { Button } from '@/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
+
+// Define custom column meta type with width property
+declare module '@tanstack/react-table' {
+  // eslint-disable-next-line
+  interface ColumnMeta<TData, TValue> {
+    width?: string;
+  }
+}
 import {
-  ArrowUpDown,
   ChevronDown,
   ChevronUp,
+  ChevronsUpDown,
   Eye,
   MoreHorizontal,
 } from 'lucide-react';
@@ -16,11 +24,16 @@ import {
 } from '@/components/ui/dropdown-menu';
 import React from 'react';
 import Link from 'next/link';
-import { HOTEL_STATUS, ROUTES } from '@/constants';
+import {
+  HOTEL_STATUS,
+  HotelTypeType,
+  MAP_HOTEL_TYPE,
+  ROUTES,
+} from '@/constants';
 import { useHotelTable } from '@/features/admin/hotels/hooks';
 
 const ReputationHeader = () => {
-  const { onOrderByChange, orderBy } = useHotelTable();
+  const { onOrderByChange, orderBy, order } = useHotelTable();
   return (
     <div
       className={`flex items-center gap-2 cursor-pointer ${
@@ -29,7 +42,13 @@ const ReputationHeader = () => {
       onClick={() => onOrderByChange('reputationScore')}
     >
       Reputation
-      <ArrowUpDown size={16} />
+      {orderBy === 'reputationScore' && order === 'asc' ? (
+        <ChevronUp size={16} />
+      ) : orderBy === 'reputationScore' && order === 'desc' ? (
+        <ChevronDown size={16} />
+      ) : (
+        <ChevronsUpDown size={16} />
+      )}
     </div>
   );
 };
@@ -62,15 +81,22 @@ export const hotelColumns: ColumnDef<any>[] = [
       return <div className="pl-4">Name</div>;
     },
     cell: ({ row }) => <div className="pl-4">{row.getValue('name')}</div>,
+    meta: { width: 'w-[250px]' },
   },
   {
     accessorKey: 'type',
-    header: 'Type',
-    cell: ({ row }) => <div>{row.getValue('type')}</div>,
+    header: () => {
+      return <div>Type</div>;
+    },
+    cell: ({ row }) => (
+      <div>{MAP_HOTEL_TYPE[row.getValue('type') as HotelTypeType]}</div>
+    ),
   },
   {
     accessorKey: 'hotelPhoneNumber',
-    header: 'Phone',
+    header: () => {
+      return <div>Phone</div>;
+    },
     cell: ({ row }) => <div>{row.getValue('hotelPhoneNumber')}</div>,
   },
   {

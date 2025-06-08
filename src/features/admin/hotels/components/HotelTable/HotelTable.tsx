@@ -85,12 +85,17 @@ const HotelTable = () => {
         </div>
         <div className="rounded-md border">
           {isLoading ? <LoadingTable /> : <div className="h-[3px]"></div>}
-          <Table>
+          <Table className="table-fixed min-w-[800px]">
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
-                    <TableHead className="w-[200px]" key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      className={
+                        header.column.columnDef.meta?.width || 'w-full'
+                      }
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -106,7 +111,7 @@ const HotelTable = () => {
               {isLoading ? (
                 <TableRow>
                   <TableCell
-                    colSpan={userColumns?.length || 5}
+                    colSpan={userColumns?.length + 1 || 5}
                     className="h-24 text-center"
                   >
                     Loading...
@@ -116,7 +121,10 @@ const HotelTable = () => {
                 table.getRowModel().rows.map((row) => (
                   <TableRow key={row.id}>
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
+                      <TableCell
+                        className="overflow-hidden text-ellipsis whitespace-nowrap"
+                        key={cell.id}
+                      >
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),
@@ -128,7 +136,7 @@ const HotelTable = () => {
               ) : (
                 <TableRow>
                   <TableCell
-                    colSpan={userColumns?.length || 5}
+                    colSpan={userColumns?.length + 1 || 5}
                     className="h-24 text-center"
                   >
                     No results.
