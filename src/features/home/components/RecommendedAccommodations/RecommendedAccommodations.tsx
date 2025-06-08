@@ -23,7 +23,7 @@ const RecommendedAccommodations = () => {
     setIsEnd,
     isEnd,
     setSwiper,
-    hotelsData,
+    hotels,
     nextBtnRef,
     prevBtnRef,
     promotionToday,
@@ -86,83 +86,78 @@ const RecommendedAccommodations = () => {
                   setIsEnd(swiperInstance.isEnd);
                 }}
               >
-                {activeTab === location.provinceCode && hotelsData?.data
-                  ? hotelsData?.data?.data?.map(
-                      (hotel: HotelByIdProvinceCodeResType) => {
-                        return (
-                          <SwiperSlide key={hotel.id}>
-                            <motion.div
-                              initial={{ opacity: 0, y: 20 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ duration: 0.3 }}
+                {activeTab === location.provinceCode && hotels
+                  ? hotels.map((hotel: HotelByIdProvinceCodeResType) => {
+                      return (
+                        <SwiperSlide key={hotel.id}>
+                          <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            <Link
+                              href={getHotelUrl({
+                                hotelId: hotel.id || '',
+                              })}
+                              className="flex flex-col group rounded-lg overflow-hidden border border-gray-200 hover:shadow-md transition-shadow duration-200"
                             >
-                              <Link
-                                href={getHotelUrl({
-                                  hotelId: hotel.id || '',
-                                })}
-                                className="flex flex-col group rounded-lg overflow-hidden border border-gray-200 hover:shadow-md transition-shadow duration-200"
-                              >
-                                <div className="relative h-48 overflow-hidden">
-                                  <Image
-                                    src={hotel?.images?.[0] || ''}
-                                    alt={hotel.name}
-                                    fill
-                                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                              <div className="relative h-48 overflow-hidden">
+                                <Image
+                                  src={hotel?.images?.[0] || ''}
+                                  alt={hotel.name}
+                                  fill
+                                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                />
+                                {promotionToday &&
+                                  promotionToday?.percentage > 0 && (
+                                    <div className="absolute top-0 left-0 bg-gradient-to-r from-red-600 to-orange-500 text-white px-3 py-1 m-2 rounded-lg font-semibold flex items-center gap-1 shadow-sm">
+                                      <Tag size={14} />
+                                      Save{' '}
+                                      {Math.round(
+                                        promotionToday.percentage * 100,
+                                      )}
+                                      % OFF
+                                    </div>
+                                  )}
+                              </div>
+                              <div className="p-4">
+                                <div className="pb-2">
+                                  <h3 className="text-gray-800 font-medium line-clamp-1">
+                                    {hotel.name}
+                                  </h3>
+                                  <StartRating
+                                    size={15}
+                                    rating={hotel.rating}
                                   />
+                                </div>
+                                <span className=" mt-1 text-sm text-gray-500 line-clamp-2">
+                                  {hotel.address}
+                                </span>
+
+                                <div className="mt-1 text-sm text-gray-500">
+                                  {MAP_HOTEL_TYPE[hotel.type]}
+                                </div>
+
+                                <div className="flex items-baseline mt-2">
                                   {promotionToday &&
                                     promotionToday?.percentage > 0 && (
-                                      <div className="absolute top-0 left-0 bg-gradient-to-r from-red-600 to-orange-500 text-white px-3 py-1 m-2 rounded-lg font-semibold flex items-center gap-1 shadow-sm">
-                                        <Tag size={14} />
-                                        Save{' '}
-                                        {Math.round(
-                                          promotionToday.percentage * 100,
-                                        )}
-                                        % OFF
-                                      </div>
+                                      <span className="text-gray-400 line-through mr-2 text-sm">
+                                        {formatCurrency(hotel.room?.[0]?.price)}
+                                      </span>
                                     )}
-                                </div>
-                                <div className="p-4">
-                                  <div className="pb-2">
-                                    <h3 className="text-gray-800 font-medium line-clamp-1">
-                                      {hotel.name}
-                                    </h3>
-                                    <StartRating
-                                      size={15}
-                                      rating={hotel.rating}
-                                    />
-                                  </div>
-                                  <span className=" mt-1 text-sm text-gray-500 line-clamp-2">
-                                    {hotel.address}
+                                  <span className="text-orange-500 text-xl font-bold">
+                                    {formatCurrency(
+                                      hotel.room?.[0]?.price *
+                                        (1 - (promotionToday?.percentage || 0)),
+                                    )}
                                   </span>
-
-                                  <div className="mt-1 text-sm text-gray-500">
-                                    {MAP_HOTEL_TYPE[hotel.type]}
-                                  </div>
-
-                                  <div className="flex items-baseline mt-2">
-                                    {promotionToday &&
-                                      promotionToday?.percentage > 0 && (
-                                        <span className="text-gray-400 line-through mr-2 text-sm">
-                                          {formatCurrency(
-                                            hotel.roomType?.[0]?.room[0]?.price,
-                                          )}
-                                        </span>
-                                      )}
-                                    <span className="text-orange-500 text-xl font-bold">
-                                      {formatCurrency(
-                                        hotel.roomType?.[0]?.room[0]?.price *
-                                          (1 -
-                                            (promotionToday?.percentage || 0)),
-                                      )}
-                                    </span>
-                                  </div>
                                 </div>
-                              </Link>
-                            </motion.div>
-                          </SwiperSlide>
-                        );
-                      },
-                    )
+                              </div>
+                            </Link>
+                          </motion.div>
+                        </SwiperSlide>
+                      );
+                    })
                   : null}
                 {!isBeginning && (
                   <Button
@@ -185,8 +180,8 @@ const RecommendedAccommodations = () => {
                   </Button>
                 )}
               </Swiper>
-              {!hotelsData?.data ||
-                (hotelsData.data.data.length === 0 && (
+              {!hotels ||
+                (hotels.length === 0 && (
                   <div className="text-center py-10 text-gray-500">
                     Not found any popular accommodations in {location.name}
                   </div>

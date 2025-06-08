@@ -12,6 +12,7 @@ export const useRecommendedAccommodations = () => {
   );
 
   const { data: hotelsData } = useGetHotelsByProvinceCodeQuery(activeTab);
+  const hotels = hotelsData?.data.data || [];
 
   const { data: promotionsData } = useGetPromotionsByValidFromQuery();
 
@@ -36,5 +37,6 @@ export const useRecommendedAccommodations = () => {
     hotelsData,
     nextBtnRef,
     prevBtnRef,
+    hotels,
   };
 };

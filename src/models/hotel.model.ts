@@ -203,18 +203,18 @@ export const UpdateHotelAmenitiesResSchema = GetHotelAmenitiesResSchema;
 
 export const GetHotelsByProvinceCodeResSchema = z.array(
   HotelSchema.extend({
-    roomType: z.array(
-      RoomTypeSchema.extend({
-        room: z.array(RoomSchema),
+    room: z.array(
+      RoomSchema.extend({
+        roomType: RoomTypeSchema,
       }),
     ),
   }),
 );
 
 export const HotelByIdProvinceCodeResSchema = HotelSchema.extend({
-  roomType: z.array(
-    RoomTypeSchema.extend({
-      room: z.array(RoomSchema),
+  room: z.array(
+    RoomSchema.extend({
+      roomType: RoomTypeSchema,
     }),
   ),
 });
