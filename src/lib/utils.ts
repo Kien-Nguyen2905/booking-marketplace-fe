@@ -123,11 +123,10 @@ export const formatCurrency = (
   switch (currencyCode) {
     case 'VND': {
       // Format VND without decimal places and with dot as thousands separator
-      return new Intl.NumberFormat('vi-VN', {
-        style: 'currency',
-        currency: 'VND',
+      const formatted = new Intl.NumberFormat('vi-VN', {
         maximumFractionDigits: 0,
       }).format(value);
+      return `${formatted} VND`;
     }
     case 'USD': {
       // Format USD with 2 decimal places
@@ -209,4 +208,10 @@ export const getHotelUrl = ({
   }
 
   return `${baseUrl}?${params.toString()}`;
+};
+
+export const normalizeToUTC = (date: Date) => {
+  return new Date(
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
+  );
 };

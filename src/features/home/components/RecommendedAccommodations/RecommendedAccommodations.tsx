@@ -2,7 +2,7 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Tag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -11,7 +11,8 @@ import { motion } from 'motion/react';
 import { MAP_HOTEL_TYPE, POPULAR_ACCOMMODATION_LIST } from '@/constants';
 import { useRecommendedAccommodations } from './useRecommendedAccommodations';
 import { HotelByIdProvinceCodeResType } from '@/models/hotel.model';
-import { getHotelUrl } from '@/lib/utils';
+import { formatCurrency, getHotelUrl } from '@/lib/utils';
+import { StartRating } from '@/components';
 
 const RecommendedAccommodations = () => {
   const {
@@ -25,6 +26,7 @@ const RecommendedAccommodations = () => {
     hotelsData,
     nextBtnRef,
     prevBtnRef,
+    promotionToday,
   } = useRecommendedAccommodations();
 
   return (
@@ -107,15 +109,28 @@ const RecommendedAccommodations = () => {
                                     fill
                                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                                   />
-                                  <div className="absolute top-2 right-2 bg-primary text-white px-2 py-1 rounded-md text-sm font-medium">
-                                    {Number(hotel.rating).toFixed(1)}
-                                  </div>
+                                  {promotionToday &&
+                                    promotionToday?.percentage > 0 && (
+                                      <div className="absolute top-0 left-0 bg-gradient-to-r from-red-600 to-orange-500 text-white px-3 py-1 m-2 rounded-lg font-semibold flex items-center gap-1 shadow-sm">
+                                        <Tag size={14} />
+                                        Save{' '}
+                                        {Math.round(
+                                          promotionToday.percentage * 100,
+                                        )}
+                                        % OFF
+                                      </div>
+                                    )}
                                 </div>
                                 <div className="p-4">
-                                  <h3 className="text-gray-800 font-medium line-clamp-1">
-                                    {hotel.name}
-                                  </h3>
-
+                                  <div className="pb-2">
+                                    <h3 className="text-gray-800 font-medium line-clamp-1">
+                                      {hotel.name}
+                                    </h3>
+                                    <StartRating
+                                      size={15}
+                                      rating={hotel.rating}
+                                    />
+                                  </div>
                                   <span className=" mt-1 text-sm text-gray-500 line-clamp-2">
                                     {hotel.address}
                                   </span>
@@ -125,15 +140,20 @@ const RecommendedAccommodations = () => {
                                   </div>
 
                                   <div className="flex items-baseline mt-2">
-                                    {hotel.roomType?.[0]?.room[0]?.price && (
-                                      <span className="text-gray-400 line-through mr-2 text-sm">
-                                        {hotel.roomType?.[0]?.room[0]?.price.toLocaleString()}{' '}
-                                        VND
-                                      </span>
-                                    )}
-                                    <span className="text-[var(--blue-primary)] font-medium">
-                                      {hotel.roomType?.[0]?.room[0]?.price.toLocaleString()}{' '}
-                                      VND
+                                    {promotionToday &&
+                                      promotionToday?.percentage > 0 && (
+                                        <span className="text-gray-400 line-through mr-2 text-sm">
+                                          {formatCurrency(
+                                            hotel.roomType?.[0]?.room[0]?.price,
+                                          )}
+                                        </span>
+                                      )}
+                                    <span className="text-orange-500 text-xl font-bold">
+                                      {formatCurrency(
+                                        hotel.roomType?.[0]?.room[0]?.price *
+                                          (1 -
+                                            (promotionToday?.percentage || 0)),
+                                      )}
                                     </span>
                                   </div>
                                 </div>

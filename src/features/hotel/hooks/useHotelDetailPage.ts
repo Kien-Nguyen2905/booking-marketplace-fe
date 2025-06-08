@@ -4,6 +4,7 @@ import {
   useGetHotelByIdQuery,
   useGetWishlistsByUserIdQuery,
   useDeleteWishlistMutation,
+  useGetPromotionsByValidFromQuery,
 } from '@/queries';
 import { AMENITY_CATEGORY, SUCCESS_MESSAGES } from '@/constants';
 import { useState } from 'react';
@@ -12,13 +13,16 @@ import { useSearchParams } from 'next/navigation';
 import { useCreateWishlistMutation } from '@/queries';
 import { showToast } from '@/lib/toast';
 import { handleErrorApi } from '@/lib/helper';
+import { useAppContext } from '@/context/AppProvider';
+import { parse, startOfDay } from 'date-fns';
 
 export const useHotelDetailPage = () => {
+  const { profile, toggleModal } = useAppContext();
   const params = useParams();
   const searchParams = useSearchParams();
   const id = params.id as string;
 
-  const { data: wishlistData } = useGetWishlistsByUserIdQuery();
+  const { data: wishlistData } = useGetWishlistsByUserIdQuery(!!profile?.id);
   const { mutateAsync: createWishlist } = useCreateWishlistMutation();
   const { mutateAsync: deleteWishlist } = useDeleteWishlistMutation();
   const wishlists = wishlistData?.data.data;
@@ -31,6 +35,13 @@ export const useHotelDetailPage = () => {
   const availableParam = Number(searchParams.get('available')) || 0;
   const adultParam = Number(searchParams.get('adult')) || 0;
   const childParam = Number(searchParams.get('child')) || 0;
+
+  const queryStringPromotion = `validFrom=${startDateParams}&validUntil=${endDateParams}`;
+  const { data: promotionsData } =
+    useGetPromotionsByValidFromQuery(queryStringPromotion);
+
+  const promotionToday = promotionsData?.data.data.todayPromotions;
+  const promotionNotToday = promotionsData?.data.data.promotions[0];
   const { data: hotelData } = useGetHotelByIdQuery(id);
   const hotel = hotelData?.data.data;
   const roomTypeList = hotel?.roomType || [];
@@ -94,8 +105,21 @@ export const useHotelDetailPage = () => {
     }
   };
 
-  const handleWishlist = wishlist ? handleDeleteWishlist : handleCreateWishlist;
+  const handleWishlist = () => {
+    if (!profile?.id) {
+      toggleModal();
+      return;
+    }
+    if (wishlist) return handleDeleteWishlist;
+    return handleCreateWishlist;
+  };
 
+  const now = startOfDay(new Date());
+  const targetDate =
+    startDateParams &&
+    startOfDay(parse(startDateParams, 'dd-MM-yyyy', new Date()));
+
+  const isFuture = targetDate && targetDate > now;
   return {
     hotelId: id,
     hotel,
@@ -113,5 +137,7 @@ export const useHotelDetailPage = () => {
     availableRooms,
     wishlist,
     handleWishlist,
+    promotion: promotionToday || promotionNotToday,
+    isFuture,
   };
 };

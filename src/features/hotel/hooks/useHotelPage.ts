@@ -1,4 +1,7 @@
-import { useGetFindHotelsQuery } from '@/queries';
+import {
+  useGetFindHotelsQuery,
+  useGetPromotionsByValidFromQuery,
+} from '@/queries';
 import { HOTEL_PARAMS, LIMIT } from '@/constants';
 import { useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
@@ -29,6 +32,13 @@ export const useHotelPage = () => {
   const child = searchParams.get('child');
   const available = searchParams.get('available');
 
+  const queryStringPromotion = `validFrom=${start}&validUntil=${end}`;
+  const { data: promotionsData } =
+    useGetPromotionsByValidFromQuery(queryStringPromotion);
+
+  const promotionToday = promotionsData?.data.data.todayPromotions;
+
+  const promotionNotToday = promotionsData?.data.data.promotions[0];
   // Add them to the detail params if they exist
   if (start) detailParams.set('start', start);
   if (end) detailParams.set('end', end);
@@ -49,5 +59,6 @@ export const useHotelPage = () => {
     pagination: hotelsData?.data?.data,
     isLoading: useDebounce({ initialValue: isLoading, delay: 500 }),
     queryStringDetail,
+    promotion: promotionToday || promotionNotToday,
   };
 };

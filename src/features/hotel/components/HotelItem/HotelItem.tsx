@@ -3,7 +3,13 @@ import { THotelItemProps } from '@/features/hotel/components/HotelItem/type';
 import React, { FC } from 'react';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
-import { CalendarFold, House, MapPinned } from 'lucide-react';
+import {
+  BadgePercent,
+  CalendarFold,
+  House,
+  MapPinned,
+  Tag,
+} from 'lucide-react';
 import { MAP_HOTEL_TYPE } from '@/constants';
 import { StartRating } from '@/components';
 import { Button } from '@/components/ui/button';
@@ -15,8 +21,13 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { format } from 'date-fns';
 
-const HotelItem: FC<THotelItemProps> = ({ hotel, queryStringDetail }) => {
+const HotelItem: FC<THotelItemProps> = ({
+  hotel,
+  queryStringDetail,
+  promotion,
+}) => {
   return (
     <Link href={`${ROUTES.HOTEL}/${hotel.id}?${queryStringDetail}`}>
       <Card>
@@ -24,13 +35,19 @@ const HotelItem: FC<THotelItemProps> = ({ hotel, queryStringDetail }) => {
           <div className="flex gap-3">
             {/* Image */}
             <div className="grid grid-cols-3 grid-rows-3 gap-1 w-[250px] h-[200px] overflow-hidden rounded-l-lg">
-              <div className="col-span-3 row-span-2 relative">
+              <div className="col-span-3 relative row-span-2">
                 <Image
                   src={hotel.images[0]}
                   alt={hotel.name}
                   fill
                   className="object-cover"
                 />
+                {promotion && promotion?.percentage > 0 && (
+                  <div className="absolute top-0 left-0 bg-gradient-to-r from-red-600 to-orange-500 text-white px-3 py-1 m-2 rounded-lg font-semibold flex items-center gap-1 shadow-sm">
+                    <Tag size={14} />
+                    Save {Math.round(promotion.percentage * 100)}% OFF
+                  </div>
+                )}
               </div>
 
               {hotel.images.map((image, index) =>
@@ -90,6 +107,14 @@ const HotelItem: FC<THotelItemProps> = ({ hotel, queryStringDetail }) => {
                   </Tooltip>
                 )}
               </div>
+              {promotion && promotion?.percentage > 0 && (
+                <div className="text-white mt-4 w-max text-xs rounded-2xl font-semibold flex items-center gap-2 bg-gradient-to-r from-red-600 to-orange-500 p-1 pr-2 cursor-pointer">
+                  <BadgePercent size={20} />
+                  {promotion?.title} from{' '}
+                  {format(promotion?.validFrom, 'dd-MM-yyyy')} to{' '}
+                  {format(promotion?.validUntil, 'dd-MM-yyyy')}
+                </div>
+              )}
             </div>
           </div>
           <div className="flex flex-col items-end gap-2">
@@ -98,11 +123,16 @@ const HotelItem: FC<THotelItemProps> = ({ hotel, queryStringDetail }) => {
             </div>
             <div className="text-right">
               <div className="mb-2 flex flex-col items-end">
-                <div className="text-gray-500 text-sm line-through mb-1">
-                  {formatCurrency(hotel.roomType[0].room[0].price * 1.2)}
-                </div>
+                {promotion && promotion?.percentage > 0 && (
+                  <div className="text-gray-500 text-sm line-through mb-1">
+                    {formatCurrency(hotel.roomType[0].room[0].price)}
+                  </div>
+                )}
                 <div className="text-orange-500 text-xl font-bold">
-                  {formatCurrency(hotel.roomType[0].room[0].price)}
+                  {formatCurrency(
+                    hotel.roomType[0].room[0].price *
+                      (1 - (promotion?.percentage || 0)),
+                  )}
                 </div>
                 <div className="text-xs text-gray-500">
                   Exclude taxes & fees

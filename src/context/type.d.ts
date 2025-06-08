@@ -25,5 +25,4 @@ export type TMainContextProviderProps = {
   isPendingPartner: boolean;
   setIsPendingPartner: SetStateAction<boolean>;
   partnerProfile: GetPartnerByUserIdResType | null;
-  setPartnerProfile: SetStateAction<GetPartnerByUserIdResType | null>;
 };

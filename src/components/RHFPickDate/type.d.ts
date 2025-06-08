@@ -4,4 +4,8 @@ export type TRHFPickDateProps = {
   required?: boolean;
   placeholder?: string;
   field: any;
+  disabled?: (date: Date) => boolean;
+  disabledInput?: boolean;
+  className?: string;
+  onChange?: (value: Date | undefined) => void;
 };

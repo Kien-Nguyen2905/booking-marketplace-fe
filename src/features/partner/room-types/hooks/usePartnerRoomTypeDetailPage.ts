@@ -17,7 +17,7 @@ import {
   UpdateRoomTypeBodyType,
 } from '@/models/room-type.model';
 import { useEffect, useState } from 'react';
-import { GetAmenityResType } from '@/models/amenity.mode';
+import { GetAmenityResType } from '@/models/amenity.model';
 import { RoomBedType, ROUTES, SUCCESS_MESSAGES } from '@/constants';
 import { handleErrorApi } from '@/lib/helper';
 import { showToast } from '@/lib/toast';

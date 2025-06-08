@@ -1,5 +1,5 @@
 import { ERROR_ROOM_TYPE_MESSAGES, ROOM_BED_TYPE } from '@/constants';
-import { AmenitySchema } from '@/models/amenity.mode';
+import { AmenitySchema } from '@/models/amenity.model';
 import { RoomSchema } from '@/models/room.model';
 import { z } from 'zod';
 

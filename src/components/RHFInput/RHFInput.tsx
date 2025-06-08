@@ -34,13 +34,15 @@ const RHFInput: FC<TInputProps> = ({
             renderProp(props, field)
           ) : (
             <div className="grid gap-1">
-              <FormLabel
-                className="block text-sm font-medium text-gray-700"
-                htmlFor={props.name}
-              >
-                {props.label}
-                <RequiredField required={required} />
-              </FormLabel>
+              {props.label && (
+                <FormLabel
+                  className="block text-sm font-medium text-gray-700"
+                  htmlFor={props.name}
+                >
+                  {props.label}
+                  <RequiredField required={required} />
+                </FormLabel>
+              )}
               <div className="relative flex items-center gap-4">
                 <FormControl>
                   <Input

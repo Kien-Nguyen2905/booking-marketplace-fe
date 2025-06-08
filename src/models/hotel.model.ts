@@ -4,7 +4,7 @@ import {
   HOTEL_STATUS,
   HOTEL_TYPE,
 } from '@/constants';
-import { AmenitySchema } from '@/models/amenity.mode';
+import { AmenitySchema } from '@/models/amenity.model';
 import { ReviewSchema } from '@/models/review.model';
 import { RoomBedSchema, RoomTypeSchema } from '@/models/room-type.model';
 import { RoomSchema } from '@/models/room.model';

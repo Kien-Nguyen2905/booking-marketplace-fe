@@ -1,4 +1,4 @@
-import { GetAmenityResType } from '@/models/amenity.mode';
+import { GetAmenityResType } from '@/models/amenity.model';
 
 export type TPartnerAmenitiesTableProps = {
   hotelAmenities: GetAmenityResType[];

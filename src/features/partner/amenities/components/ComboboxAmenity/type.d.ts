@@ -1,4 +1,4 @@
-import { GetAmenityResType } from '@/models/amenity.mode';
+import { GetAmenityResType } from '@/models/amenity.model';
 
 export type TComboboxAmenityProps = {
   addAmenity: (amenity: GetAmenityResType) => void;

@@ -16,7 +16,7 @@ import {
   GetQuantityHotelsByProvinceCodeResType,
   GetFindHotelsResType,
 } from '@/models/hotel.model';
-import { GetAmenitiesResType } from '@/models/amenity.mode';
+import { GetAmenitiesResType } from '@/models/amenity.model';
 
 const hotelServices = {
   getHotels: (queryString: string = '') => {

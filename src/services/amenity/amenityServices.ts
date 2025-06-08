@@ -1,4 +1,4 @@
-import { GetAmenitiesResType } from '@/models/amenity.mode';
+import { GetAmenitiesResType } from '@/models/amenity.model';
 import { instance } from '@/services/interceptor';
 import { SuccessResponse } from '@/services/type';
 

@@ -10,7 +10,8 @@ import {
 import { CPagination } from '@/components';
 
 const HotelPage = () => {
-  const { hotels, pagination, isLoading, queryStringDetail } = useHotelPage();
+  const { hotels, pagination, isLoading, queryStringDetail, promotion } =
+    useHotelPage();
   return (
     <div className="pt-[130px] container mx-auto">
       <div className="w-full justify-end flex mb-4">
@@ -31,6 +32,7 @@ const HotelPage = () => {
                     <HotelItem
                       hotel={hotel}
                       queryStringDetail={queryStringDetail}
+                      promotion={promotion || null}
                     />
                   </div>
                 ))}

@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { POPULAR_ACCOMMODATION_LIST } from '@/constants';
-import { useGetHotelsByProvinceCodeQuery } from '@/queries/useHotel';
+import {
+  useGetHotelsByProvinceCodeQuery,
+  useGetPromotionsByValidFromQuery,
+} from '@/queries';
 import { useRef } from 'react';
 
 export const useRecommendedAccommodations = () => {
@@ -10,6 +13,10 @@ export const useRecommendedAccommodations = () => {
 
   const { data: hotelsData } = useGetHotelsByProvinceCodeQuery(activeTab);
 
+  const { data: promotionsData } = useGetPromotionsByValidFromQuery();
+
+  const promotionToday = promotionsData?.data.data.todayPromotions;
+
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   // @ts-ignore
@@ -17,8 +24,8 @@ export const useRecommendedAccommodations = () => {
 
   const nextBtnRef = useRef<HTMLButtonElement>(null);
   const prevBtnRef = useRef<HTMLButtonElement>(null);
-
   return {
+    promotionToday,
     activeTab,
     setActiveTab,
     setIsBeginning,

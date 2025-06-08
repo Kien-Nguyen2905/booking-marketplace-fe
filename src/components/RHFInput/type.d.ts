@@ -9,7 +9,7 @@ export type TInputProps = {
   classNameInput?: string;
   className?: string;
   disabled?: boolean;
-  min?: number;
+  min?: number | string;
   renderProp?: any;
   component?: React.ReactNode;
   required?: boolean;

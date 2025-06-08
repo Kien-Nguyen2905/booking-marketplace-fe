@@ -1,10 +1,11 @@
 import { wishlistServices } from '@/services/wishlist';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-export const useGetWishlistsByUserIdQuery = () => {
+export const useGetWishlistsByUserIdQuery = (enabled: boolean) => {
   return useQuery({
     queryKey: ['wishlists'],
     queryFn: wishlistServices.getWishlistsByUserId,
+    enabled,
   });
 };
 

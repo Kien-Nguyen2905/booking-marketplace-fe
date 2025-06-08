@@ -10,3 +10,5 @@ export * from './useAmenity';
 export * from './useRoomType';
 export * from './useRoom';
 export * from './useWishlist';
+export * from './useHotel';
+export * from './usePromotion';

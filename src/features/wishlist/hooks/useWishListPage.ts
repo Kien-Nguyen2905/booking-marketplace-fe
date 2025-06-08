@@ -2,9 +2,13 @@ import { useGetWishlistsByUserIdQuery } from '@/queries';
 import { useDeleteWishlistMutation } from '@/queries';
 import { useState } from 'react';
 import { handleErrorApi } from '@/lib/helper';
+import { useAppContext } from '@/context/AppProvider';
 
 export const useWishListPage = () => {
-  const { data: wishlistData, isLoading } = useGetWishlistsByUserIdQuery();
+  const { profile } = useAppContext();
+  const { data: wishlistData, isLoading } = useGetWishlistsByUserIdQuery(
+    !!profile?.id,
+  );
   const wishlists = wishlistData?.data.data;
 
   const { mutateAsync: deleteWishlist, isPending } =

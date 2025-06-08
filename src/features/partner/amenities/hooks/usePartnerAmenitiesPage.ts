@@ -6,7 +6,7 @@ import {
 } from '@/queries';
 import { useAppContext } from '@/context/AppProvider';
 import { useState, useEffect } from 'react';
-import { GetAmenityResType } from '@/models/amenity.mode';
+import { GetAmenityResType } from '@/models/amenity.model';
 import { handleErrorApi } from '@/lib/helper';
 import { showToast } from '@/lib/toast';
 import { SUCCESS_MESSAGES } from '@/constants';

@@ -3,7 +3,7 @@ import { RoomBedType, ROUTES, SUCCESS_MESSAGES } from '@/constants';
 import { useAppContext } from '@/context/AppProvider';
 import { handleErrorApi } from '@/lib/helper';
 import { showToast } from '@/lib/toast';
-import { GetAmenityResType } from '@/models/amenity.mode';
+import { GetAmenityResType } from '@/models/amenity.model';
 import {
   CreateRoomTypeBodySchema,
   CreateRoomTypeBodyType,

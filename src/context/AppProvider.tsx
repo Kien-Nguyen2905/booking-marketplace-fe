@@ -100,6 +100,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
       setPartnerProfile(partnerData.data.data);
     }
   }, [partnerData]);
+
   useEffect(() => {
     if (typeof window === 'undefined') return; // Ensure client-side execution
 

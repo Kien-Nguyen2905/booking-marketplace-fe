@@ -8,13 +8,14 @@ import {
   RoomDetailModal,
   StartRating,
 } from '@/components';
-import { MAP_HOTEL_TYPE } from '@/constants';
+import { MAP_HOTEL_TYPE, POLICY_TYPE } from '@/constants';
 import { Badge } from '@/components/ui/badge';
 import {
   BookmarkCheck,
   BookmarkPlus,
   CalendarOff,
   CheckCircle2,
+  CircleAlert,
   HandCoins,
   House,
   Info,
@@ -25,6 +26,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { formatCurrency } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ChildIcon, PeopleIcon } from '@/icons';
+import { format } from 'date-fns';
 
 const HotelDetailPage = () => {
   const {
@@ -41,6 +43,9 @@ const HotelDetailPage = () => {
     childParam,
     handleWishlist,
     wishlist,
+    promotion,
+    isFuture,
+    startDateParams,
   } = useHotelDetailPage();
 
   if (!hotel) return <Loading />;
@@ -166,6 +171,11 @@ const HotelDetailPage = () => {
                             const availableRoom = availableRooms.find(
                               (room) => room?.id === item.id,
                             );
+                            if (
+                              item.policy === POLICY_TYPE.FREE_CANCELLATION &&
+                              !isFuture
+                            )
+                              return null;
                             return (
                               availableRoom &&
                               availableRoom.availableRooms >=
@@ -181,7 +191,8 @@ const HotelDetailPage = () => {
                                   <div className="col-span-3">
                                     <div className="flex flex-col gap-1">
                                       <div className="flex items-center">
-                                        {item.policy === 'FREE_CANCELLATION' ? (
+                                        {item.policy ===
+                                        POLICY_TYPE.FREE_CANCELLATION ? (
                                           <Badge className="bg-green-100 text-green-700 hover:bg-green-100 border-0">
                                             <CalendarOff
                                               size={14}
@@ -189,7 +200,8 @@ const HotelDetailPage = () => {
                                             />
                                             Free Cancellation
                                           </Badge>
-                                        ) : item.policy === 'PAY_AT_HOTEL' ? (
+                                        ) : item.policy ===
+                                          POLICY_TYPE.PAY_AT_HOTEL ? (
                                           <Badge className="bg-blue-100 text-primary hover:bg-blue-100 border-0">
                                             <HandCoins
                                               size={14}
@@ -207,6 +219,18 @@ const HotelDetailPage = () => {
                                           </Badge>
                                         )}
                                       </div>
+                                      {item.policy ===
+                                        POLICY_TYPE.FREE_CANCELLATION && (
+                                        <div className=" flex items-start gap-1 text-gray-500 mt-1">
+                                          <CircleAlert
+                                            size={14}
+                                            className="text-green-500"
+                                          />
+                                          <span className="text-xs">
+                                            Before {startDateParams}
+                                          </span>
+                                        </div>
+                                      )}
                                       {(item?.rangeLimitDate || 0) > 0 && (
                                         <span className="text-xs text-gray-500 mt-1">
                                           Limit range booking:{' '}
@@ -241,12 +265,34 @@ const HotelDetailPage = () => {
                                   </div>
                                   <div className="col-span-3">
                                     <div className="mb-2 flex flex-col items-end">
-                                      <div className="text-gray-500 text-xs line-through mb-1">
-                                        {formatCurrency(item.price * 1.2)}
+                                      {promotion &&
+                                        promotion?.percentage > 0 && (
+                                          <div className="text-gray-500 text-xs line-through mb-1">
+                                            {formatCurrency(item.price)}
+                                          </div>
+                                        )}
+                                      <div className="text-orange-500 text-lg font-bold">
+                                        {formatCurrency(
+                                          item.price *
+                                            (1 - (promotion?.percentage || 0)),
+                                        )}
                                       </div>
-                                      <div className="text-orange-500 text-xl font-bold">
-                                        {formatCurrency(item.price)}
-                                      </div>
+                                      {promotion &&
+                                        promotion.percentage > 0 && (
+                                          <span className="text-xs text-right font-bold text-red-500">
+                                            Sale from{' '}
+                                            {format(
+                                              promotion.validFrom,
+                                              'dd/MM/yyyy',
+                                            )}{' '}
+                                            <br />
+                                            to{' '}
+                                            {format(
+                                              promotion.validUntil,
+                                              'dd/MM/yyyy',
+                                            )}
+                                          </span>
+                                        )}
                                       <div className="text-xs text-gray-500">
                                         Exclude taxes & fees
                                       </div>

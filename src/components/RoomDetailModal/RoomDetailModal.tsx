@@ -16,7 +16,7 @@ import { ChildIcon, PeopleIcon } from '@/icons';
 import { Separator } from '@/components/ui/separator';
 import { BedSingle, Dot, Ruler } from 'lucide-react';
 import { TRoomDetailModalProps } from '@/components/RoomDetailModal/type';
-import { AmenityType } from '@/models/amenity.mode';
+import { AmenityType } from '@/models/amenity.model';
 import { Button } from '@/components/ui/button';
 import { Swiper, SwiperSlide } from 'swiper/react';
 

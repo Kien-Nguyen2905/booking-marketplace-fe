@@ -181,3 +181,27 @@ export const ERROR_ROOM_MESSAGES = {
     min: 'Range limit date must be a than 0',
   },
 };
+
+export const ERROR_PROMOTION_MESSAGES = {
+  title: {
+    required: 'Title is required',
+    maxLength: 'Title must not exceed 100 characters',
+  },
+  percentage: {
+    required: 'Percentage is required',
+    min: 'Percentage must be a than 0',
+    max: 'Percentage must not exceed 100 percent',
+  },
+  sharePercentage: {
+    required: 'Share percentage is required',
+    min: 'Share percentage must be from 0',
+    max: 'Share percentage must not exceed 100 percent',
+  },
+  validFrom: {
+    required: 'Valid from is required',
+    min: 'Valid from must be from today',
+  },
+  validUntil: {
+    required: 'Valid until is required',
+  },
+};

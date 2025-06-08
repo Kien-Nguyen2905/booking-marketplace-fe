@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { GetAmenityResType } from '@/models/amenity.mode';
+import { GetAmenityResType } from '@/models/amenity.model';
 import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-react';
 import { TPartnerAmenitiesTableProps } from '@/features/partner/amenities/components/PartnerAmenitiesTable/type';
