@@ -108,19 +108,16 @@ const PromotionTable = () => {
 
           <div className="rounded-md border">
             {isLoading ? <LoadingTable /> : <div className="h-[3px]"></div>}
-            <Table>
+            <Table className="table-fixed min-w-[1000px]">
               <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow key={headerGroup.id}>
                     {headerGroup.headers.map((header) => (
                       <TableHead
                         key={header.id}
-                        className={`w-[135px] ${
-                          (header.column.columnDef.header === 'percentage' &&
-                            'w-[180px]') ||
-                          (header.column.columnDef.header === 'title' &&
-                            'w-[220px]')
-                        }`}
+                        className={
+                          header.column.columnDef.meta?.width || 'w-full'
+                        }
                       >
                         {header.isPlaceholder
                           ? null
@@ -137,7 +134,7 @@ const PromotionTable = () => {
                 {isLoading ? (
                   <TableRow>
                     <TableCell
-                      colSpan={userColumns?.length || 5}
+                      colSpan={userColumns?.length + 1 || 5}
                       className="h-24 text-center"
                     >
                       Loading...
@@ -159,7 +156,7 @@ const PromotionTable = () => {
                 ) : (
                   <TableRow>
                     <TableCell
-                      colSpan={userColumns?.length || 5}
+                      colSpan={userColumns?.length + 1 || 5}
                       className="h-24 text-center"
                     >
                       No results.

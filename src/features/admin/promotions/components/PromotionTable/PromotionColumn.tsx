@@ -1,5 +1,11 @@
 import { Button } from '@/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
+declare module '@tanstack/react-table' {
+  // eslint-disable-next-line
+  interface ColumnMeta<TData, TValue> {
+    width?: string;
+  }
+}
 import {
   ChevronDown,
   ChevronsUpDown,
@@ -27,7 +33,7 @@ const PercentageHeader = () => {
   const { orderBy, onOrderByChange, order } = usePromotionTable();
   return (
     <div
-      className={`flex items-center gap-2 cursor-pointer w-[180px] ${
+      className={`flex items-center gap-2 cursor-pointer ${
         orderBy === 'percentage' ? 'text-primary' : ''
       }`}
       onClick={() => onOrderByChange('percentage')}
@@ -48,7 +54,7 @@ const SharePercentageHeader = () => {
   const { orderBy, onOrderByChange, order } = usePromotionTable();
   return (
     <div
-      className={`flex items-center gap-2 cursor-pointer w-[130px] ${
+      className={`flex items-center gap-2 cursor-pointer ${
         orderBy === 'sharePercentage' ? 'text-primary' : ''
       }`}
       onClick={() => onOrderByChange('sharePercentage')}
@@ -69,7 +75,7 @@ const ValidFromHeader = () => {
   const { orderBy, onOrderByChange, order } = usePromotionTable();
   return (
     <div
-      className={`flex items-center gap-2 cursor-pointer w-[135px] ${
+      className={`flex items-center gap-2 cursor-pointer ${
         orderBy === 'validFrom' ? 'text-primary' : ''
       }`}
       onClick={() => onOrderByChange('validFrom')}
@@ -90,7 +96,7 @@ const ValidUntilHeader = () => {
   const { orderBy, onOrderByChange, order } = usePromotionTable();
   return (
     <div
-      className={`flex items-center gap-2 cursor-pointer w-[135px] ${
+      className={`flex items-center gap-2 cursor-pointer ${
         orderBy === 'validUntil' ? 'text-primary' : ''
       }`}
       onClick={() => onOrderByChange('validUntil')}
@@ -141,36 +147,35 @@ export const promotionColumns: ColumnDef<any>[] = [
   {
     accessorKey: 'title',
     header: () => {
-      return <div className="pl-4 w-[220px]">Title</div>;
+      return <div className="pl-4">Title</div>;
     },
     cell: ({ row }) => (
-      <span className="pl-4 w-[220px] truncate line-clamp-1">
+      <span className="pl-4 truncate line-clamp-1">
         {row.getValue('title')}
       </span>
     ),
+    meta: { width: 'w-[250px]' },
   },
   {
     accessorKey: 'percentage',
     header: () => <PercentageHeader />,
-    cell: ({ row }) => (
-      <div className="">{Number(row.getValue('percentage')) * 100}%</div>
-    ),
+    cell: ({ row }) => <div>{Number(row.getValue('percentage')) * 100}%</div>,
+    meta: { width: 'w-[150px]' },
   },
   {
     accessorKey: 'sharePercentage',
     header: () => <SharePercentageHeader />,
     cell: ({ row }) => (
-      <div className="">{Number(row.getValue('sharePercentage')) * 100}%</div>
+      <div>{Number(row.getValue('sharePercentage')) * 100}%</div>
     ),
+    meta: { width: 'w-[150px]' },
   },
   {
     accessorKey: 'validFrom',
     header: () => <ValidFromHeader />,
     cell: ({ row }) => {
       const dateValue = row.getValue('validFrom') as string;
-      return (
-        <div className="w-max">{format(new Date(dateValue), 'dd/MM/yyyy')}</div>
-      );
+      return <div>{format(new Date(dateValue), 'dd/MM/yyyy')}</div>;
     },
   },
   {
@@ -178,9 +183,7 @@ export const promotionColumns: ColumnDef<any>[] = [
     header: () => <ValidUntilHeader />,
     cell: ({ row }) => {
       const dateValue = row.getValue('validUntil') as string;
-      return (
-        <div className="w-max">{format(new Date(dateValue), 'dd/MM/yyyy')}</div>
-      );
+      return <div>{format(new Date(dateValue), 'dd/MM/yyyy')}</div>;
     },
   },
   {
@@ -194,5 +197,6 @@ export const promotionColumns: ColumnDef<any>[] = [
   {
     id: 'actions',
     cell: ({ row }) => <ActionsCell row={row} />,
+    meta: { width: 'w-[80px]' },
   },
 ];

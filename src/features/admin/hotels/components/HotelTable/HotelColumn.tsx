@@ -156,5 +156,6 @@ export const hotelColumns: ColumnDef<any>[] = [
   {
     id: 'actions',
     cell: ({ row }) => <ActionsCell row={row} />,
+    meta: { width: 'w-[80px]' },
   },
 ];
