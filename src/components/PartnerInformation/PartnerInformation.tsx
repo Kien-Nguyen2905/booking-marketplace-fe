@@ -102,7 +102,12 @@ const PartnerInformation: FC<TPartnerInformationProps> = ({ partner }) => {
                     placeholder="Pick your birthday"
                     className="w-1/3"
                     renderProp={(props: any, field: any) => (
-                      <RHFPickDate field={field} {...props} />
+                      <RHFPickDate
+                        fromYear={1900}
+                        toYear={new Date().getFullYear()}
+                        field={field}
+                        {...props}
+                      />
                     )}
                   />
                   <RHFSelection

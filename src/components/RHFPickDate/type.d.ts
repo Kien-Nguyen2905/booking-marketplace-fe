@@ -8,4 +8,6 @@ export type TRHFPickDateProps = {
   disabledInput?: boolean;
   className?: string;
   onChange?: (value: Date | undefined) => void;
+  fromYear?: number;
+  toYear?: number;
 };

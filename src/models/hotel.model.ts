@@ -122,6 +122,8 @@ export const GetFindHotelsResSchema = z.object({
           room: z.array(RoomSchema),
         }),
       ),
+      room: z.array(RoomSchema),
+      price: z.number(),
     }),
   ),
   totalItems: z.number(),
@@ -137,6 +139,8 @@ export const FindHotelResSchema = HotelSchema.extend({
       room: z.array(RoomSchema),
     }),
   ),
+  room: z.array(RoomSchema),
+  price: z.number(),
 });
 
 export const CreateHotelBodySchema = HotelSchema.omit({

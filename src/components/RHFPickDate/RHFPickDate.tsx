@@ -23,6 +23,8 @@ const RHFPickDate: FC<TRHFPickDateProps> = ({
   className = '',
   onChange,
   disabledInput = false,
+  fromYear = new Date().getFullYear(),
+  toYear = new Date().getFullYear() + 50,
   disabled = (date: Date) => date > new Date(),
 }) => {
   const [open, setOpen] = useState(false);
@@ -68,9 +70,9 @@ const RHFPickDate: FC<TRHFPickDateProps> = ({
             disabled={disabled}
             initialFocus
             captionLayout="dropdown-buttons"
-            fromYear={1900}
-            toYear={2025}
             defaultMonth={field.value || new Date()}
+            fromYear={fromYear}
+            toYear={toYear}
           />
         </PopoverContent>
       </Popover>
