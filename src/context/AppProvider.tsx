@@ -1,6 +1,7 @@
 'use client';
 import { MANAGEMENT_NAV_LINKS, ROLE_NAME, ROUTES } from '@/constants';
 import { useLogout } from '@/hooks';
+import { generateSocketInstance } from '@/lib/socket';
 import {
   getAccessTokenLocalStorage,
   getEmailLocalStorage,
@@ -24,6 +25,7 @@ import {
   useMemo,
   useState,
 } from 'react';
+import { Socket } from 'socket.io-client';
 
 interface AppContextProps {
   isOpenModal: boolean;
@@ -44,6 +46,8 @@ interface AppContextProps {
   setIsPendingPartner: (value: boolean) => void;
   partnerProfile: GetPartnerByUserIdResType | null;
   setPartnerProfile: (partnerProfile: GetPartnerByUserIdResType | null) => void;
+  socket: Socket | undefined;
+  setSocket: (socket: Socket | undefined) => void;
 }
 
 const defaultContext: AppContextProps = {
@@ -65,6 +69,8 @@ const defaultContext: AppContextProps = {
   setIsPendingPartner: () => null,
   partnerProfile: null,
   setPartnerProfile: () => null,
+  socket: undefined,
+  setSocket: () => null,
 };
 
 const AppContext = createContext<AppContextProps>(defaultContext);
@@ -86,6 +92,8 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [partnerProfile, setPartnerProfile] =
     useState<GetPartnerByUserIdResType | null>(null);
   const [isPendingPartner, setIsPendingPartner] = useState(false);
+  const [socket, setSocket] = useState<Socket | undefined>();
+
   const { data, error } = useGetProfileQuery(isAuthenticated);
   const profileData = data?.data?.data;
 
@@ -132,6 +140,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
           window.location.reload();
         }
       }
+      setSocket(generateSocketInstance());
     }
   }, [data, isAuthenticated]);
 
@@ -182,6 +191,8 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
       setIsPendingPartner,
       partnerProfile,
       setPartnerProfile,
+      socket,
+      setSocket,
     }),
     [
       isOpenModal,
@@ -195,6 +206,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
       profile,
       isPendingPartner,
       partnerProfile,
+      socket,
     ],
   );
   return (

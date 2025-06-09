@@ -4,6 +4,7 @@ import {
   LoginBodyType,
 } from '@/models';
 import { SetStateAction } from 'react';
+import { Socket } from 'socket.io-client';
 
 export type TMainContextProviderProps = {
   isOpenModal: boolean;
@@ -25,4 +26,6 @@ export type TMainContextProviderProps = {
   isPendingPartner: boolean;
   setIsPendingPartner: SetStateAction<boolean>;
   partnerProfile: GetPartnerByUserIdResType | null;
+  socket: Socket | undefined;
+  setSocket: SetStateAction<Socket | undefined>;
 };
