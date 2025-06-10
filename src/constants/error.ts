@@ -199,7 +199,7 @@ export const ERROR_PROMOTION_MESSAGES = {
   },
   validFrom: {
     required: 'Valid from is required',
-    min: 'Valid from must be from today',
+    min: 'Valid from must be from tomorrow',
   },
   validUntil: {
     required: 'Valid until is required',

@@ -1,4 +1,5 @@
 import { ERROR_PROMOTION_MESSAGES } from '@/constants';
+import { addDays, endOfDay } from 'date-fns';
 import { z } from 'zod';
 
 export const PromotionSchema = z.object({
@@ -19,7 +20,7 @@ export const PromotionSchema = z.object({
     .date({
       message: ERROR_PROMOTION_MESSAGES.validFrom.required,
     })
-    .min(new Date(), {
+    .min(endOfDay(new Date()), {
       message: ERROR_PROMOTION_MESSAGES.validFrom.min,
     }),
   validUntil: z.coerce.date({
