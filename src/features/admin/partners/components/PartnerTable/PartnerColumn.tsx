@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
-import { ChevronDown, ChevronUp, Eye, MoreHorizontal } from 'lucide-react';
+import { Eye, MoreHorizontal } from 'lucide-react';
 import { format } from 'date-fns';
 import {
   DropdownMenu,
@@ -82,22 +82,7 @@ export const partnerColumns: ColumnDef<any>[] = [
   },
   {
     accessorKey: 'createdAt',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          className="hover:bg-transparent"
-        >
-          Date
-          {column.getIsSorted() === 'asc' ? (
-            <ChevronUp className="ml-2 h-4 w-4" />
-          ) : column.getIsSorted() === 'desc' ? (
-            <ChevronDown className="ml-2 h-4 w-4" />
-          ) : null}
-        </Button>
-      );
-    },
+    header: 'Date',
     cell: ({ row }) => {
       const dateValue = row.getValue('createdAt') as string;
       return <div>{format(new Date(dateValue), 'dd/MM/yyyy')}</div>;
