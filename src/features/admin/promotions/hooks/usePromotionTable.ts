@@ -243,7 +243,12 @@ export const usePromotionTable = () => {
           ' will be taken place from ' +
           format(promotion.validFrom, 'dd-MM-yyyy') +
           ' to ' +
-          format(promotion.validUntil, 'dd-MM-yyyy'),
+          format(promotion.validUntil, 'dd-MM-yyyy') +
+          ' with percentage ' +
+          promotion.percentage * 100 +
+          '% and we will share ' +
+          promotion.sharePercentage * 100 +
+          '% to partner',
         type: NOTIFY_TYPE.INFORM,
         recipientId: null,
       });

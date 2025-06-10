@@ -12,6 +12,12 @@ import {
 import { Button } from '@/components/ui/button';
 import { Eye, MailCheck, MoreHorizontal } from 'lucide-react';
 import { usePartnerNotification } from '@/features/partner/notifications/hooks';
+declare module '@tanstack/react-table' {
+  // eslint-disable-next-line
+  interface ColumnMeta<TData, TValue> {
+    width?: string;
+  }
+}
 
 export const NotificationTableContext = createContext<TNotificationTable>({
   setSelectedNotification: () => {},
@@ -83,7 +89,6 @@ export const notificationColumns: ColumnDef<any>[] = [
     cell: ({ row }) => (
       <div className="truncate line-clamp-1">{row.getValue('message')}</div>
     ),
-    meta: { width: 'w-[450px]' },
   },
   {
     accessorKey: 'readAt',
