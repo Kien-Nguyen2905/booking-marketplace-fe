@@ -1,1 +1,2 @@
-export * from './useHotelTable';
+export { useHotelTable } from './useHotelTable';
+export { useHotelPageDetail } from './useHotelPageDetail';

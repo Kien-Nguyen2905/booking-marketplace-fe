@@ -14,6 +14,7 @@ export const useHotelTable = () => {
   const { data: hotelsData, isLoading: isLoadingGetHotels } = useGetHotelsQuery(
     searchParams.toString() || `limit=${LIMIT}&page=1`,
   );
+
   const [orderBy, setOrderBy] = useState('');
   const [order, setOrder] = useState('');
   const isLoading = useDebounce({

@@ -26,9 +26,15 @@ export const useCreateHotelMutation = () => {
 };
 
 export const useUpdateHotelMutation = (id: string | number) => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (body: UpdateHotelBodyType) =>
       hotelServices.updateHotel(id, body),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['hotel', id],
+      });
+    },
   });
 };
 

@@ -35,6 +35,8 @@ const PartnerHotelPage = () => {
               ? 'text-green-800'
               : hotel?.status === HOTEL_STATUS.PENDING
               ? 'text-yellow-800'
+              : hotel?.status === HOTEL_STATUS.INACTIVE
+              ? 'text-red-800'
               : 'text-gray-800'
           }`}
         >
