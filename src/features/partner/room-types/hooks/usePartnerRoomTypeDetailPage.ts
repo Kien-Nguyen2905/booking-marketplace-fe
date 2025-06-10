@@ -241,7 +241,7 @@ export const usePartnerRoomTypeDetailPage = () => {
           adults: roomType?.adults || 1,
           child: roomType?.child || 0,
           area: roomType?.area || 0,
-          serviceFeeRate: roomType?.serviceFeeRate * 100 || 0,
+          serviceFeeRate: Math.round(roomType?.serviceFeeRate * 100),
           description: roomType?.description || '',
           images: roomType?.images || [],
         });

@@ -173,14 +173,16 @@ export const promotionColumns: ColumnDef<any>[] = [
   {
     accessorKey: 'percentage',
     header: () => <PercentageHeader />,
-    cell: ({ row }) => <div>{Number(row.getValue('percentage')) * 100}%</div>,
+    cell: ({ row }) => (
+      <div>{Math.round(Number(row.getValue('percentage')) * 100)}%</div>
+    ),
     meta: { width: 'w-[150px]' },
   },
   {
     accessorKey: 'sharePercentage',
     header: () => <SharePercentageHeader />,
     cell: ({ row }) => (
-      <div>{Number(row.getValue('sharePercentage')) * 100}%</div>
+      <div>{Math.round(Number(row.getValue('sharePercentage')) * 100)}%</div>
     ),
     meta: { width: 'w-[150px]' },
   },

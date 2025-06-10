@@ -244,9 +244,9 @@ export const usePromotionTable = () => {
           ' to ' +
           format(promotion.validUntil, 'dd-MM-yyyy') +
           ' with percentage ' +
-          promotion.percentage * 100 +
+          Math.round(promotion.percentage * 100) +
           '% and we will share ' +
-          promotion.sharePercentage * 100 +
+          Math.round(promotion.sharePercentage * 100) +
           '% to partner',
         type: NOTIFY_TYPE.INFORM,
         recipientId: null,
@@ -266,8 +266,8 @@ export const usePromotionTable = () => {
     if (selectedPromotion) {
       form.reset({
         title: selectedPromotion.title,
-        percentage: selectedPromotion.percentage * 100,
-        sharePercentage: selectedPromotion.sharePercentage * 100,
+        percentage: Math.round(selectedPromotion.percentage * 100),
+        sharePercentage: Math.round(selectedPromotion.sharePercentage * 100),
         validFrom: new Date(selectedPromotion.validFrom),
         validUntil: new Date(selectedPromotion.validUntil),
       });

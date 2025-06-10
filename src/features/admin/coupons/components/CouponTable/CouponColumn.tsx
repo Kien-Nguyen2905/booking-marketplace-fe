@@ -146,7 +146,7 @@ export const couponColumns: ColumnDef<any>[] = [
     header: () => <PercentageHeader />,
     cell: ({ row }) => (
       <div className="truncate line-clamp-1">
-        {(Number(row.getValue('percentage')) * 100).toFixed(0)}%
+        {Math.round(Number(row.getValue('percentage')) * 100)}%
       </div>
     ),
     meta: { width: 'w-[100px]' },

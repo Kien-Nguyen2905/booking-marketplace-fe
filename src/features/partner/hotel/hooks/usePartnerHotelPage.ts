@@ -23,7 +23,7 @@ export const usePartnerHotelPage = () => {
     defaultValues: {
       name: hotel?.name || '',
       hotelPhoneNumber: hotel?.hotelPhoneNumber || '',
-      vat: hotel?.vat ? hotel.vat * 100 : 0,
+      vat: hotel?.vat ? Math.round(hotel.vat * 100) : 0,
       description: hotel?.description || '',
       images: hotel?.images || [],
       status: hotel?.status || HOTEL_STATUS.ACTIVE,
@@ -41,7 +41,7 @@ export const usePartnerHotelPage = () => {
       form.reset({
         name: hotel?.name,
         hotelPhoneNumber: hotel?.hotelPhoneNumber,
-        vat: hotel?.vat ? hotel.vat * 100 : 0,
+        vat: hotel?.vat ? Math.round(hotel.vat * 100) : 0,
         description: hotel?.description,
         images: hotel?.images,
         status: hotel?.status,

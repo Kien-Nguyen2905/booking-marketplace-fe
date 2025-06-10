@@ -108,7 +108,7 @@ const PromoCodeSlider = () => {
                             {coupon.title}
                           </h3>
                           <span className="text-xs font-medium text-white bg-red-500 px-2 py-1 rounded-full">
-                            {Number(coupon.percentage * 100).toFixed(0)}%
+                            {Math.round(coupon.percentage * 100)}%
                           </span>
                         </div>
                         <p className="text-xs text-gray-500">

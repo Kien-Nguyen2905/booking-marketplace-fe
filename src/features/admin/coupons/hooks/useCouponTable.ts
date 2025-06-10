@@ -162,7 +162,7 @@ export const useCouponTable = () => {
     if (selectedCoupon) {
       form.reset({
         title: selectedCoupon.title,
-        percentage: +Number(selectedCoupon.percentage * 100).toFixed(0),
+        percentage: Math.round(selectedCoupon.percentage * 100),
         amount: selectedCoupon.amount,
         description: selectedCoupon.description,
       });

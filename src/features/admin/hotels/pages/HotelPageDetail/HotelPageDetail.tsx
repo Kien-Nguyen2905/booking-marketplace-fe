@@ -128,7 +128,7 @@ const HotelPageDetail = () => {
                 </div>
                 <div className="flex gap-1">
                   <p className="font-semibold">VAT:</p>
-                  <p>{hotel?.vat ? hotel.vat * 100 : 0}%</p>
+                  <p>{hotel?.vat ? Math.round(hotel.vat * 100) : 0}%</p>
                 </div>
               </div>
               <div className="flex gap-1">

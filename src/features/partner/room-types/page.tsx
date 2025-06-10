@@ -78,7 +78,9 @@ const PartnerRoomTypesPage = () => {
                   <TableCell>{roomType.adults}</TableCell>
                   <TableCell>{roomType.child}</TableCell>
                   <TableCell>{roomType.area}m2</TableCell>
-                  <TableCell>{roomType.serviceFeeRate * 100}%</TableCell>
+                  <TableCell>
+                    {Math.round(roomType.serviceFeeRate * 100)}%
+                  </TableCell>
                   <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
