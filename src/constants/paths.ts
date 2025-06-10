@@ -129,6 +129,11 @@ export const MANAGEMENT_NAV_LINKS: Dashboard = {
       name: 'Orders',
       icon: CalendarFold,
     },
+    NOTIFICATIONS: {
+      href: ROUTES.PARTNER.NOTIFICATIONS,
+      name: 'Notifications',
+      icon: Bell,
+    },
   },
   EMPLOYEE: {
     ROOT: {

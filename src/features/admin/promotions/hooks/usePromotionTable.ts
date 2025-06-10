@@ -1,6 +1,7 @@
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import {
+  useCreateMultipleNotifyMutation,
   useCreatePromotionMutation,
   useDeletePromotionMutation,
   useGetAllPromotionsQuery,
@@ -8,12 +9,13 @@ import {
 } from '@/queries';
 import { useDebounce } from '@/hooks';
 import { useReactTable, getCoreRowModel } from '@tanstack/react-table';
-import { LIMIT, ROUTES, SUCCESS_MESSAGES } from '@/constants';
+import { LIMIT, NOTIFY_TYPE, ROUTES, SUCCESS_MESSAGES } from '@/constants';
 import { normalizeToUTC, setParamsDefault } from '@/lib/utils';
 import {
   CreatePromotionBodySchema,
   CreatePromotionBodyType,
   GetPromotionResType,
+  PromotionType,
   UpdatePromotionBodyType,
 } from '@/models/promotion.model';
 import { promotionColumns } from '@/features/admin/promotions/components/PromotionTable/PromotionColumn';
@@ -26,6 +28,8 @@ export const usePromotionTable = () => {
   const searchParams = useSearchParams();
   const [orderBy, setOrderBy] = useState('');
   const [order, setOrder] = useState('');
+  const { mutateAsync: createMultipleNotify } =
+    useCreateMultipleNotifyMutation();
   const { mutateAsync: createPromotion, isPending: isSubmittingCreate } =
     useCreatePromotionMutation();
   const { mutateAsync: updatePromotion, isPending: isSubmittingUpdate } =
@@ -229,6 +233,31 @@ export const usePromotionTable = () => {
     ? handleUpdatePromotion
     : handleCreatePromotion;
 
+  const handleCreateNotify = async (promotion: PromotionType) => {
+    try {
+      const { data } = await createMultipleNotify({
+        title: promotion.title,
+        message:
+          'Promotion: ' +
+          `"${promotion.title}"` +
+          ' will be taken place from ' +
+          format(promotion.validFrom, 'dd-MM-yyyy') +
+          ' to ' +
+          format(promotion.validUntil, 'dd-MM-yyyy'),
+        type: NOTIFY_TYPE.INFORM,
+        recipientId: null,
+      });
+      if (data?.message) {
+        showToast({
+          type: 'success',
+          message: SUCCESS_MESSAGES.NOTIFIED_SUCCESS,
+        });
+      }
+    } catch (error: any) {
+      handleErrorApi({ error, setError: form.setError });
+    }
+  };
+
   useEffect(() => {
     if (selectedPromotion) {
       form.reset({
@@ -275,5 +304,6 @@ export const usePromotionTable = () => {
     orderBy,
     order,
     onOrderByChange,
+    handleCreateNotify,
   };
 };

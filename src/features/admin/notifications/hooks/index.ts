@@ -1,0 +1,1 @@
+export { usePartnerNotification } from './usePartnerNotification';

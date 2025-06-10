@@ -1,56 +1,47 @@
+import { ROUTES } from '@/constants';
 import { useAppContext } from '@/context/AppProvider';
-import { TNotification } from '@/layouts/DashboardHeader/type';
+import { handleErrorApi } from '@/lib/helper';
+import { showToast } from '@/lib/toast';
+import { NotifyType } from '@/models/notify.model';
+import {
+  useGetNotifiesByRecipientIdQuery,
+  useReadNotifyMutation,
+} from '@/queries';
+import { usePathname } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 
 export const useDashboardHeader = () => {
-  const { profile } = useAppContext();
+  const { profile, socket } = useAppContext();
+  const { data, refetch } = useGetNotifiesByRecipientIdQuery();
+  const notifications = data?.data.data.data || [];
+  const { mutateAsync: readNotify, isPending } = useReadNotifyMutation();
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
-  const [notifications, setNotifications] = useState<TNotification[]>([
-    {
-      id: '1',
-      title: 'Booking Confirmed',
-      message: 'Your booking at Grand Hotel has been confirmed.',
-      time: '2 hours ago',
-      read: false,
-    },
-    {
-      id: '2',
-      title: 'Special Offer',
-      message: 'New discount available for your next booking!',
-      time: '5 hours ago',
-      read: false,
-    },
-    {
-      id: '3',
-      title: 'Payment Received',
-      message: 'We have received your payment for reservation #12345.',
-      time: '1 day ago',
-      read: false,
-    },
-    {
-      id: '4',
-      title: 'Booking Reminder',
-      message: 'Your stay at Ocean View Resort is tomorrow.',
-      time: '1 day ago',
-      read: true,
-    },
-    {
-      id: '5',
-      title: 'Rate Your Stay',
-      message: 'How was your recent stay at Mountain Lodge?',
-      time: '3 days ago',
-      read: true,
-    },
-    {
-      id: '6',
-      title: 'Account Update',
-      message: 'Your profile information has been updated successfully.',
-      time: '5 days ago',
-      read: true,
-    },
-  ]);
 
   const notificationRef = useRef<HTMLDivElement>(null);
+  const originalTitleRef = useRef<string>('');
+
+  const pageName = usePathname();
+
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [selectedNotification, setSelectedNotification] =
+    useState<NotifyType | null>(null);
+
+  const confirmAction = () => {
+    try {
+      if (!selectedNotification) return;
+      readNotify(selectedNotification.id);
+      refetch();
+      setSelectedNotification(null);
+    } catch (error) {
+      handleErrorApi({ error });
+    }
+  };
+
+  const onOpenModal = (notification: NotifyType) => {
+    if (!notification || notification.readAt) return;
+    setSelectedNotification(notification);
+    setIsConfirmModalOpen(true);
+  };
 
   // Handle click outside to close notifications dropdown
   useEffect(() => {
@@ -74,32 +65,64 @@ export const useDashboardHeader = () => {
     setIsNotificationsOpen(!isNotificationsOpen);
   };
 
-  const markAsRead = (id: string) => {
-    setNotifications(
-      notifications.map((notification) =>
-        notification.id === id ? { ...notification, read: true } : notification,
-      ),
-    );
-  };
-
-  const markAllAsRead = () => {
-    setNotifications(
-      notifications.map((notification) => ({ ...notification, read: true })),
-    );
-  };
-
   const getUnreadCount = () => {
-    return notifications.filter((notification) => !notification.read).length;
+    return notifications.filter((notification) => !notification.readAt).length;
   };
+
+  const hrefLink =
+    profile?.role.name === 'ADMIN'
+      ? ROUTES.ADMIN.NOTIFICATIONS
+      : ROUTES.PARTNER.NOTIFICATIONS;
+
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleNotification = () => {
+      showToast({
+        type: 'info',
+        message: 'You have a new notification',
+      });
+      refetch();
+    };
+
+    socket.on('notify', handleNotification);
+
+    return () => {
+      socket.off('notify', handleNotification);
+    };
+  }, [socket, refetch]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    // Set original title once on mount
+    if (originalTitleRef.current === '') {
+      originalTitleRef.current = document.title;
+    }
+
+    const unreadCount = getUnreadCount();
+    const originalTitle = originalTitleRef.current;
+
+    if (unreadCount > 0) {
+      document.title = `(${unreadCount}) ${originalTitle}`;
+    } else {
+      document.title = originalTitle;
+    }
+  }, [notifications, pageName]);
 
   return {
     isNotificationsOpen,
     notifications,
     notificationRef,
     toggleNotifications,
-    markAsRead,
-    markAllAsRead,
     getUnreadCount,
     profile,
+    onOpenModal,
+    isConfirmModalOpen,
+    confirmAction,
+    isPending,
+    selectedNotification,
+    setIsConfirmModalOpen,
+    hrefLink,
   };
 };

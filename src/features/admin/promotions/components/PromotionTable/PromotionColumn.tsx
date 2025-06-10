@@ -7,6 +7,7 @@ declare module '@tanstack/react-table' {
   }
 }
 import {
+  Bell,
   ChevronDown,
   ChevronsUpDown,
   ChevronUp,
@@ -115,6 +116,7 @@ const ValidUntilHeader = () => {
 
 export const ActionsCell = ({ row }: { row: any }) => {
   const { setSelectedPromotion, setOpen } = useContext(PromotionTableContext);
+  const { handleCreateNotify } = usePromotionTable();
   const promotion = row.original;
 
   return (
@@ -137,6 +139,18 @@ export const ActionsCell = ({ row }: { row: any }) => {
         >
           <Eye className="mr-2 h-4 w-4" />
           <span>View details</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            // Use setTimeout to ensure the state update has time to process
+            setTimeout(() => {
+              handleCreateNotify(promotion);
+            }, 0);
+          }}
+          className="cursor-pointer"
+        >
+          <Bell className="mr-2 h-4 w-4" />
+          <span>Notify</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

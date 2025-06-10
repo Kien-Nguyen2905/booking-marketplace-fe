@@ -12,3 +12,4 @@ export * from './useRoom';
 export * from './useWishlist';
 export * from './useHotel';
 export * from './usePromotion';
+export * from './useNotify';

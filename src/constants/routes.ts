@@ -32,6 +32,7 @@ export const ROUTES = {
     ROOM_TYPES_CREATE: '/partner/room-types/create',
     ROOMS: '/partner/rooms',
     ORDERS: '/partner/orders',
+    NOTIFICATIONS: '/partner/notifications',
   },
   TWO_FA_PAGE: '/2fa-page',
   RESET_PASSWORD_PAGE: '/reset-password',
