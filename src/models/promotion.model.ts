@@ -1,5 +1,5 @@
 import { ERROR_PROMOTION_MESSAGES } from '@/constants';
-import { addDays, endOfDay } from 'date-fns';
+import { endOfDay } from 'date-fns';
 import { z } from 'zod';
 
 export const PromotionSchema = z.object({

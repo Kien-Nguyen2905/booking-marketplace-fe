@@ -89,6 +89,7 @@ export const notificationColumns: ColumnDef<any>[] = [
     cell: ({ row }) => (
       <div className="truncate line-clamp-1">{row.getValue('message')}</div>
     ),
+    meta: { width: 'w-[450px]' },
   },
   {
     accessorKey: 'readAt',

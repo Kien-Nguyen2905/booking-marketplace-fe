@@ -36,7 +36,6 @@ export const usePromotionTable = () => {
     useUpdatePromotionMutation();
   const { mutateAsync: deletePromotion, isPending: isSubmittingDelete } =
     useDeletePromotionMutation();
-  console.log(searchParams.toString());
   const { data: allPromotionData, isLoading: isLoadingPromotions } =
     useGetAllPromotionsQuery(
       searchParams.toString() || `limit=${LIMIT}&page=1`,

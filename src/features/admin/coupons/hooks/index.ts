@@ -1,0 +1,1 @@
+export { useCouponTable } from './useCouponTable';

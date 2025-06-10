@@ -3,3 +3,4 @@ export { AdminPartnerPage } from './partners';
 export { AdminHotelPage } from './hotels';
 export { AdminPromotionsPage } from './promotions';
 export { AdminNotificationsPage } from './notifications';
+export { AdminCouponPage } from './coupons';

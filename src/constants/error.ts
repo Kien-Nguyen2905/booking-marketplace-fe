@@ -205,3 +205,29 @@ export const ERROR_PROMOTION_MESSAGES = {
     required: 'Valid until is required',
   },
 };
+
+export const ERROR_COUPON_MESSAGES = {
+  title: {
+    required: 'Title is required',
+    maxLength: 'Title must not exceed 100 characters',
+  },
+  description: {
+    required: 'Description is required',
+    maxLength: 'Description must not exceed 255 characters',
+  },
+  code: {
+    required: 'Code is required',
+    maxLength: 'Code must not exceed 50 characters',
+  },
+  amount: {
+    required: 'Amount is required',
+    min: 'Amount must be a than 0',
+    invalidNumber: 'Invalid amount',
+  },
+  percentage: {
+    required: 'Percentage is required',
+    min: 'Percentage must be a than 0',
+    max: 'Percentage must not exceed 15 percent',
+    invalidNumber: 'Invalid percentage',
+  },
+};

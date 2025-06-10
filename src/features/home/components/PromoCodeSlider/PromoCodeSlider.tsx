@@ -6,43 +6,7 @@ import { Navigation, Pagination } from 'swiper/modules';
 import { Copy, Check, Gift, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { usePromoCodeSlider } from '@/features/home/components/PromoCodeSlider/usePromoCodeSlider';
-export const mockPromoCodes = [
-  {
-    id: '1',
-    title: 'Giảm ngay 50K',
-    code: 'TVLKBANMOI',
-    description: 'Áp dụng cho lần đặt đầu tiên đặt đơn trên website',
-    percentage: 0.1,
-  },
-  {
-    id: '2',
-    title: '8% giảm giá Khách sạn',
-    code: 'TVLKBANMOI',
-    description: 'Áp dụng cho lần đặt đầu tiên trên ứng dụng Traveloka.',
-    percentage: 0.08,
-  },
-  {
-    id: '3',
-    title: '8% giảm Hoạt động Du lịch',
-    code: 'TVLKBANMOI',
-    description: 'Áp dụng cho lần đặt đầu tiên trên ứng dụng Traveloka.',
-    percentage: 0.08,
-  },
-  {
-    id: '4',
-    title: '5% giảm giá Combo',
-    code: 'COMBO5',
-    description: 'Áp dụng cho lần đặt đầu tiên trên ứng dụng Traveloka.',
-    percentage: 0.05,
-  },
-  {
-    id: '5',
-    title: '10% giảm giá Combo',
-    code: 'COMBO5',
-    description: 'Áp dụng cho lần đặt đầu tiên trên ứng dụng Traveloka.',
-    percentage: 0.1,
-  },
-];
+
 const PromoCodeSlider = () => {
   const {
     copiedCodeId,
@@ -55,6 +19,7 @@ const PromoCodeSlider = () => {
     setIsBeginning,
     setIsEnd,
     setSwiper,
+    coupons,
   } = usePromoCodeSlider();
   return (
     <div className="w-full relative">
@@ -125,60 +90,66 @@ const PromoCodeSlider = () => {
             setIsEnd(swiperInstance.isEnd);
           }}
         >
-          {mockPromoCodes.map((promo) => (
-            <SwiperSlide key={promo.id} className="max-w-[320px] w-full">
-              <div className="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
-                <div className="p-4 border-b border-gray-100">
-                  <div className="flex items-center">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center mr-3">
-                      <div className="w-full h-full rounded-full flex items-center justify-center bg-[var(--blue-primary)]">
-                        <Gift className="h-5 w-5 text-white" />
+          {coupons &&
+            coupons?.length > 0 &&
+            coupons?.map((coupon) => (
+              <SwiperSlide key={coupon.id} className="max-w-[320px] w-full">
+                <div className="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
+                  <div className="p-4 border-b border-gray-100">
+                    <div className="flex items-center">
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center mr-3">
+                        <div className="w-full h-full rounded-full flex items-center justify-center bg-[var(--blue-primary)]">
+                          <Gift className="h-5 w-5 text-white" />
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between">
-                        <h3 className="font-medium text-sm">{promo.title}</h3>
-                        <span className="text-xs font-medium text-white bg-red-500 px-2 py-1 rounded-full">
-                          {promo.percentage * 100}%
-                        </span>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between">
+                          <h3 className="font-medium text-sm">
+                            {coupon.title}
+                          </h3>
+                          <span className="text-xs font-medium text-white bg-red-500 px-2 py-1 rounded-full">
+                            {Number(coupon.percentage * 100).toFixed(0)}%
+                          </span>
+                        </div>
+                        <p className="text-xs text-gray-500">
+                          {coupon.description}
+                        </p>
                       </div>
-                      <p className="text-xs text-gray-500">
-                        {promo.description}
-                      </p>
                     </div>
                   </div>
+                  <div className="p-4 flex items-center justify-between">
+                    <span className="text-sm font-bold text-[var(--blue-primary)]">
+                      {coupon.code}
+                    </span>
+                    <Button
+                      onClick={() =>
+                        onCopyCode(coupon.code, coupon.id.toString())
+                      }
+                      variant="outline"
+                      size="sm"
+                      className={cn(
+                        'h-8 rounded-full font-medium transition-all',
+                        copiedCodeId === coupon.id.toString()
+                          ? 'bg-green-50 text-green-600 border-green-200'
+                          : 'hover:border-[var(--blue-primary)] hover:text-[var(--blue-primary)]',
+                      )}
+                    >
+                      {copiedCodeId === coupon.id.toString() ? (
+                        <>
+                          <Check className="h-3.5 w-3.5 mr-1" />
+                          Copied
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="h-3.5 w-3.5 mr-1" />
+                          Copy
+                        </>
+                      )}
+                    </Button>
+                  </div>
                 </div>
-                <div className="p-4 flex items-center justify-between">
-                  <span className="text-sm font-bold text-[var(--blue-primary)]">
-                    {promo.code}
-                  </span>
-                  <Button
-                    onClick={() => onCopyCode(promo.code, promo.id)}
-                    variant="outline"
-                    size="sm"
-                    className={cn(
-                      'h-8 rounded-full font-medium transition-all',
-                      copiedCodeId === promo.id
-                        ? 'bg-green-50 text-green-600 border-green-200'
-                        : 'hover:border-[var(--blue-primary)] hover:text-[var(--blue-primary)]',
-                    )}
-                  >
-                    {copiedCodeId === promo.id ? (
-                      <>
-                        <Check className="h-3.5 w-3.5 mr-1" />
-                        Copied
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="h-3.5 w-3.5 mr-1" />
-                        Copy
-                      </>
-                    )}
-                  </Button>
-                </div>
-              </div>
-            </SwiperSlide>
-          ))}
+              </SwiperSlide>
+            ))}
         </Swiper>
 
         <div

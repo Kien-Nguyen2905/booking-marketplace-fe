@@ -1,7 +1,10 @@
 import { showToast } from '@/lib/toast';
 import { useRef, useState } from 'react';
+import { useGetAllCouponsQuery } from '@/queries';
 
 export const usePromoCodeSlider = () => {
+  const { data: couponsData } = useGetAllCouponsQuery();
+  const coupons = couponsData?.data.data.data;
   const [copiedCodeId, setCopiedCodeId] = useState<string | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
@@ -39,5 +42,6 @@ export const usePromoCodeSlider = () => {
     setIsBeginning,
     setIsEnd,
     setSwiper,
+    coupons,
   };
 };
