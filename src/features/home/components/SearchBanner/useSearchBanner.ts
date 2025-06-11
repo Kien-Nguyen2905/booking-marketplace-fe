@@ -145,15 +145,19 @@ export const useSearchBanner = () => {
     if (selectedDateRange?.to) {
       params.set('end', format(selectedDateRange.to, 'dd-MM-yyyy'));
     }
-
+    console.log(selectedPeople);
     // Extract counts from selectedPeople
     const adults = selectedPeople.find((p) => p.id === 'adults')?.count || 0;
     const children =
       selectedPeople.find((p) => p.id === 'children')?.count || 0;
     const rooms = selectedPeople.find((p) => p.id === 'rooms')?.count || 0;
-
+    console.log(adults, children, rooms);
     if (adults) params.set('adult', adults.toString());
-    if (children) params.set('child', children.toString());
+    if (children > 0) {
+      params.set('child', children.toString());
+    } else {
+      params.delete('child');
+    }
     if (rooms) params.set('available', rooms.toString());
 
     // Create a new URL with the updated parameters

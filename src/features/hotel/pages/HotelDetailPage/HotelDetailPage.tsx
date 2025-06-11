@@ -46,6 +46,7 @@ const HotelDetailPage = () => {
     promotion,
     isFuture,
     startDateParams,
+    onBookNow,
   } = useHotelDetailPage();
 
   if (!hotel) return <Loading />;
@@ -142,7 +143,7 @@ const HotelDetailPage = () => {
         </Card>
         <div className="space-y-10">
           {hotel.roomType?.map((room) => {
-            if (room.adults < adultParam || (room.child || 0) < childParam)
+            if (room.adults !== adultParam || (room.child || 0) !== childParam)
               return null;
             return (
               <Card key={room.id}>
@@ -299,7 +300,10 @@ const HotelDetailPage = () => {
                                     </div>
                                   </div>
                                   <div className="col-span-3 flex justify-end">
-                                    <Button className="bg-orange-500 hover:bg-orange-600">
+                                    <Button
+                                      onClick={onBookNow}
+                                      className="bg-orange-500 hover:bg-orange-600"
+                                    >
                                       Book now
                                     </Button>
                                   </div>

@@ -71,7 +71,7 @@ export const useAvailableRoomsByRoomIds = (
 ) => {
   return useQueries({
     queries: roomIds.map((roomId) => ({
-      queryKey: ['room', roomId],
+      queryKey: ['room', roomId, queryString],
       queryFn: () =>
         roomServices.getAvailableRoomsByRoomId(roomId, queryString),
       enabled: !!roomId,

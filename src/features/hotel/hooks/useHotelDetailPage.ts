@@ -1,4 +1,4 @@
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import {
   useAvailableRoomsByRoomIds,
   useGetHotelByIdQuery,
@@ -6,7 +6,7 @@ import {
   useDeleteWishlistMutation,
   useGetPromotionsByValidFromQuery,
 } from '@/queries';
-import { AMENITY_CATEGORY, SUCCESS_MESSAGES } from '@/constants';
+import { AMENITY_CATEGORY, ROUTES, SUCCESS_MESSAGES } from '@/constants';
 import { useState } from 'react';
 import { GetRoomTypeByIdResType } from '@/models/room-type.model';
 import { useSearchParams } from 'next/navigation';
@@ -21,6 +21,8 @@ export const useHotelDetailPage = () => {
   const params = useParams();
   const searchParams = useSearchParams();
   const id = params.id as string;
+
+  const router = useRouter();
 
   const { data: wishlistData } = useGetWishlistsByUserIdQuery(!!profile?.id);
   const { mutateAsync: createWishlist } = useCreateWishlistMutation();
@@ -65,10 +67,11 @@ export const useHotelDetailPage = () => {
     setSelectedRoomType(room);
     setIsModalOpen(true);
   };
-  const results = useAvailableRoomsByRoomIds(
-    roomIdList,
-    `start=${startDateParams}&end=${endDateParams}`,
-  );
+
+  const queryString = `start=${startDateParams}&end=${endDateParams}`;
+  console.log(queryString);
+  const results = useAvailableRoomsByRoomIds(roomIdList, queryString);
+
   const availableRooms = results.map((result) => result.data?.data.data);
 
   const handleCreateWishlist = async () => {
@@ -120,6 +123,15 @@ export const useHotelDetailPage = () => {
     startOfDay(parse(startDateParams, 'dd-MM-yyyy', new Date()));
 
   const isFuture = targetDate && targetDate > now;
+
+  const onBookNow = () => {
+    if (!profile?.id) {
+      toggleModal();
+      return;
+    }
+    router.push(ROUTES.ORDER + `?hotelId=${id}`);
+  };
+
   return {
     hotelId: id,
     hotel,
@@ -139,5 +151,6 @@ export const useHotelDetailPage = () => {
     handleWishlist,
     promotion: promotionToday || promotionNotToday,
     isFuture,
+    onBookNow,
   };
 };
