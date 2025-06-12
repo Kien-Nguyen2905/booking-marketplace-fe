@@ -123,13 +123,12 @@ export const useSearchBanner = () => {
     if (pathname === ROUTES.HOTEL) {
       // If already on hotel page, update URL without full page refresh
       router.push(`${ROUTES.HOTEL}?${queryStr}`, { scroll: false });
+      // Clear loading state after navigation
+      setTimeout(() => setIsLoading(false), 300);
     } else {
       // If coming from another page, navigate to hotel page
       router.push(`${ROUTES.HOTEL}?${queryStr}`);
     }
-
-    // Clear loading state after navigation
-    setTimeout(() => setIsLoading(false), 300);
   };
 
   const handleSearchDetail = () => {
@@ -145,13 +144,11 @@ export const useSearchBanner = () => {
     if (selectedDateRange?.to) {
       params.set('end', format(selectedDateRange.to, 'dd-MM-yyyy'));
     }
-    console.log(selectedPeople);
     // Extract counts from selectedPeople
     const adults = selectedPeople.find((p) => p.id === 'adults')?.count || 0;
     const children =
       selectedPeople.find((p) => p.id === 'children')?.count || 0;
     const rooms = selectedPeople.find((p) => p.id === 'rooms')?.count || 0;
-    console.log(adults, children, rooms);
     if (adults) params.set('adult', adults.toString());
     if (children > 0) {
       params.set('child', children.toString());
