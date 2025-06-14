@@ -6,7 +6,14 @@ import {
   useDeleteWishlistMutation,
   useGetPromotionsByValidFromQuery,
 } from '@/queries';
-import { AMENITY_CATEGORY, ROUTES, SUCCESS_MESSAGES } from '@/constants';
+import {
+  AMENITY_CATEGORY,
+  ERROR_MESSAGES,
+  MAX_ROOM_PAY_AT_HOTEL,
+  POLICY_TYPE,
+  ROUTES,
+  SUCCESS_MESSAGES,
+} from '@/constants';
 import { useState } from 'react';
 import { GetRoomTypeByIdResType } from '@/models/room-type.model';
 import { useSearchParams } from 'next/navigation';
@@ -14,7 +21,8 @@ import { useCreateWishlistMutation } from '@/queries';
 import { showToast } from '@/lib/toast';
 import { handleErrorApi } from '@/lib/helper';
 import { useAppContext } from '@/context/AppProvider';
-import { parse, startOfDay } from 'date-fns';
+import { eachDayOfInterval, parse, startOfDay, subDays } from 'date-fns';
+import { saveBooking } from '@/lib/utils';
 
 export const useHotelDetailPage = () => {
   const { profile, toggleModal } = useAppContext();
@@ -32,11 +40,15 @@ export const useHotelDetailPage = () => {
     (wishlist) => wishlist.hotelId === Number(id),
   );
 
-  const startDateParams = searchParams.get('start');
-  const endDateParams = searchParams.get('end');
+  const startDateParams = searchParams.get('start') || '';
+  const endDateParams = searchParams.get('end') || '';
   const availableParam = Number(searchParams.get('available')) || 0;
   const adultParam = Number(searchParams.get('adult')) || 0;
   const childParam = Number(searchParams.get('child')) || 0;
+  const dateRange = eachDayOfInterval({
+    start: parse(startDateParams, 'dd-MM-yyyy', new Date()),
+    end: subDays(parse(endDateParams, 'dd-MM-yyyy', new Date()), 1),
+  });
 
   const queryStringPromotion = `validFrom=${startDateParams}&validUntil=${endDateParams}`;
   const { data: promotionsData } =
@@ -59,7 +71,7 @@ export const useHotelDetailPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRoomType, setSelectedRoomType] =
     useState<GetRoomTypeByIdResType | null>(null);
-
+  const [isLoadingNavigate, setIsLoadingNavigate] = useState(false);
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
@@ -69,7 +81,6 @@ export const useHotelDetailPage = () => {
   };
 
   const queryString = `start=${startDateParams}&end=${endDateParams}`;
-  console.log(queryString);
   const results = useAvailableRoomsByRoomIds(roomIdList, queryString);
 
   const availableRooms = results.map((result) => result.data?.data.data);
@@ -124,12 +135,48 @@ export const useHotelDetailPage = () => {
 
   const isFuture = targetDate && targetDate > now;
 
-  const onBookNow = () => {
+  const onBookNow = (roomTypeId: number, roomId: number) => {
     if (!profile?.id) {
       toggleModal();
       return;
     }
-    router.push(ROUTES.ORDER + `?hotelId=${id}`);
+    if (
+      !startDateParams ||
+      !endDateParams ||
+      !availableParam ||
+      !adultParam ||
+      !id ||
+      !roomTypeId ||
+      !roomId
+    ) {
+      return;
+    }
+    const booking = {
+      roomTypeId,
+      roomId,
+      hotelId: Number(id),
+      startDate: startDateParams,
+      endDate: endDateParams,
+      adult: adultParam,
+      child: childParam,
+      available: availableParam,
+    };
+    const room = roomTypeList
+      .flatMap((roomType) => roomType.room)
+      .find((room) => room.id === roomId);
+    if (
+      room?.policy === POLICY_TYPE.PAY_AT_HOTEL &&
+      availableParam > MAX_ROOM_PAY_AT_HOTEL
+    ) {
+      showToast({
+        type: 'error',
+        message: ERROR_MESSAGES.POLICY_NOT_ALLOW_BOOKING,
+      });
+      return;
+    }
+    const code = saveBooking(booking);
+    setIsLoadingNavigate(true);
+    router.push(`${ROUTES.ORDER}?code=${code}`);
   };
 
   return {
@@ -152,5 +199,7 @@ export const useHotelDetailPage = () => {
     promotion: promotionToday || promotionNotToday,
     isFuture,
     onBookNow,
+    isLoadingNavigate,
+    dateRange,
   };
 };

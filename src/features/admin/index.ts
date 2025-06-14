@@ -5,3 +5,4 @@ export { AdminPromotionsPage } from './promotions';
 export { AdminNotificationsPage } from './notifications';
 export { AdminCouponPage } from './coupons';
 export { AdminCustomerPage } from './customers';
+export { AdminOrderPage } from './orders';

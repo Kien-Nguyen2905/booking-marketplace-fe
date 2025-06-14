@@ -8,6 +8,7 @@ const configProject = configSchema.safeParse({
   NEXT_PUBLIC_API_ENDPOINT: process.env.NEXT_PUBLIC_API_ENDPOINT,
   NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
   NEXT_PUBLIC_SECRET_API_KEY: process.env.NEXT_PUBLIC_SECRET_API_KEY,
+  NEXT_PUBLIC_JWT_SECRET: process.env.NEXT_PUBLIC_JWT_SECRET,
 });
 if (!configProject.success) {
   console.error(configProject.error.errors);

@@ -76,14 +76,14 @@ const UsedCountHeader = () => {
   return (
     <div
       className={`flex items-center gap-2 cursor-pointer ${
-        orderBy === 'usedCount' ? 'text-primary' : ''
+        orderBy === 'available' ? 'text-primary' : ''
       }`}
-      onClick={() => onOrderByChange('usedCount')}
+      onClick={() => onOrderByChange('available')}
     >
-      Used
-      {orderBy === 'usedCount' && order === 'asc' ? (
+      Available
+      {orderBy === 'available' && order === 'asc' ? (
         <ChevronUp size={16} />
-      ) : orderBy === 'usedCount' && order === 'desc' ? (
+      ) : orderBy === 'available' && order === 'desc' ? (
         <ChevronDown size={16} />
       ) : (
         <ChevronsUpDown size={16} />
@@ -159,9 +159,9 @@ export const couponColumns: ColumnDef<any>[] = [
   },
 
   {
-    accessorKey: 'usedCount',
+    accessorKey: 'available',
     header: () => <UsedCountHeader />,
-    cell: ({ row }) => <div>{row.getValue('usedCount')}</div>,
+    cell: ({ row }) => <div>{row.getValue('available')}</div>,
     meta: { width: 'w-[100px]' },
   },
   {

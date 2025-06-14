@@ -28,6 +28,12 @@ const couponServices = {
     return instance.get<SuccessResponse<GetCouponResType>>(`/coupons/${id}`);
   },
 
+  validateCouponByCode: (body: { code: string }) => {
+    return instance.post<SuccessResponse<GetCouponResType>>(
+      `/coupons/code`,
+      body,
+    );
+  },
   updateCoupon: (id: number | string, body: UpdateCouponBodyType) => {
     return instance.put<SuccessResponse<UpdateCouponResType>>(
       `/coupons/${id}`,

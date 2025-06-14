@@ -78,3 +78,14 @@ export const useAvailableRoomsByRoomIds = (
     })),
   });
 };
+
+export const useGetAvailableRoomsByRoomIdQuery = (
+  roomId: string | number,
+  queryString: string = '',
+) => {
+  return useQuery({
+    queryKey: ['room', roomId, queryString],
+    queryFn: () => roomServices.getAvailableRoomsByRoomId(roomId, queryString),
+    enabled: !!roomId,
+  });
+};

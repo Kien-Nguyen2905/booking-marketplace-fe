@@ -183,7 +183,7 @@ export const usePartnerCreateRoomTypesPage = () => {
         images: [],
       });
     }
-  }, [partnerProfile]);
+  }, [partnerProfile, form]);
 
   const dialogRoomQuantityProps = {
     openQuantity,

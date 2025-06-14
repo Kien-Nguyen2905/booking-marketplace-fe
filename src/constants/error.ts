@@ -10,6 +10,10 @@ export const ERROR_MESSAGES = {
   NEED_VERIFY_2FA: 'You need to verify two-factor authentication',
   UPLOAD_ERROR: 'Upload error',
   NOT_FOUND_REFRESH_TOKEN: 'Not found refresh token',
+  ROOM_NOT_AVAILABLE: 'Room is not available',
+  COUPON_NOT_FOUND: 'Coupon not found',
+  POINT_NOT_ENOUGH: 'Point not enough',
+  POLICY_NOT_ALLOW_BOOKING: 'Policy not allow booking more than 5 rooms',
 };
 
 export const ERROR_AUTH_MESSAGES = {
@@ -216,8 +220,7 @@ export const ERROR_COUPON_MESSAGES = {
     maxLength: 'Description must not exceed 255 characters',
   },
   code: {
-    required: 'Code is required',
-    maxLength: 'Code must not exceed 50 characters',
+    invalid: 'Invalid code',
   },
   amount: {
     required: 'Amount is required',

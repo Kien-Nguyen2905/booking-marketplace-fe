@@ -1,4 +1,4 @@
-import { ROUTES } from '@/constants';
+import { EVENT, ROUTES } from '@/constants';
 import { useAppContext } from '@/context/AppProvider';
 import { handleErrorApi } from '@/lib/helper';
 import { showToast } from '@/lib/toast';
@@ -12,7 +12,7 @@ import { useState, useRef, useEffect } from 'react';
 
 export const useDashboardHeader = () => {
   const { profile, socket } = useAppContext();
-  const { data, refetch } = useGetNotifiesByRecipientIdQuery();
+  const { data, refetch } = useGetNotifiesByRecipientIdQuery('');
   const notifications = data?.data.data.data || [];
   const { mutateAsync: readNotify, isPending } = useReadNotifyMutation();
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
@@ -85,10 +85,20 @@ export const useDashboardHeader = () => {
       refetch();
     };
 
-    socket.on('notify', handleNotification);
+    const handleOrder = () => {
+      showToast({
+        type: 'info',
+        message: 'You have a new order',
+      });
+      refetch();
+    };
+
+    socket.on(EVENT.NOTIFY, handleNotification);
+    socket.on(EVENT.ORDER_CREATED, handleOrder);
 
     return () => {
-      socket.off('notify', handleNotification);
+      socket.off(EVENT.NOTIFY, handleNotification);
+      socket.off(EVENT.ORDER_CREATED, handleOrder);
     };
   }, [socket, refetch]);
 

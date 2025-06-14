@@ -5,4 +5,6 @@ export const LOCAL_STORAGE = {
   ROLE: 'role',
   OTP_EXPIRY: 'otpExpiry',
   IS_PENDING_PARTNER: 'isPendingPartner',
+  BOOKING: 'booking',
+  PAYMENT_TIMER: 'paymentTimer',
 };

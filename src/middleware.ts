@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server';
 
 const managePaths = ['/admin', '/partner', '/employee'];
 const oauthPaths = ['/login-google', '/oauth-google'];
-const privatePaths = [...managePaths, '/account'];
+const privatePaths = [...managePaths, '/account', '/order', '/payment'];
 const validRoles = Object.values(ROLE_NAME); // ['CUSTOMER', 'ADMIN', 'PARTNER', 'EMPLOYEE']
 
 const getRedirectUrl = (request: NextRequest, path: string): URL => {
@@ -52,5 +52,7 @@ export const config = {
     '/oauth-google',
     '/login-google',
     '/account/:path*',
+    '/order/:path*',
+    '/payment/:path*',
   ],
 };

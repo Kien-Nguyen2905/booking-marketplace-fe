@@ -70,7 +70,7 @@ const CustomerTable = () => {
               {isLoading ? (
                 <TableRow>
                   <TableCell
-                    colSpan={userColumns?.length || 5}
+                    colSpan={userColumns?.length + 1 || 5}
                     className="h-24 text-center"
                   >
                     Loading...
@@ -92,7 +92,7 @@ const CustomerTable = () => {
               ) : (
                 <TableRow>
                   <TableCell
-                    colSpan={userColumns?.length || 5}
+                    colSpan={userColumns?.length + 1 || 5}
                     className="h-24 text-center"
                   >
                     No results.

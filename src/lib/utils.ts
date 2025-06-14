@@ -2,10 +2,18 @@ import { AccessTokenPayload } from '@/types/jwt.type';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import jwt from 'jsonwebtoken';
-import { COOKIE_NAMES, LIMIT, LOCAL_STORAGE, ROUTES } from '@/constants';
+import {
+  COOKIE_NAMES,
+  LIMIT,
+  LOCAL_STORAGE,
+  PERCENTAGE,
+  ROUTES,
+} from '@/constants';
 import Cookies from 'js-cookie';
-import { addDays, format } from 'date-fns';
+import { addDays, format, parse } from 'date-fns';
 import { DateRange } from 'react-day-picker';
+import { TBooking, TBookingInput, TProfitResult } from '@/types/booking.type';
+import { CouponType } from '@/models/coupon.model';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -214,4 +222,207 @@ export const normalizeToUTC = (date: Date) => {
   return new Date(
     Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
   );
+};
+
+export const saveBooking = (booking: TBooking): string => {
+  const code = Math.random().toString(36).slice(2, 12); // mã 10 ký tự
+  localStorage.setItem(`booking:${code}`, JSON.stringify(booking));
+  return code;
+};
+
+export const getBooking = (code: string): TBooking | null => {
+  const data = localStorage.getItem(`booking:${code}`);
+  return data ? JSON.parse(data) : null;
+};
+
+export const clearBooking = (code: string) => {
+  localStorage.removeItem(`booking:${code}`);
+};
+export const clearAllBookings = () => {
+  if (typeof window === 'undefined') return;
+  Object.keys(localStorage).forEach((key) => {
+    if (key.startsWith('booking:')) {
+      localStorage.removeItem(key);
+    }
+  });
+};
+
+export const calculateCouponDiscount = (
+  coupon: CouponType,
+  baseAmount: number,
+): number => {
+  if (!coupon) return 0;
+  if (coupon.percentage) {
+    console.log(baseAmount);
+    console.log(coupon.percentage);
+    return baseAmount * coupon.percentage;
+  }
+  return 0;
+};
+
+export const calculateBaseAmount = (
+  price: number,
+  available: number,
+  nights: number,
+): number => {
+  return (price || 0) * available * nights;
+};
+
+export const calculateServiceFee = (
+  baseAmount: number,
+  serviceFeeRate: number = 0,
+): number => {
+  return baseAmount * serviceFeeRate;
+};
+
+export const calculateVAT = (baseAmount: number, vatRate: number = 0) => {
+  return baseAmount * vatRate;
+};
+
+export const isDayDiscounted = (promotion: any, dateString: string) => {
+  if (!promotion) return false;
+
+  // Check if the date is within promotion period
+  const dateParsed = parse(dateString, 'dd-MM-yyyy', new Date());
+  const date = new Date(
+    Date.UTC(
+      dateParsed.getFullYear(),
+      dateParsed.getMonth(),
+      dateParsed.getDate(),
+    ),
+  );
+  const validFrom = promotion.validFrom && new Date(promotion.validFrom);
+  const validUntil = promotion.validUntil && new Date(promotion.validUntil);
+
+  if (validFrom && validUntil) {
+    return date >= validFrom && date <= validUntil;
+  }
+  return false;
+};
+
+export const calculateTotalPromotionDiscount = (
+  checkIn: Date,
+  checkOut: Date,
+  promotion: any,
+  room: any,
+  booking: any,
+  nights: number,
+) => {
+  let totalPromotionDiscount = 0;
+  Array.from({ length: nights }).map((_, index) => {
+    const currentDate = new Date(checkIn);
+    currentDate.setDate(currentDate.getDate() + index);
+    const dateString = format(currentDate, 'dd-MM-yyyy');
+    const isDiscounted = isDayDiscounted(promotion, dateString);
+    if (isDiscounted) {
+      totalPromotionDiscount +=
+        (room?.price || 0) * booking.available * promotion.percentage;
+    }
+  });
+  return totalPromotionDiscount;
+};
+
+export const countDateDiscountPromotion = (
+  checkIn: Date,
+  promotion: any,
+  nights: number,
+) => {
+  let countDateDiscount = 0;
+  Array.from({ length: nights }).map((_, index) => {
+    const currentDate = new Date(checkIn);
+    currentDate.setDate(currentDate.getDate() + index);
+    const dateString = format(currentDate, 'dd-MM-yyyy');
+    const isDiscounted = isDayDiscounted(promotion, dateString);
+    if (isDiscounted) {
+      countDateDiscount += 1;
+    }
+  });
+  return countDateDiscount;
+};
+
+/**
+ * Tính toán giá trị đơn hàng và lợi nhuận cho sàn và đối tác
+ * @param input Thông tin đơn hàng
+ * @returns Kết quả bao gồm lợi nhuận sàn, đối tác, và các giá trị khác
+ */
+export const calculateBookingProfit = (input: TBookingInput): TProfitResult => {
+  const {
+    basePrice: P,
+    numberOfNights: N,
+    promotionNights: K,
+    promotionPercentage: Pr,
+    promotionSharePercentage: Sp,
+    serviceFeeRate: S_rate,
+    vatRate: V_rate,
+    couponPercentage: C,
+    pointsDiscount: D_points,
+  } = input;
+
+  // Tính giảm giá từ promotion (D_p)
+  const promotionDiscount = (P * K * Pr) / N;
+
+  // Tính subtotal sau promotion
+  const subtotalAfterPromotion = P * (1 - (K * Pr) / N + S_rate + V_rate);
+
+  // Tính giảm giá từ coupon (D_c)
+  const couponDiscount = C * P * (1 + S_rate + V_rate);
+
+  // Tính giá trị cuối cùng khách trả
+  const finalAmount = Math.round(
+    subtotalAfterPromotion - couponDiscount - D_points,
+  );
+
+  // Tính lợi nhuận cơ bản của sàn (15%) và đối tác (85%)
+  const platformBaseProfit = PERCENTAGE.COMMISSION * subtotalAfterPromotion;
+
+  const partnerBaseProfit = PERCENTAGE.PARTNER * subtotalAfterPromotion;
+
+  // Tính phần trợ giá từ promotion
+  const promotionShare = Sp * promotionDiscount;
+
+  // Tính lợi nhuận thực tế
+  const platformProfit = Math.round(
+    platformBaseProfit - promotionShare - couponDiscount - D_points,
+  );
+  const partnerProfit = Math.round(partnerBaseProfit + promotionShare);
+
+  return {
+    platformProfit,
+    partnerProfit,
+    finalAmount,
+    subtotalAfterPromotion,
+    promotionDiscount,
+    couponDiscount,
+    pointsDiscount: D_points,
+  };
+};
+
+/**
+ * Kiểm tra tổng lợi nhuận sàn và đối tác có khớp với subtotal sau promotion không
+ * @param result Kết quả từ calculateBookingProfit
+ * @returns True nếu khớp, false nếu không
+ */
+export const verifyProfit = (result: TProfitResult): boolean => {
+  const {
+    platformProfit,
+    partnerProfit,
+    subtotalAfterPromotion,
+    couponDiscount,
+    pointsDiscount,
+  } = result;
+  const totalProfit =
+    platformProfit + partnerProfit + couponDiscount + pointsDiscount;
+  return Math.abs(totalProfit - subtotalAfterPromotion) < 0.01; // Chấp nhận sai số nhỏ do làm tròn
+};
+
+export const clearPaymentTimer = (orderId: string | null) => {
+  localStorage.removeItem(
+    orderId
+      ? `${LOCAL_STORAGE.PAYMENT_TIMER}_${orderId}`
+      : LOCAL_STORAGE.PAYMENT_TIMER,
+  );
+};
+
+export const clearAllLocalStorage = () => {
+  localStorage.clear();
 };

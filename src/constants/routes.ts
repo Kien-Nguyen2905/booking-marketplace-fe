@@ -43,4 +43,6 @@ export const ROUTES = {
   },
   HOTEL: '/hotel',
   HOTEL_DETAIL: '/hotel/:id',
+  ORDER: '/order',
+  PAYMENT: '/payment',
 };

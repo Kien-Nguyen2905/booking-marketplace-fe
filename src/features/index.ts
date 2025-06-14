@@ -6,3 +6,5 @@ export { ResetPasswordPage } from './reset-password';
 export { ProfilePage } from './profile';
 export { HotelPage } from './hotel';
 export { WishlistPage } from './wishlist';
+export { OrderPage } from './order';
+export { PaymentPage } from './payment';

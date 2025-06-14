@@ -66,7 +66,7 @@ const RoomForm = ({
                   label: policy,
                 }))}
               />
-              {form.watch('policy') === POLICY_TYPE.FREE_CANCELLATION && (
+              {form.watch('policy') === POLICY_TYPE.PAY_AT_HOTEL && (
                 <RHFInput
                   form={form}
                   name="rangeLimitDate"

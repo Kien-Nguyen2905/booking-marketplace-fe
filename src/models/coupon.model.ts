@@ -21,7 +21,7 @@ export const CouponSchema = z.object({
     .min(0, { message: ERROR_COUPON_MESSAGES.percentage.min })
     .max(15, { message: ERROR_COUPON_MESSAGES.percentage.max })
     .int({ message: ERROR_COUPON_MESSAGES.percentage.invalidNumber }),
-  usedCount: z.number().int().default(0),
+  available: z.number().int().default(0),
   createdById: z.number().int().positive(),
   createdAt: z.date().nullable(),
   updatedAt: z.date().nullable(),
@@ -52,7 +52,7 @@ export const CreateCouponBodySchema = CouponSchema.omit({
   updatedAt: true,
   code: true,
   createdById: true,
-  usedCount: true,
+  available: true,
 }).strict();
 
 export const UpdateCouponBodySchema = CouponSchema.omit({
@@ -61,7 +61,7 @@ export const UpdateCouponBodySchema = CouponSchema.omit({
   updatedAt: true,
   code: true,
   createdById: true,
-  usedCount: true,
+  available: true,
 }).strict();
 
 export const CreateCouponResSchema = CouponSchema;

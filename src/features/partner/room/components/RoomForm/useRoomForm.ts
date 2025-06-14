@@ -97,7 +97,7 @@ export const useRoomForm = (
       policy: POLICY_TYPE.NON_REFUNDABLE,
       notePolicy: '',
     });
-  }, [room, hotelId, selectedRoomTypeId]);
+  }, [room, hotelId, selectedRoomTypeId, form]);
   return {
     form,
     handleSubmit,

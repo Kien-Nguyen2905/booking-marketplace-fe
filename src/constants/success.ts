@@ -9,6 +9,7 @@ export const SUCCESS_MESSAGES = {
   ADDED: 'Added successfully',
   REMOVED: 'Removed successfully',
   NOTIFIED_SUCCESS: 'Notified successfully',
+  PAYMENT_SUCCESS: 'Payment success',
 };
 export const SUCCESS_PROFILE_MESSAGES = {
   AVATAR_UPDATED_SUCCESS: 'Avatar updated successfully',

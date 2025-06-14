@@ -36,7 +36,6 @@ export const STATUS_VALUE = [
     label: 'Inactive',
   },
 ];
-
 export const BANK_ACCOUNT = [
   {
     value: 'BIDV',
@@ -163,9 +162,7 @@ export const BANK_ACCOUNT = [
     label: 'Ngân hàng TMCP Xăng dầu Petrolimex (PG Bank)',
   },
 ];
-
 export const LIMIT = '8';
-
 export const POPULAR_ACCOMMODATION_LIST = [
   { provinceCode: '79', name: 'Hồ Chí Minh' },
   { provinceCode: '77', name: 'Vũng Tàu' },
@@ -173,3 +170,8 @@ export const POPULAR_ACCOMMODATION_LIST = [
   { provinceCode: '1', name: 'Hà Nội' },
   { provinceCode: '68', name: 'Đà Lạt' },
 ];
+
+export const PERCENTAGE = {
+  COMMISSION: 0.15,
+  PARTNER: 0.85,
+};

@@ -17,6 +17,12 @@ export const useGetCouponByIdQuery = (id: string | number) => {
   });
 };
 
+export const useValidateCouponByCodeMutation = () => {
+  return useMutation({
+    mutationFn: (code: string) => couponServices.validateCouponByCode({ code }),
+  });
+};
+
 export const useCreateCouponMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({

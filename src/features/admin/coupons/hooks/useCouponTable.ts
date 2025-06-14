@@ -167,7 +167,7 @@ export const useCouponTable = () => {
         description: selectedCoupon.description,
       });
     }
-  }, [selectedCoupon]);
+  }, [selectedCoupon, form]);
   useEffect(() => {
     setOrderBy(searchParams.get('orderBy') || '');
     setOrder(searchParams.get('order') || '');

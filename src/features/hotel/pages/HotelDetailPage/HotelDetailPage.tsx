@@ -47,9 +47,11 @@ const HotelDetailPage = () => {
     isFuture,
     startDateParams,
     onBookNow,
+    isLoadingNavigate,
+    dateRange,
   } = useHotelDetailPage();
 
-  if (!hotel) return <Loading />;
+  if (!hotel || isLoadingNavigate) return <Loading />;
 
   return (
     <div className="pt-[130px] container mx-auto px-4 md:px-6">
@@ -177,6 +179,12 @@ const HotelDetailPage = () => {
                               !isFuture
                             )
                               return null;
+                            if (
+                              item.rangeLimitDate &&
+                              item.rangeLimitDate < dateRange.length
+                            ) {
+                              return null;
+                            }
                             return (
                               availableRoom &&
                               availableRoom.availableRooms >=
@@ -301,7 +309,9 @@ const HotelDetailPage = () => {
                                   </div>
                                   <div className="col-span-3 flex justify-end">
                                     <Button
-                                      onClick={onBookNow}
+                                      onClick={() =>
+                                        onBookNow(item.roomTypeId, item.id)
+                                      }
                                       className="bg-orange-500 hover:bg-orange-600"
                                     >
                                       Book now

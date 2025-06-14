@@ -255,7 +255,7 @@ export const usePartnerRoomTypeDetailPage = () => {
       }
     }, 100);
     return () => clearTimeout(timer);
-  }, [roomType]);
+  }, [roomType, form]);
 
   const dialogRoomQuantityProps = {
     openQuantity,

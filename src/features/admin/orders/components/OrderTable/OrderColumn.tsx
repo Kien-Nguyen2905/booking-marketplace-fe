@@ -1,0 +1,154 @@
+import { Button } from '@/components/ui/button';
+import { ColumnDef } from '@tanstack/react-table';
+declare module '@tanstack/react-table' {
+  // eslint-disable-next-line
+  interface ColumnMeta<TData, TValue> {
+    width?: string;
+  }
+}
+import {
+  ChevronDown,
+  ChevronsUpDown,
+  ChevronUp,
+  Eye,
+  MoreHorizontal,
+} from 'lucide-react';
+import { format } from 'date-fns';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import React, { createContext, useContext } from 'react';
+import { TOrderTable } from '@/features/admin/orders/components/OrderTable/type';
+import { useOrderTable } from '@/features/admin/orders/hooks';
+import { formatCurrency } from '@/lib/utils';
+import { MAP_PAYMENT_TYPE } from '@/constants';
+
+export const OrderTableContext = createContext<TOrderTable>({
+  setSelectedOrder: () => {},
+  setOpen: () => {},
+});
+
+const PriceHeader = () => {
+  const { orderBy, onOrderByChange, order } = useOrderTable();
+  return (
+    <div
+      className={`flex items-center gap-2 cursor-pointer ${
+        orderBy === 'totalPrice' ? 'text-primary' : ''
+      }`}
+      onClick={() => onOrderByChange('totalPrice')}
+    >
+      Price
+      {orderBy === 'totalPrice' && order === 'asc' ? (
+        <ChevronUp size={16} />
+      ) : orderBy === 'totalPrice' && order === 'desc' ? (
+        <ChevronDown size={16} />
+      ) : (
+        <ChevronsUpDown size={16} />
+      )}
+    </div>
+  );
+};
+
+export const ActionsCell = ({ row }: { row: any }) => {
+  const { setSelectedOrder, setOpen } = useContext(OrderTableContext);
+  const order = row.original;
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon">
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-56">
+        <DropdownMenuItem
+          onClick={() => {
+            // Use setTimeout to ensure the state update has time to process
+            setTimeout(() => {
+              setSelectedOrder(order);
+              setOpen(true);
+            }, 0);
+          }}
+          className="cursor-pointer"
+        >
+          <Eye className="mr-2 h-4 w-4" />
+          <span>View details</span>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
+
+export const orderColumns: ColumnDef<any>[] = [
+  {
+    accessorKey: 'id',
+    header: () => {
+      return <div className="pl-4">ID</div>;
+    },
+    cell: ({ row }) => (
+      <span className="pl-4 truncate line-clamp-1">{row.getValue('id')}</span>
+    ),
+    meta: { width: 'w-[80px]' },
+  },
+  {
+    accessorKey: 'checkinDate',
+    header: 'Checkin',
+    cell: ({ row }) => (
+      <div>{format(row.getValue('checkinDate'), 'dd/MM/yyyy')}</div>
+    ),
+    meta: { width: 'w-[160px]' },
+  },
+  {
+    accessorKey: 'checkoutDate',
+    header: 'Checkout',
+    cell: ({ row }) => (
+      <div>{format(row.getValue('checkoutDate'), 'dd/MM/yyyy')}</div>
+    ),
+    meta: { width: 'w-[160px]' },
+  },
+  {
+    accessorKey: 'totalPrice',
+    header: () => <PriceHeader />,
+    cell: ({ row }) => {
+      return <div>{formatCurrency(row.getValue('totalPrice'))}</div>;
+    },
+    meta: { width: 'w-[160px]' },
+  },
+  {
+    accessorKey: 'status',
+    header: () => <div>Status</div>,
+    cell: ({ row }) => {
+      return <div>{row.getValue('status')}</div>;
+    },
+  },
+  {
+    accessorKey: 'paymentType',
+    header: () => <div>Payment</div>,
+    cell: ({ row }) => {
+      return (
+        <div>
+          {
+            MAP_PAYMENT_TYPE[
+              row.getValue('paymentType') as keyof typeof MAP_PAYMENT_TYPE
+            ]
+          }
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: 'createdAt',
+    header: 'Date',
+    cell: ({ row }) => {
+      return <div>{format(row.getValue('createdAt'), 'dd/MM/yyyy')}</div>;
+    },
+  },
+  {
+    id: 'actions',
+    cell: ({ row }) => <ActionsCell row={row} />,
+    meta: { width: 'w-[80px]' },
+  },
+];

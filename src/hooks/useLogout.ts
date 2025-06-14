@@ -3,9 +3,9 @@ import { ERROR_MESSAGES, ROUTES } from '@/constants';
 import { handleErrorApi } from '@/lib/helper';
 import { showToast } from '@/lib/toast';
 import {
+  clearAllLocalStorage,
   getRefreshTokenLocalStorage,
   removeRoleNameCookies,
-  removeTokensLocalStorage,
 } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import { useAppContext } from '@/context/AppProvider';
@@ -26,7 +26,7 @@ export const useLogout = () => {
           setIsAuthenticated(false);
           setProfile(null);
           setRole('');
-          removeTokensLocalStorage();
+          clearAllLocalStorage();
           removeRoleNameCookies();
           router.push(ROUTES.HOME);
         }
