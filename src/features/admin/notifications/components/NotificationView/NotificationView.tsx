@@ -148,7 +148,7 @@ const NotificationView: FC<TNotificationViewProps> = ({
       <DialogContent>
         <DialogHeader>
           <div className="flex items-center justify-between py-5">
-            <DialogTitle>
+            <DialogTitle className="max-w-[100px]">
               {selectedNotification?.title || 'Notification'}
             </DialogTitle>
             {renderTypeBadge()}

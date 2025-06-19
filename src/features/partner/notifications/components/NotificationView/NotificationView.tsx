@@ -147,7 +147,7 @@ const NotificationView: FC<TNotificationViewProps> = ({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
-          <div className="flex items-center justify-between py-5">
+          <div className="flex items-start justify-between py-5">
             <DialogTitle>
               {selectedNotification?.title || 'Notification'}
             </DialogTitle>

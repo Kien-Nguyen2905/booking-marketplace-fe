@@ -16,6 +16,9 @@ export const useTimeCountdown = ({
   duration = 60,
   onExpire,
 }: TUseTimeCountdownProps = {}) => {
+  /**
+   * Time remaining in seconds 59s
+   */
   const [time, setTime] = useState<number>(0);
 
   const startTimer = () => {

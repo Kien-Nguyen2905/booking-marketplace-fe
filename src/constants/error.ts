@@ -234,3 +234,29 @@ export const ERROR_COUPON_MESSAGES = {
     invalidNumber: 'Invalid percentage',
   },
 };
+
+export const ERROR_ORDER_MESSAGES = {
+  reason: {
+    required: 'Reason is required',
+  },
+  cancel: {
+    pastOrder: 'Cannot cancel past orders',
+  },
+  refund: {},
+};
+
+export const ERROR_REVIEW_MESSAGES = {
+  title: {
+    required: 'Title is required',
+    maxLength: 'Title must not exceed 100 characters',
+  },
+  content: {
+    required: 'Content is required',
+    maxLength: 'Content must not exceed 255 characters',
+  },
+  rating: {
+    required: 'Rating is required',
+    min: 'Rating must be a than 0',
+    max: 'Rating must not exceed 5',
+  },
+};

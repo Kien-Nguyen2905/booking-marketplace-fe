@@ -6,7 +6,6 @@ import {
   BookUser,
   Calendar,
   CalendarFold,
-  DollarSign,
   Grid2x2Plus,
   Handshake,
   Heart,
@@ -16,7 +15,6 @@ import {
   PanelsTopLeft,
   Percent,
   ReceiptText,
-  Star,
   TicketPercent,
   User,
 } from 'lucide-react';
@@ -86,11 +84,6 @@ export const MANAGEMENT_NAV_LINKS: Dashboard = {
       href: ROUTES.ADMIN.REFUNDS,
       name: 'Refunds',
       icon: ArrowRightLeft,
-    },
-    REVIEWS: {
-      href: ROUTES.ADMIN.REVIEWS,
-      name: 'Reviews',
-      icon: Star,
     },
     NOTIFICATIONS: {
       href: ROUTES.ADMIN.NOTIFICATIONS,
@@ -169,11 +162,6 @@ export const NAV_LINKS = [
     href: ROUTES.ACCOUNT.ORDER,
     name: 'Order',
     icon: Calendar,
-  },
-  {
-    href: ROUTES.ACCOUNT.REFUND,
-    name: 'Refund',
-    icon: DollarSign,
   },
   {
     href: null,

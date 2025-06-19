@@ -46,7 +46,6 @@ const CPagination: FC<TCPaginationProps> = ({
   totalItems,
   itemsPerPage,
 }) => {
-  console.log(currentPage, totalPages, totalItems, itemsPerPage);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();

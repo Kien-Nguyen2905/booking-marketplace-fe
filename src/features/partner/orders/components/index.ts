@@ -1,0 +1,1 @@
+export { OrderPartnerTable } from './OrderPartnerTable';

@@ -6,7 +6,8 @@ import {
   GetOrderByIdResType,
   GetOrdersByUserIdResType,
   GetOrdersResType,
-} from '@/models/order.model';
+  UpdateOrderBodyType,
+} from '@/models';
 
 const orderService = {
   getOrders: (queryString: string = '') => {
@@ -19,9 +20,9 @@ const orderService = {
       `/orders/${orderId}`,
     );
   },
-  getMyOrders: () => {
+  getMyOrders: (queryString: string = '') => {
     return instance.get<SuccessResponse<GetOrdersByUserIdResType>>(
-      `/orders/me`,
+      `/orders/me${queryString ? `?${queryString}` : ''}`,
     );
   },
   getOrderByHotelId: (hotelId: string | number) => {
@@ -31,6 +32,21 @@ const orderService = {
   },
   createOrder: (body: CreateOrderBodyType) => {
     return instance.post<SuccessResponse<CreateOrderResType>>(`/orders`, body);
+  },
+  updateStatusOrder: (orderId: string | number, body: UpdateOrderBodyType) => {
+    return instance.put<SuccessResponse<GetOrderByIdResType>>(
+      `/orders/status/${orderId}`,
+      body,
+    );
+  },
+  updateStatusMyOrder: (
+    orderId: string | number,
+    body: UpdateOrderBodyType,
+  ) => {
+    return instance.put<SuccessResponse<GetOrderByIdResType>>(
+      `/orders/status/me/${orderId}`,
+      body,
+    );
   },
 };
 export default orderService;

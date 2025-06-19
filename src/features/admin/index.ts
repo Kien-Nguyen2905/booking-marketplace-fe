@@ -6,3 +6,5 @@ export { AdminNotificationsPage } from './notifications';
 export { AdminCouponPage } from './coupons';
 export { AdminCustomerPage } from './customers';
 export { AdminOrderPage } from './orders';
+export { AdminTransactionsPage } from './transactions';
+export { AdminRefundsPage } from './refunds';

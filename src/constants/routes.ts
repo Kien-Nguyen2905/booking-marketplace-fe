@@ -5,7 +5,6 @@ export const ROUTES = {
     PROFILE: '/account/profile',
     WISH_LIST: '/account/wishlist',
     ORDER: '/account/order',
-    REFUND: '/account/refund',
   },
   ADMIN: {
     ROOT: '/admin',
@@ -18,7 +17,6 @@ export const ROUTES = {
     PROMOTIONS: '/admin/promotions',
     TRANSACTIONS: '/admin/transactions',
     REFUNDS: '/admin/refunds',
-    REVIEWS: '/admin/reviews',
     NOTIFICATIONS: '/admin/notifications',
     PROFILE: '/admin/profile',
   },

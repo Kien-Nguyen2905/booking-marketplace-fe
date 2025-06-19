@@ -1,7 +1,6 @@
 'use client';
 
 import React, { FC } from 'react';
-import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import { Star } from 'lucide-react';
 import useReviewHotel from './useReviewHotel';
@@ -57,7 +56,7 @@ const HotelReview: FC<THotelReviewProps> = ({ reviewData = [] }) => {
                             key={index}
                             size={16}
                             className={`${
-                              index < Math.round(review.rating / 2)
+                              index < Math.round(review.rating)
                                 ? 'fill-[#FFD700] text-[#FFD700]'
                                 : 'fill-none text-gray-300'
                             }`}
@@ -80,21 +79,6 @@ const HotelReview: FC<THotelReviewProps> = ({ reviewData = [] }) => {
                   )}
                   <p className="text-gray-700">{review.content}</p>
                 </div>
-                {/* Review images if available */}
-                {review.image && (
-                  <div className="mb-4">
-                    <div className="h-[120px] md:h-[180px] relative">
-                      <div className="relative h-full w-[220px] rounded-md overflow-hidden">
-                        <Image
-                          src={review.image}
-                          alt={`Review image ${review.id}`}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )}
               </div>
             </CardContent>
           </Card>

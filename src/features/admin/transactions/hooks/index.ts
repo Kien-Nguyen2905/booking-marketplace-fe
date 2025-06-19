@@ -1,0 +1,1 @@
+export { useTransactionTable } from './useTransactionTable';

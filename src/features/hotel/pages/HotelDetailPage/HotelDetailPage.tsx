@@ -27,6 +27,7 @@ import { formatCurrency } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ChildIcon, PeopleIcon } from '@/icons';
 import { format } from 'date-fns';
+import { HotelReview } from '@/features/hotel/components';
 
 const HotelDetailPage = () => {
   const {
@@ -49,6 +50,7 @@ const HotelDetailPage = () => {
     onBookNow,
     isLoadingNavigate,
     dateRange,
+    reviews,
   } = useHotelDetailPage();
 
   if (!hotel || isLoadingNavigate) return <Loading />;
@@ -331,6 +333,7 @@ const HotelDetailPage = () => {
           })}
         </div>
       </div>
+      <HotelReview reviewData={reviews?.data || []} />
       <RoomDetailModal
         open={isModalOpen}
         onOpenChange={handleCloseModal}

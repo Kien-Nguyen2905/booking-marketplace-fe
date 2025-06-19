@@ -33,7 +33,7 @@ const RHFInput: FC<TInputProps> = ({
           {renderProp ? (
             renderProp(props, field)
           ) : (
-            <div className="grid gap-1">
+            <div className={`grid ${props.label ? 'gap-1' : ''}`}>
               {props.label && (
                 <FormLabel
                   className="block text-sm font-medium text-gray-700"

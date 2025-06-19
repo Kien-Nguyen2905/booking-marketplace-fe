@@ -3,7 +3,10 @@ export const ORDER_STATUS = {
   CONFIRMED: 'CONFIRMED',
   FAILED: 'FAILED',
   CANCELED: 'CANCELED',
+  PENDING_REFUND: 'PENDING_REFUND',
   REFUNDED: 'REFUNDED',
+  CHECKOUT: 'CHECKOUT',
+  NO_SHOW: 'NO_SHOW',
 } as const;
 
 export type OrderStatusType = (typeof ORDER_STATUS)[keyof typeof ORDER_STATUS];
@@ -27,9 +30,29 @@ export const PAYMENT_TYPE_LIST = Object.values(PAYMENT_TYPE).map((value) => ({
 
 export const MAP_PAYMENT_TYPE = {
   BANKING: 'Banking',
-  PAY_AT_HOTEL: 'Hotel',
+  PAY_AT_HOTEL: 'Pay at Hotel',
+};
+
+export const TRANSACTION_TYPE = {
+  IN: 'IN',
+  OUT: 'OUT',
+} as const;
+
+export type TransactionTypeType =
+  (typeof TRANSACTION_TYPE)[keyof typeof TRANSACTION_TYPE];
+
+export const TRANSACTION_TYPE_LIST = Object.values(TRANSACTION_TYPE).map(
+  (value) => ({
+    value: value.toLowerCase(),
+    label: value,
+  }),
+);
+
+export const MAP_TRANSACTION_TYPE = {
+  IN: 'Inbound',
+  OUT: 'Outbound',
 };
 export const PREFIX_CONTENT_ORDER = {
   PAY: 'BKP',
-  REFUND: 'BKF',
+  REFUND: 'BKR',
 };

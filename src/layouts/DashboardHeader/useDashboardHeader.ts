@@ -95,7 +95,6 @@ export const useDashboardHeader = () => {
 
     socket.on(EVENT.NOTIFY, handleNotification);
     socket.on(EVENT.ORDER_CREATED, handleOrder);
-
     return () => {
       socket.off(EVENT.NOTIFY, handleNotification);
       socket.off(EVENT.ORDER_CREATED, handleOrder);

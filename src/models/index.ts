@@ -12,3 +12,7 @@ export * from './amenity.model';
 export * from './review.model';
 export * from './wishlist.model';
 export * from './media.model';
+export * from './order.model';
+export * from './transaction.model';
+export * from './refund.model';
+export * from './review.model';

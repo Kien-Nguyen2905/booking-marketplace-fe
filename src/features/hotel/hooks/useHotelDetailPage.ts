@@ -5,6 +5,7 @@ import {
   useGetWishlistsByUserIdQuery,
   useDeleteWishlistMutation,
   useGetPromotionsByValidFromQuery,
+  useGetReviewsQuery,
 } from '@/queries';
 import {
   AMENITY_CATEGORY,
@@ -68,6 +69,10 @@ export const useHotelDetailPage = () => {
   const amenityPublic = hotel?.hotelAmenity.filter(
     (amenity) => amenity.amenity.category === AMENITY_CATEGORY.PUBLIC,
   );
+
+  const { data: reviewsData } = useGetReviewsQuery(id);
+  const reviews = reviewsData?.data.data;
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRoomType, setSelectedRoomType] =
     useState<GetRoomTypeByIdResType | null>(null);
@@ -124,8 +129,8 @@ export const useHotelDetailPage = () => {
       toggleModal();
       return;
     }
-    if (wishlist) return handleDeleteWishlist;
-    return handleCreateWishlist;
+    if (wishlist) return handleDeleteWishlist();
+    return handleCreateWishlist();
   };
 
   const now = startOfDay(new Date());
@@ -201,5 +206,6 @@ export const useHotelDetailPage = () => {
     onBookNow,
     isLoadingNavigate,
     dateRange,
+    reviews,
   };
 };

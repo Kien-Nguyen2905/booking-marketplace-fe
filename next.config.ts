@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
       'plus.unsplash.com',
       'totp',
       'booking-marketplace.s3.ap-southeast-1.amazonaws.com',
+      'qr.sepay.vn',
     ],
   },
 };

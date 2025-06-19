@@ -1,10 +1,12 @@
-import { TReviewData } from './type';
+import { GetReviewsResType } from '@/models';
 
 /**
  * Custom hook for ReviewHotel component
  * Handles business logic for the hotel reviews section
  */
-export default function useReviewHotel(reviews: TReviewData[] = []) {
+export default function useReviewHotel(
+  reviews: GetReviewsResType['data'] = [],
+) {
   /**
    * Calculate average rating from reviews
    */

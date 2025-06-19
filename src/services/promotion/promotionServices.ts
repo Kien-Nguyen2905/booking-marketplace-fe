@@ -39,7 +39,6 @@ const promotionServices = {
       `/promotions/${id}`,
     );
   },
-
   getPromotionsByValidFrom: (queryString: string = '') => {
     return instance.get<SuccessResponse<GetPromotionByValidFromResType>>(
       `/promotions/valid${queryString ? `?${queryString}` : ''}`,

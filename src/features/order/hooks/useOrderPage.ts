@@ -25,7 +25,7 @@ import {
   CreateCustomerBodyType,
 } from '@/models/customer.model';
 import { differenceInDays, parse } from 'date-fns';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { addDays, set } from 'date-fns';
 import { showToast } from '@/lib/toast';
 import { useAppContext } from '@/context/AppProvider';
@@ -41,7 +41,7 @@ import {
   calculateBookingProfit,
 } from '@/lib/utils';
 import { useCreateOrderMutation } from '@/queries/useOrder';
-import { CreateOrderBodyType } from '@/models/order.model';
+import { CreateOrderBodyType } from '@/models';
 export const useOrderPage = () => {
   const { profile } = useAppContext();
   const searchParams = useSearchParams();
@@ -51,8 +51,8 @@ export const useOrderPage = () => {
   const [estimatedCheckInTime, setEstimatedCheckInTime] = useState<Date | null>(
     null,
   );
-  const { mutateAsync: createOrder, isPending: isCreatingOrder } =
-    useCreateOrderMutation();
+  const { mutateAsync: createOrder } = useCreateOrderMutation();
+  const [isCreatingOrder, setIsCreatingOrder] = useState(false);
   const { data: hotelDetailData } = useGetHotelByIdQuery(booking?.hotelId || 0);
   const hotel = hotelDetailData?.data.data;
   const roomType = hotel?.roomType.find(
@@ -206,6 +206,7 @@ export const useOrderPage = () => {
 
   const handleCreateOrder = async (values: CreateCustomerBodyType) => {
     if (!booking || !profile || !room) return;
+    setIsCreatingOrder(true);
     try {
       const order: CreateOrderBodyType = {
         ...values,
@@ -237,20 +238,21 @@ export const useOrderPage = () => {
       const { data } = await createOrder(order);
       if (data.data.id) {
         if (data.data.paymentType === PAYMENT_TYPE.PAY_AT_HOTEL) {
+          showToast({
+            type: 'success',
+            message: SUCCESS_MESSAGES.CREATED,
+          });
           router.push(ROUTES.HOME);
         } else {
           router.push(`${ROUTES.PAYMENT}?id=${data.data.id}`);
         }
-        showToast({
-          type: 'success',
-          message: SUCCESS_MESSAGES.CREATED,
-        });
         clearBooking(searchParams.get('code') || '');
       }
     } catch (error) {
       handleErrorApi({ error, setError: form.setError });
     }
   };
+
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const timer = setTimeout(() => {
@@ -297,17 +299,26 @@ export const useOrderPage = () => {
     }
   }, [hotelDetailData, booking, router]);
 
+  // Store a ref to track if the real checkIn from booking has been processed
+  const checkInProcessedRef = useRef(false);
+
   useEffect(() => {
-    if (checkIn && !estimatedCheckInTime) {
-      const defaultCheckInTime = set(addDays(new Date(checkIn), 1), {
+    const needsInitialSetup = !estimatedCheckInTime;
+    const needsUpdate = booking?.startDate && !checkInProcessedRef.current;
+
+    if (checkIn && (needsInitialSetup || needsUpdate)) {
+      const defaultCheckInTime = set(new Date(checkIn), {
         hours: 14,
         minutes: 0,
         seconds: 0,
       });
       setEstimatedCheckInTime(defaultCheckInTime);
-    }
-  }, [checkIn, estimatedCheckInTime]);
 
+      if (booking?.startDate) {
+        checkInProcessedRef.current = true;
+      }
+    }
+  }, [checkIn, booking?.startDate, estimatedCheckInTime]);
   const handleEstimatedCheckInTimeChange = (time: Date | null) => {
     setEstimatedCheckInTime(time);
   };
@@ -318,6 +329,7 @@ export const useOrderPage = () => {
   const maximumCheckInTime = checkIn
     ? set(addDays(new Date(checkIn), 1), { hours: 12, minutes: 0, seconds: 0 })
     : null;
+
   return {
     booking,
     hotel,

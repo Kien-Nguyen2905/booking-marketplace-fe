@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import orderService from '@/services/order/orderServices';
+import { UpdateOrderBodyType } from '@/models/order.model';
 
 export const useGetAllOrdersQuery = (queryString: string = '') => {
   return useQuery({
@@ -16,10 +17,10 @@ export const useGetOrderByIdQuery = (id: string | number) => {
   });
 };
 
-export const useGetMyOrdersQuery = () => {
+export const useGetMyOrdersQuery = (queryString: string = '') => {
   return useQuery({
-    queryKey: ['orders', 'me'],
-    queryFn: () => orderService.getMyOrders(),
+    queryKey: ['my-orders', queryString],
+    queryFn: () => orderService.getMyOrders(queryString),
   });
 };
 
@@ -40,5 +41,31 @@ export const useCreateOrderMutation = () => {
       });
     },
     retry: 2,
+  });
+};
+
+export const useUpdateOrderMutation = (orderId: string | number) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (body: UpdateOrderBodyType) =>
+      orderService.updateStatusOrder(orderId, body),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['order', orderId],
+      });
+    },
+  });
+};
+
+export const useUpdateMyOrderMutation = (orderId: string | number) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (body: UpdateOrderBodyType) =>
+      orderService.updateStatusMyOrder(orderId, body),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['order', orderId],
+      });
+    },
   });
 };

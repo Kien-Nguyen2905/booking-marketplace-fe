@@ -26,7 +26,6 @@ export const usePaymentPage = () => {
   const { data } = useGetOrderByIdQuery(orderId || '');
   const order = data?.data.data;
 
-  // Initialize countdown timer with custom storage key for this specific order
   const {
     time: timeRemaining,
     startTimer,
@@ -49,7 +48,7 @@ export const usePaymentPage = () => {
     const handlePaymentSuccess = () => {
       showToast({
         type: 'success',
-        message: SUCCESS_MESSAGES.PAYMENT_SUCCESS,
+        message: SUCCESS_MESSAGES.PAID_SUCCESS,
       });
       clearPaymentTimer(orderId);
       router.push(ROUTES.HOME);
@@ -72,9 +71,17 @@ export const usePaymentPage = () => {
       router.push(ROUTES.HOME);
       return;
     }
-    // Start timer if it's not already active
+    // Only start a new timer if one doesn't exist for this order
     if (!isActive) {
-      startTimer();
+      // Check if there's already a timer in localStorage before starting a new one
+      const storageKey = `${LOCAL_STORAGE.PAYMENT_TIMER}_${orderId}`;
+      const storedExpiry = localStorage.getItem(storageKey);
+
+      // Only start a new timer if one doesn't exist
+      if (!storedExpiry) {
+        startTimer();
+      }
+      // If a timer exists, the useTimeCountdown hook will use that automatically
     }
   }, [order, router, isActive, startTimer]);
   return {

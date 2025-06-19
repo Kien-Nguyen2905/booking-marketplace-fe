@@ -111,7 +111,8 @@ const PromoCodeSlider = () => {
                             {Math.round(coupon.percentage * 100)}%
                           </span>
                         </div>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs">Available: {coupon.available}</p>
+                        <p className="text-xs text-gray-500 truncate line-clamp-1">
                           {coupon.description}
                         </p>
                       </div>

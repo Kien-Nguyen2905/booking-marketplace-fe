@@ -1,0 +1,1 @@
+export { useOrderPartnerTable } from './useOrderPartnerTable';

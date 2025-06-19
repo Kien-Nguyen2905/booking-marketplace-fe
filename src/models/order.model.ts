@@ -1,7 +1,10 @@
 import { ORDER_STATUS, PAYMENT_TYPE } from '@/constants';
+import { UserSchema } from '@/models/auth.model';
 import { CustomerSchema } from '@/models/customer.model';
 import { HotelSchema } from '@/models/hotel.model';
-import { RoomTypeSchema } from '@/models/room-type.model';
+import { ReviewSchema } from '@/models/review.model';
+import { RoleSchema } from '@/models/role.model';
+import { RoomBedSchema, RoomTypeSchema } from '@/models/room-type.model';
 import { RoomSchema } from '@/models/room.model';
 import { z } from 'zod';
 
@@ -30,12 +33,16 @@ export const OrderSchema = z.object({
       ORDER_STATUS.CONFIRMED,
       ORDER_STATUS.FAILED,
       ORDER_STATUS.CANCELED,
+      ORDER_STATUS.PENDING_REFUND,
       ORDER_STATUS.REFUNDED,
+      ORDER_STATUS.CHECKOUT,
+      ORDER_STATUS.NO_SHOW,
     ])
     .default(ORDER_STATUS.PENDING)
     .optional(),
   paymentType: z.enum([PAYMENT_TYPE.BANKING, PAYMENT_TYPE.PAY_AT_HOTEL]),
   arrivalTime: z.coerce.date().optional().nullable(),
+  reason: z.string().max(255).optional().nullable(),
   checkoutTime: z.coerce.date().optional().nullable(),
   createdAt: z.date().nullable(),
   updatedAt: z.date().nullable(),
@@ -71,11 +78,26 @@ export const GetOrderByIdResSchema = OrderSchema.extend({
   customer: CustomerSchema,
   hotel: HotelSchema,
   room: RoomSchema.extend({
-    roomType: RoomTypeSchema,
+    roomType: RoomTypeSchema.extend({
+      roomBed: z.array(RoomBedSchema),
+    }),
+  }),
+  user: UserSchema.extend({
+    role: RoleSchema,
   }),
 });
 
-export const GetOrdersByUserIdResSchema = z.array(OrderSchema);
+export const GetOrdersByUserIdResSchema = z.object({
+  data: z.array(
+    OrderSchema.extend({
+      review: ReviewSchema,
+    }),
+  ),
+  totalItems: z.number(),
+  page: z.number(),
+  limit: z.number(),
+  totalPages: z.number(),
+});
 
 export const CreateOrderBodySchema = OrderSchema.omit({
   id: true,
@@ -104,10 +126,26 @@ export const CreateOrderBodySchema = OrderSchema.omit({
 export const CreateOrderResSchema = OrderSchema;
 
 export const UpdateOrderBodySchema = OrderSchema.pick({
-  id: true,
   status: true,
-}).strict();
-
+  reason: true,
+})
+  .strict()
+  .superRefine(({ status, reason }, ctx) => {
+    if (status === ORDER_STATUS.CANCELED && !reason) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Reason is required',
+        path: ['reason'],
+      });
+    }
+    if (status === ORDER_STATUS.PENDING_REFUND && !reason) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Reason is required',
+        path: ['reason'],
+      });
+    }
+  });
 export const UpdateOrderResSchema = OrderSchema;
 
 export type GetOrdersQueryType = z.infer<typeof GetOrdersQuerySchema>;

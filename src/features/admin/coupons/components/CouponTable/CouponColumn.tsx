@@ -29,6 +29,7 @@ export const CouponTableContext = createContext<TCouponTable>({
   setSelectedCoupon: () => {},
   setOpen: () => {},
 });
+
 const PercentageHeader = () => {
   const { orderBy, onOrderByChange, order } = useCouponTable();
   return (
@@ -91,6 +92,7 @@ const UsedCountHeader = () => {
     </div>
   );
 };
+
 export const ActionsCell = ({ row }: { row: any }) => {
   const { setSelectedCoupon, setOpen } = useContext(CouponTableContext);
   const coupon = row.original;
@@ -120,6 +122,7 @@ export const ActionsCell = ({ row }: { row: any }) => {
     </DropdownMenu>
   );
 };
+
 export const couponColumns: ColumnDef<any>[] = [
   {
     accessorKey: 'title',

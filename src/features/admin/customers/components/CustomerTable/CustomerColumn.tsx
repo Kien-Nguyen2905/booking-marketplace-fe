@@ -40,7 +40,11 @@ export const customerColumns: ColumnDef<any>[] = [
     header: 'Date',
     cell: ({ row }) => {
       const dateValue = row.getValue('createdAt') as string;
-      return <div>{format(new Date(dateValue), 'dd/MM/yyyy')}</div>;
+      return (
+        <div className="truncate line-clamp-1 items-center flex h-[36px]">
+          {format(new Date(dateValue), 'dd/MM/yyyy')}
+        </div>
+      );
     },
   },
 ];

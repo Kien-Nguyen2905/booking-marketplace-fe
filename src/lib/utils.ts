@@ -6,6 +6,7 @@ import {
   COOKIE_NAMES,
   LIMIT,
   LOCAL_STORAGE,
+  ORDER_STATUS,
   PERCENTAGE,
   ROUTES,
 } from '@/constants';
@@ -426,3 +427,33 @@ export const clearPaymentTimer = (orderId: string | null) => {
 export const clearAllLocalStorage = () => {
   localStorage.clear();
 };
+
+export const toStartOfUTCDate = (date: Date): Date => {
+  return new Date(
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
+  );
+};
+
+export const getColorStatus = (status?: string) => {
+  switch (status) {
+    case ORDER_STATUS.CONFIRMED:
+      return 'text-green-600';
+    case ORDER_STATUS.PENDING:
+      return 'text-yellow-600';
+    case ORDER_STATUS.FAILED:
+      return 'text-red-600';
+    case ORDER_STATUS.CANCELED:
+      return 'text-red-600';
+    case ORDER_STATUS.REFUNDED:
+      return 'text-orange-600';
+    case ORDER_STATUS.PENDING_REFUND:
+      return 'text-orange-600';
+    default:
+      return 'text-gray-600';
+  }
+};
+
+export const getNowUTC7 = (): Date =>
+  new Date(
+    new Date().toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' }),
+  );

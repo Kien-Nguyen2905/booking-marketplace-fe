@@ -10,11 +10,13 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { userColumns } from '@/features/admin/users/components/UserTable/UserColumn';
 import { CPagination, LoadingTable, RHFInput, RHFPickDate } from '@/components';
 import { Form } from '@/components/ui/form';
 import { addDays } from 'date-fns';
-import { OrderTableContext } from '@/features/admin/orders/components/OrderTable/OrderColumn';
+import {
+  orderColumns,
+  OrderTableContext,
+} from '@/features/admin/orders/components/OrderTable/OrderColumn';
 import { useOrderTable } from '@/features/admin/orders/hooks';
 import { Button } from '@/components/ui/button';
 import {
@@ -206,7 +208,7 @@ const OrderTable = () => {
                 {isLoading ? (
                   <TableRow>
                     <TableCell
-                      colSpan={userColumns?.length + 2}
+                      colSpan={orderColumns?.length + 1}
                       className="h-24 text-center"
                     >
                       Loading...
@@ -228,7 +230,7 @@ const OrderTable = () => {
                 ) : (
                   <TableRow>
                     <TableCell
-                      colSpan={userColumns?.length + 2}
+                      colSpan={orderColumns?.length + 1}
                       className="h-24 text-center"
                     >
                       No results.

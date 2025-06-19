@@ -6,8 +6,8 @@ import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { format, parse } from 'date-fns';
-import { useGetAllOrdersQuery } from '@/queries/useOrder';
-import { OrderType } from '@/models/order.model';
+import { useGetAllOrdersQuery } from '@/queries';
+import { OrderType } from '@/models';
 import { orderColumns } from '@/features/admin/orders/components/OrderTable/OrderColumn';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { setParamsDefault } from '@/lib/utils';
@@ -55,6 +55,16 @@ export const useOrderTable = () => {
 
   const dateFromValue = formQuery.watch('dateFrom');
 
+  const onSearch = debounce((value: string) => {
+    if (value) {
+      params.set('search', value);
+    } else {
+      params.delete('search');
+    }
+    const newQueryString = setParamsDefault(params);
+    router.push(`${pathname}?${newQueryString}`);
+  }, 700);
+
   const onDateFromChange = (value: Date) => {
     if (!value) return;
     formQuery.setValue('dateFrom', value);
@@ -70,16 +80,6 @@ export const useOrderTable = () => {
     const newQueryString = setParamsDefault(params);
     router.push(`${pathname}?${newQueryString}`);
   };
-
-  const onSearch = debounce((value: string) => {
-    if (value) {
-      params.set('search', value);
-    } else {
-      params.delete('search');
-    }
-    const newQueryString = setParamsDefault(params);
-    router.push(`${pathname}?${newQueryString}`);
-  }, 700);
 
   const onDateToChange = (value: Date | null) => {
     if (!value) return;

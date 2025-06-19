@@ -46,19 +46,19 @@ export const BANK_ACCOUNT = [
     label: 'Ngân hàng TMCP Á Châu (ACB)',
   },
   {
-    value: 'VIETCOMBANK',
+    value: 'Vietcombank',
     label: 'Ngân hàng TMCP Ngoại thương Việt Nam (Vietcombank)',
   },
   {
-    value: 'VIETINBANK',
+    value: 'Vietinbank',
     label: 'Ngân hàng TMCP Công Thương Việt Nam (VietinBank)',
   },
   {
-    value: 'AGRIBANK',
+    value: 'Agribank',
     label: 'Ngân hàng Nông nghiệp và Phát triển Nông thôn Việt Nam (Agribank)',
   },
   {
-    value: 'TECHCOMBANK',
+    value: 'Techcombank',
     label: 'Ngân hàng TMCP Kỹ Thương Việt Nam (Techcombank)',
   },
   {
@@ -78,15 +78,11 @@ export const BANK_ACCOUNT = [
     label: 'Ngân hàng TMCP Phát triển TP.HCM (HDBank)',
   },
   {
-    value: 'TPBANK',
-    label: 'Ngân hàng TMCP Tiên Phong (TPBank)',
-  },
-  {
     value: 'SHB',
     label: 'Ngân hàng TMCP Sài Gòn – Hà Nội (SHB)',
   },
   {
-    value: 'SACOMBANK',
+    value: 'Sacombank',
     label: 'Ngân hàng TMCP Sài Gòn Thương Tín (Sacombank)',
   },
   {
@@ -98,11 +94,11 @@ export const BANK_ACCOUNT = [
     label: 'Ngân hàng TMCP Phương Đông (OCB)',
   },
   {
-    value: 'SEABANK',
+    value: 'SeABank',
     label: 'Ngân hàng TMCP Đông Nam Á (SeABank)',
   },
   {
-    value: 'EXIMBANK',
+    value: 'Eximbank',
     label: 'Ngân hàng TMCP Xuất Nhập khẩu Việt Nam (Eximbank)',
   },
   {
@@ -114,7 +110,7 @@ export const BANK_ACCOUNT = [
     label: 'Ngân hàng TMCP Quốc Dân (NCB)',
   },
   {
-    value: 'NAMABANK',
+    value: 'NamABank',
     label: 'Ngân hàng TMCP Nam Á (Nam A Bank)',
   },
   {

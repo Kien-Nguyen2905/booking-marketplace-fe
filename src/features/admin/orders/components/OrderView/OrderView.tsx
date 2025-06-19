@@ -2,7 +2,7 @@
 
 import React, { FC } from 'react';
 import { format } from 'date-fns';
-import { Hotel, Tags } from 'lucide-react';
+import { Hotel, Tags, User } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -11,44 +11,32 @@ import {
 } from '@/components/ui/dialog';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { formatCurrency } from '@/lib/utils';
-import { MAP_POLICY, ORDER_STATUS } from '@/constants';
+import { formatCurrency, getColorStatus } from '@/lib/utils';
+import { MAP_PAYMENT_TYPE, MAP_POLICY, ORDER_STATUS } from '@/constants';
 import { useOrderView } from '@/features/admin/orders/components/OrderView/useOrderView';
 import { TOrderViewProps } from '@/features/admin/orders/components/OrderView/type';
 import { Button } from '@/components/ui/button';
+import { LoadingButton } from '@/components';
 
 const OrderView: FC<TOrderViewProps> = ({
   selectedOrder,
   open,
   onOpenChange,
 }) => {
-  const { order } = useOrderView(selectedOrder?.id);
-  
-  if (!selectedOrder) return null;
+  const { order, handleCreateRefund, isPending } = useOrderView(
+    selectedOrder?.id,
+  );
 
+  if (!selectedOrder) return null;
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="!max-w-[1000px] h-[90vh] overflow-y-auto p-8">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold flex items-center gap-2">
             <p>Order ID: #{order?.id}</p>
-            <span
-              className={`text-xs font-bold ${
-                order?.status === ORDER_STATUS.CONFIRMED
-                  ? 'text-green-600'
-                  : order?.status === ORDER_STATUS.PENDING
-                  ? 'text-yellow-600'
-                  : order?.status === ORDER_STATUS.FAILED
-                  ? 'text-red-600'
-                  : order?.status === ORDER_STATUS.CANCELED
-                  ? 'text-red-600'
-                  : order?.status === ORDER_STATUS.REFUNDED
-                  ? 'text-blue-600'
-                  : 'text-gray-600'
-              }`}
-            >
+            <p className={`font-bold ${getColorStatus(order?.status)}`}>
               {order?.status}
-            </span>
+            </p>
           </DialogTitle>
         </DialogHeader>
 
@@ -107,11 +95,13 @@ const OrderView: FC<TOrderViewProps> = ({
                 <h3 className="font-bold text-lg">Payment</h3>
                 <div className="flex gap-1">
                   <p>Payment type: </p>
-                  <p>{order?.paymentType}</p>
-                </div>
-                <div className="flex gap-1">
-                  <p>Payment status: </p>
-                  <p>{order?.status}</p>
+                  <p>
+                    {
+                      MAP_PAYMENT_TYPE[
+                        order?.paymentType as keyof typeof MAP_PAYMENT_TYPE
+                      ]
+                    }
+                  </p>
                 </div>
               </div>
               <div className="grid-span-1 text-sm font-medium">
@@ -146,6 +136,60 @@ const OrderView: FC<TOrderViewProps> = ({
                   </div>
                 )}
               </div>
+              {order?.reason && (
+                <div className="grid-span-1 text-sm font-medium">
+                  <h3 className="font-bold text-lg">Reason</h3>
+                  <div className="flex gap-1">
+                    <p>Reason: </p>
+                    <p>{order?.reason}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="mb-2">
+          <CardContent className="pt-0">
+            <h2 className="flex items-center gap-2 text-lg font-semibold mb-4">
+              <User className="h-5 w-5 text-blue-primary" />
+              Information Account
+            </h2>
+            <div className="grid grid-cols-3 gap-4">
+              <div className="grid-span-1 text-sm font-medium">
+                <h3 className="font-bold text-lg">User</h3>
+                <div className="flex gap-1">
+                  <p>Role: </p>
+                  <p>{order?.user?.role?.name}</p>
+                </div>
+                <div className="flex gap-1">
+                  <p>Name: </p>
+                  <p>{order?.user?.fullName}</p>
+                </div>
+                <div className="flex gap-1">
+                  <p>Email: </p>
+                  <p>{order?.user?.email}</p>
+                </div>
+                <div className="flex gap-1">
+                  <p>Phone number: </p>
+                  <p>{order?.user?.phoneNumber}</p>
+                </div>
+              </div>
+              <div className="grid-span-1 text-sm font-medium">
+                <h3 className="font-bold text-lg">Bank</h3>
+                <div className="flex gap-1">
+                  <p>Bank account: </p>
+                  <p>{order?.user?.bankAccount}</p>
+                </div>
+                <div className="flex gap-1">
+                  <p>Account number: </p>
+                  <p>{order?.user?.accountNumber}</p>
+                </div>
+                <div className="flex gap-1">
+                  <p>Bank name: </p>
+                  <p>{order?.user?.bankName}</p>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -167,12 +211,14 @@ const OrderView: FC<TOrderViewProps> = ({
                 </span>
               </div>
 
-              <div className="flex justify-between py-2">
-                <span className="text-gray-600">Point discount</span>
-                <span className="font-medium text-green-500">
-                  -{formatCurrency(order?.pointDiscount || 0)}
-                </span>
-              </div>
+              {(order?.pointDiscount || 0) > 0 && (
+                <div className="flex justify-between py-2">
+                  <span className="text-gray-600">Point discount</span>
+                  <span className="font-medium text-green-500">
+                    -{formatCurrency(order?.pointDiscount || 0)}
+                  </span>
+                </div>
+              )}
 
               {order?.couponId && (
                 <div className="flex justify-between py-2">
@@ -225,9 +271,17 @@ const OrderView: FC<TOrderViewProps> = ({
           </CardContent>
         </Card>
 
-        <div className="flex justify-end">
-          <Button className="bg-orange-500 hover:bg-orange-600">REFUND</Button>
-        </div>
+        {selectedOrder?.status === ORDER_STATUS.PENDING_REFUND && (
+          <div className="flex justify-end">
+            <Button
+              onClick={handleCreateRefund}
+              disabled={isPending}
+              className="bg-orange-500 hover:bg-orange-600 h-10 w-[110px] relative"
+            >
+              {isPending ? <LoadingButton /> : 'REFUND'}
+            </Button>
+          </div>
+        )}
       </DialogContent>
     </Dialog>
   );

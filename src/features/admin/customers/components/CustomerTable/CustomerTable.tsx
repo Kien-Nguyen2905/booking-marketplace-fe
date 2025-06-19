@@ -11,19 +11,19 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { userColumns } from '@/features/admin/users/components/UserTable/UserColumn';
 import { CPagination, LoadingTable, RHFInput } from '@/components';
 import { Search } from 'lucide-react';
 import { Form } from '@/components/ui/form';
 import { useCustomerTable } from '@/features/admin/customers/hooks/useCustomerTable';
+import { customerColumns } from '@/features/admin/customers/components/CustomerTable/CustomerColumn';
 
 const CustomerTable = () => {
   const { form, onSearch, isLoading, pagination, onReset, table } =
     useCustomerTable();
 
   return (
-    <Form {...form}>
-      <div className="space-y-4">
+    <div className="space-y-4">
+      <Form {...form}>
         <div className="flex items-center justify-between">
           <div className="relative">
             <RHFInput
@@ -70,7 +70,7 @@ const CustomerTable = () => {
               {isLoading ? (
                 <TableRow>
                   <TableCell
-                    colSpan={userColumns?.length + 1 || 5}
+                    colSpan={customerColumns?.length + 1 || 5}
                     className="h-24 text-center"
                   >
                     Loading...
@@ -92,7 +92,7 @@ const CustomerTable = () => {
               ) : (
                 <TableRow>
                   <TableCell
-                    colSpan={userColumns?.length + 1 || 5}
+                    colSpan={customerColumns?.length + 1 || 5}
                     className="h-24 text-center"
                   >
                     No results.
@@ -110,8 +110,8 @@ const CustomerTable = () => {
             itemsPerPage={pagination?.limit as number}
           />
         )}
-      </div>
-    </Form>
+      </Form>
+    </div>
   );
 };
 
