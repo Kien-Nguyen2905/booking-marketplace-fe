@@ -20,7 +20,7 @@ export const ERROR_AUTH_MESSAGES = {
   email: {
     required: 'Email is required',
     invalid: 'Email is invalid',
-    maxLength: 'Email must not exceed 100 characters',
+    maxLength: 'Email must not exceed 255 characters',
   },
   password: {
     required: 'Password is required',
@@ -30,7 +30,7 @@ export const ERROR_AUTH_MESSAGES = {
   fullName: {
     required: 'Full name is required',
     minLength: 'Full name must be at least 2 characters long',
-    maxLength: 'Full name must not exceed 100 characters',
+    maxLength: 'Full name must not exceed 255 characters',
     invalidCharacters:
       'Full name must only contain letters, without numbers or special characters.',
   },

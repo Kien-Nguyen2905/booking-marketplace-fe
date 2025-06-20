@@ -7,7 +7,7 @@ export const UserSchema = z.object({
   email: z
     .string({ required_error: ERROR_AUTH_MESSAGES.email.required })
     .email({ message: ERROR_AUTH_MESSAGES.email.invalid })
-    .max(100, { message: ERROR_AUTH_MESSAGES.email.maxLength }),
+    .max(255, { message: ERROR_AUTH_MESSAGES.email.maxLength }),
   password: z
     .string({ required_error: ERROR_AUTH_MESSAGES.password.required })
     .min(6, { message: ERROR_AUTH_MESSAGES.password.minLength })
@@ -16,7 +16,7 @@ export const UserSchema = z.object({
     .string({ required_error: ERROR_AUTH_MESSAGES.fullName.required })
     .trim()
     .min(2, { message: ERROR_AUTH_MESSAGES.fullName.minLength })
-    .max(100, { message: ERROR_AUTH_MESSAGES.fullName.maxLength })
+    .max(255, { message: ERROR_AUTH_MESSAGES.fullName.maxLength })
     .regex(/^[A-Za-zÀ-ỹ\s]+$/, {
       message: ERROR_AUTH_MESSAGES.fullName.invalidCharacters,
     }),

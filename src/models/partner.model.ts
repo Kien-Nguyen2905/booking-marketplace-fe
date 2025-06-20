@@ -9,7 +9,7 @@ export const PartnerSchema = z.object({
     .string({ required_error: ERROR_AUTH_MESSAGES.fullName.required })
     .nonempty({ message: ERROR_AUTH_MESSAGES.fullName.required })
     .trim()
-    .max(100, { message: ERROR_AUTH_MESSAGES.fullName.maxLength })
+    .max(255, { message: ERROR_AUTH_MESSAGES.fullName.maxLength })
     .regex(/^[A-Za-zÀ-ỹ\s]+$/, {
       message: ERROR_AUTH_MESSAGES.fullName.invalidCharacters,
     }),
@@ -17,7 +17,7 @@ export const PartnerSchema = z.object({
     .string({ required_error: ERROR_AUTH_MESSAGES.email.required })
     .nonempty({ message: ERROR_AUTH_MESSAGES.email.required })
     .email({ message: ERROR_AUTH_MESSAGES.email.invalid })
-    .max(100, { message: ERROR_AUTH_MESSAGES.email.maxLength }),
+    .max(255, { message: ERROR_AUTH_MESSAGES.email.maxLength }),
   phoneNumber: z
     .string()
     .nonempty({ message: ERROR_AUTH_MESSAGES.phoneNumber.required })

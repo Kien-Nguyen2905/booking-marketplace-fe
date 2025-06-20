@@ -3,7 +3,7 @@ import { PermissionSchema } from '@/models/permission.model';
 
 export const RoleSchema = z.object({
   id: z.number(),
-  name: z.string().max(500),
+  name: z.string().max(50),
   description: z.string().nullable(),
   isActive: z.boolean().nullable().default(true),
   createdById: z.number().nullable(),
