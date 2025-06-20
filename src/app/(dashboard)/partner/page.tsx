@@ -1,7 +1,19 @@
-import React from 'react';
-
+import { Loading } from '@/components';
+import { PartnerDashboardPage } from '@/features/partner';
+import { Metadata } from 'next';
+import React, { Suspense } from 'react';
+export const metadata: Metadata = {
+  title: 'Partner',
+  alternates: {
+    canonical: '/partner',
+  },
+};
 const PartnerPage = () => {
-  return <div className="h-[1200px]">Hello Partner</div>;
+  return (
+    <Suspense fallback={<Loading />}>
+      <PartnerDashboardPage />
+    </Suspense>
+  );
 };
 
 export default PartnerPage;

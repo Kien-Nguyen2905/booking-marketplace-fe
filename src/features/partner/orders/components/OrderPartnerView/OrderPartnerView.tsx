@@ -46,7 +46,6 @@ const OrderPartnerView: FC<TOrderViewProps> = ({
   } = useOrderPartnerView(selectedOrder?.id);
 
   if (!selectedOrder) return null;
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="!max-w-[1000px] h-[90vh] overflow-y-auto p-8">

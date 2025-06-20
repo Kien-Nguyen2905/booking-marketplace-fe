@@ -1,5 +1,7 @@
+import { Loading } from '@/components';
+import { AdminDashboardPage } from '@/features/admin';
 import { Metadata } from 'next';
-import React from 'react';
+import React, { Suspense } from 'react';
 export const metadata: Metadata = {
   title: 'Admin',
   alternates: {
@@ -7,7 +9,11 @@ export const metadata: Metadata = {
   },
 };
 const AdminPage = () => {
-  return <div className="h-[1200px]">Hello Admin</div>;
+  return (
+    <Suspense fallback={<Loading />}>
+      <AdminDashboardPage />
+    </Suspense>
+  );
 };
 
 export default AdminPage;

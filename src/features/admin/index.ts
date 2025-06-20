@@ -8,3 +8,5 @@ export { AdminCustomerPage } from './customers';
 export { AdminOrderPage } from './orders';
 export { AdminTransactionsPage } from './transactions';
 export { AdminRefundsPage } from './refunds';
+export { AdminRevenuePage } from './revenue';
+export { AdminDashboardPage } from './dashboard';

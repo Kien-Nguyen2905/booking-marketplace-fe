@@ -51,7 +51,6 @@ const Sidebar: FC<TSideBarProps> = ({ isCollapsed, toggleSidebar }) => {
                     variant={pathname === item.href ? 'default' : 'ghost'}
                     className={cn(
                       'w-full justify-start text-left',
-                      // pathname === item.href ? 'bg-accent' : '',
                       isCollapsed && 'justify-center p-2',
                     )}
                   >

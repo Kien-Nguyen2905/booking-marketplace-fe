@@ -18,6 +18,7 @@ export const ROUTES = {
     TRANSACTIONS: '/admin/transactions',
     REFUNDS: '/admin/refunds',
     NOTIFICATIONS: '/admin/notifications',
+    REVENUE: '/admin/revenue',
     PROFILE: '/admin/profile',
   },
   PARTNER: {

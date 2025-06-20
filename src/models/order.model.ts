@@ -148,6 +148,24 @@ export const UpdateOrderBodySchema = OrderSchema.pick({
   });
 export const UpdateOrderResSchema = OrderSchema;
 
+export const ExportPartnerRevenueResSchema = z.array(
+  z.object({
+    startDate: z.string(),
+    endDate: z.string(),
+    partnerName: z.string(),
+    hotelName: z.string(),
+    accountNumber: z.string(),
+    bankName: z.string(),
+    bankAccount: z.string(),
+    countOrder: z.number(),
+    totalOrderValue: z.number(),
+    totalPrice: z.number(),
+    hotelPayment: z.number(),
+    commissionAmount: z.number(),
+    transferAmount: z.number(),
+  }),
+);
+
 export type GetOrdersQueryType = z.infer<typeof GetOrdersQuerySchema>;
 export type GetOrdersResType = z.infer<typeof GetOrdersResSchema>;
 
@@ -163,3 +181,7 @@ export type CreateOrderResType = z.infer<typeof CreateOrderResSchema>;
 
 export type UpdateOrderBodyType = z.infer<typeof UpdateOrderBodySchema>;
 export type UpdateOrderResType = z.infer<typeof UpdateOrderResSchema>;
+
+export type ExportPartnerRevenueResType = z.infer<
+  typeof ExportPartnerRevenueResSchema
+>;

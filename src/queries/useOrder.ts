@@ -69,3 +69,10 @@ export const useUpdateMyOrderMutation = (orderId: string | number) => {
     },
   });
 };
+
+export const useExportPartnerRevenueQuery = (queryString: string = '') => {
+  return useQuery({
+    queryKey: ['export-partner-revenue', queryString],
+    queryFn: () => orderService.exportPartnerRevenue(queryString),
+  });
+};

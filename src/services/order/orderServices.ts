@@ -3,6 +3,7 @@ import { SuccessResponse } from '@/services/type';
 import {
   CreateOrderBodyType,
   CreateOrderResType,
+  ExportPartnerRevenueResType,
   GetOrderByIdResType,
   GetOrdersByUserIdResType,
   GetOrdersResType,
@@ -46,6 +47,11 @@ const orderService = {
     return instance.put<SuccessResponse<GetOrderByIdResType>>(
       `/orders/status/me/${orderId}`,
       body,
+    );
+  },
+  exportPartnerRevenue: (queryString: string = '') => {
+    return instance.get<SuccessResponse<ExportPartnerRevenueResType>>(
+      `/orders/export-partner-revenue${queryString ? `?${queryString}` : ''}`,
     );
   },
 };

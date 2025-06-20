@@ -16,6 +16,7 @@ import {
   Percent,
   ReceiptText,
   TicketPercent,
+  TrendingUpDown,
   User,
 } from 'lucide-react';
 import { ComponentType } from 'react';
@@ -39,6 +40,16 @@ export const MANAGEMENT_NAV_LINKS: Dashboard = {
       href: ROUTES.ADMIN.ROOT,
       name: 'Dashboard',
       icon: PanelsTopLeft,
+    },
+    REVENUE: {
+      href: ROUTES.ADMIN.REVENUE,
+      name: 'Revenue',
+      icon: TrendingUpDown,
+    },
+    NOTIFICATIONS: {
+      href: ROUTES.ADMIN.NOTIFICATIONS,
+      name: 'Notifications',
+      icon: Bell,
     },
     USERS: {
       href: ROUTES.ADMIN.USERS,
@@ -85,17 +96,17 @@ export const MANAGEMENT_NAV_LINKS: Dashboard = {
       name: 'Refunds',
       icon: ArrowRightLeft,
     },
-    NOTIFICATIONS: {
-      href: ROUTES.ADMIN.NOTIFICATIONS,
-      name: 'Notifications',
-      icon: Bell,
-    },
   },
   PARTNER: {
     ROOT: {
       href: ROUTES.PARTNER.ROOT,
       name: 'Dashboard',
       icon: PanelsTopLeft,
+    },
+    NOTIFICATIONS: {
+      href: ROUTES.PARTNER.NOTIFICATIONS,
+      name: 'Notifications',
+      icon: Bell,
     },
     HOTEL: {
       href: ROUTES.PARTNER.HOTEL,
@@ -121,11 +132,6 @@ export const MANAGEMENT_NAV_LINKS: Dashboard = {
       href: ROUTES.PARTNER.ORDERS,
       name: 'Orders',
       icon: CalendarFold,
-    },
-    NOTIFICATIONS: {
-      href: ROUTES.PARTNER.NOTIFICATIONS,
-      name: 'Notifications',
-      icon: Bell,
     },
   },
   EMPLOYEE: {

@@ -19,3 +19,4 @@ export * from './useOrder';
 export * from './useTransaction';
 export * from './useRefund';
 export * from './useReview';
+export * from './useMetric';
