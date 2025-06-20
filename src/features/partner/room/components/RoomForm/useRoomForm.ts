@@ -7,9 +7,12 @@ import {
   RoomType,
   UpdateRoomBodyType,
 } from '@/models/room.model';
-import { useCreateRoomMutation } from '@/queries';
+import {
+  useCreateRoomMutation,
+  useFindOrdersExceedQuantityMutation,
+} from '@/queries';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useUpdateRoomMutation } from '@/queries';
 import { usePartnerRoom } from '@/features/partner/room/hooks';
@@ -24,7 +27,14 @@ export const useRoomForm = (
     useCreateRoomMutation();
   const { mutateAsync: updateRoom, isPending: isUpdating } =
     useUpdateRoomMutation();
-
+  const { mutateAsync: findOrdersExceedQuantity } =
+    useFindOrdersExceedQuantityMutation();
+  
+  // States for confirmation dialog
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [pendingValues, setPendingValues] = useState<UpdateRoomBodyType | null>(null);
+  const [exceedingOrders, setExceedingOrders] = useState<any[]>([]);
+  
   const form = useForm<CreateRoomBodyType>({
     resolver: zodResolver(CreateRoomBodySchema),
     defaultValues: {
@@ -55,8 +65,31 @@ export const useRoomForm = (
   };
 
   const handleUpdateRoom = async (values: UpdateRoomBodyType) => {
+    if (!room) return;
     try {
-      if (!room) return;
+      const { data: orders } = await findOrdersExceedQuantity({
+        roomId: room.id,
+        quantity: values.quantity,
+      });
+      
+      if (orders?.data?.length > 0) {
+        // Store the values and orders for confirmation dialog
+        setPendingValues(values);
+        setExceedingOrders(orders.data);
+        setShowConfirmDialog(true);
+        return; // Stop execution until confirmation
+      }
+      
+      // If no orders exceed quantity, proceed with update
+      await executeRoomUpdate(values);
+    } catch (error) {
+      handleErrorApi({ error, setError: form.setError });
+    }
+  };
+
+  const executeRoomUpdate = async (values: UpdateRoomBodyType) => {
+    if (!room) return;
+    try {
       const { data } = await updateRoom({
         id: room.id,
         body: values,
@@ -70,6 +103,15 @@ export const useRoomForm = (
       }
     } catch (error) {
       handleErrorApi({ error, setError: form.setError });
+    }
+  };
+  
+  // Handle confirmation of update despite exceeding orders
+  const handleConfirmUpdate = () => {
+    if (pendingValues) {
+      executeRoomUpdate(pendingValues);
+      setPendingValues(null);
+      setExceedingOrders([]);
     }
   };
 
@@ -102,5 +144,10 @@ export const useRoomForm = (
     form,
     handleSubmit,
     isSubmitting: isCreating || isUpdating,
+    // Dialog state and handlers
+    showConfirmDialog,
+    setShowConfirmDialog,
+    exceedingOrders,
+    handleConfirmUpdate,
   };
 };

@@ -4,6 +4,8 @@ import {
   CreateOrderBodyType,
   CreateOrderResType,
   ExportPartnerRevenueResType,
+  FindOrdersExceedQuantityResType,
+  FindOrdersExceedQuantityType,
   GetOrderByIdResType,
   GetOrdersByUserIdResType,
   GetOrdersResType,
@@ -52,6 +54,12 @@ const orderService = {
   exportPartnerRevenue: (queryString: string = '') => {
     return instance.get<SuccessResponse<ExportPartnerRevenueResType>>(
       `/orders/export-partner-revenue${queryString ? `?${queryString}` : ''}`,
+    );
+  },
+  findOrdersExceedQuantity: (body: FindOrdersExceedQuantityType) => {
+    return instance.post<SuccessResponse<FindOrdersExceedQuantityResType>>(
+      `/orders/exceed-quantity`,
+      body,
     );
   },
 };

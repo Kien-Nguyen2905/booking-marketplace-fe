@@ -76,3 +76,15 @@ export const useExportPartnerRevenueQuery = (queryString: string = '') => {
     queryFn: () => orderService.exportPartnerRevenue(queryString),
   });
 };
+
+export const useFindOrdersExceedQuantityMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: orderService.findOrdersExceedQuantity,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['exceed-quantity'],
+      });
+    },
+  });
+};

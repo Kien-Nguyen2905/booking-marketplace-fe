@@ -312,7 +312,11 @@ const HotelDetailPage = () => {
                                   <div className="col-span-3 flex justify-end">
                                     <Button
                                       onClick={() =>
-                                        onBookNow(item.roomTypeId, item.id)
+                                        onBookNow(
+                                          item.roomTypeId,
+                                          item.id,
+                                          item.policy,
+                                        )
                                       }
                                       className="bg-orange-500 hover:bg-orange-600"
                                     >

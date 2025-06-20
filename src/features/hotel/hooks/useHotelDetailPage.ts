@@ -12,6 +12,7 @@ import {
   ERROR_MESSAGES,
   MAX_ROOM_PAY_AT_HOTEL,
   POLICY_TYPE,
+  PolicyType,
   ROUTES,
   SUCCESS_MESSAGES,
 } from '@/constants';
@@ -140,7 +141,11 @@ export const useHotelDetailPage = () => {
 
   const isFuture = targetDate && targetDate > now;
 
-  const onBookNow = (roomTypeId: number, roomId: number) => {
+  const onBookNow = (
+    roomTypeId: number,
+    roomId: number,
+    policy: PolicyType,
+  ) => {
     if (!profile?.id) {
       toggleModal();
       return;
@@ -156,6 +161,16 @@ export const useHotelDetailPage = () => {
     ) {
       return;
     }
+    if (
+      policy === POLICY_TYPE.PAY_AT_HOTEL &&
+      availableParam > MAX_ROOM_PAY_AT_HOTEL
+    ) {
+      showToast({
+        type: 'error',
+        message: ERROR_MESSAGES.POLICY_NOT_ALLOW_BOOKING,
+      });
+      return;
+    }
     const booking = {
       roomTypeId,
       roomId,
@@ -166,19 +181,6 @@ export const useHotelDetailPage = () => {
       child: childParam,
       available: availableParam,
     };
-    const room = roomTypeList
-      .flatMap((roomType) => roomType.room)
-      .find((room) => room.id === roomId);
-    if (
-      room?.policy === POLICY_TYPE.PAY_AT_HOTEL &&
-      availableParam > MAX_ROOM_PAY_AT_HOTEL
-    ) {
-      showToast({
-        type: 'error',
-        message: ERROR_MESSAGES.POLICY_NOT_ALLOW_BOOKING,
-      });
-      return;
-    }
     const code = saveBooking(booking);
     setIsLoadingNavigate(true);
     router.push(`${ROUTES.ORDER}?code=${code}`);
