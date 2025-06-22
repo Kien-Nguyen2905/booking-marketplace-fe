@@ -7,4 +7,5 @@ export const LOCAL_STORAGE = {
   IS_PENDING_PARTNER: 'isPendingPartner',
   BOOKING: 'booking',
   PAYMENT_TIMER: 'paymentTimer',
+  CHAT_HISTORY: 'chatHistory',
 };

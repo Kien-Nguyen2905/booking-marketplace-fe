@@ -457,3 +457,15 @@ export const getNowUTC7 = (): Date =>
   new Date(
     new Date().toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' }),
   );
+
+export const setChatHistoryLocalStorage = (stringify: string) => {
+  localStorage.setItem(LOCAL_STORAGE.CHAT_HISTORY, stringify);
+};
+
+export const getChatHistoryLocalStorage = () => {
+  return localStorage.getItem(LOCAL_STORAGE.CHAT_HISTORY);
+};
+
+export const clearChatHistoryLocalStorage = () => {
+  localStorage.removeItem(LOCAL_STORAGE.CHAT_HISTORY);
+};
