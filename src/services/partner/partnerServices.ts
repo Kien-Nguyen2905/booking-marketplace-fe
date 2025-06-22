@@ -7,6 +7,8 @@ import {
   GetPartnerByUserIdResType,
   GetPartnersResType,
   UpdatePartnerBodyType,
+  UpdatePartnerByAdminBodyType,
+  UpdatePartnerByAdminResType,
   UpdatePartnerResType,
   UpdatePartnerStatusBodyType,
   UpdatePartnerStatusResType,
@@ -43,6 +45,15 @@ const partnerServices = {
   updatePartnerStatus: (body: UpdatePartnerStatusBodyType) => {
     return instance.put<SuccessResponse<UpdatePartnerStatusResType>>(
       `/partners/status`,
+      body,
+    );
+  },
+  updatePartnerByAdmin: (
+    id: string | number,
+    body: UpdatePartnerByAdminBodyType,
+  ) => {
+    return instance.put<SuccessResponse<UpdatePartnerByAdminResType>>(
+      `/partners/admin/${id}`,
       body,
     );
   },

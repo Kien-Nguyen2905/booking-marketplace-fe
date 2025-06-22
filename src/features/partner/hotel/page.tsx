@@ -88,7 +88,6 @@ const PartnerHotelPage = () => {
                 list={HOTEL_TYPE_LIST}
                 className="w-1/3"
                 isSearch
-                disabled
               />
               <RHFInput
                 form={form}
@@ -106,14 +105,8 @@ const PartnerHotelPage = () => {
                 className="w-1/3"
               />
             </div>
-            <AddressSelection disabled form={form} />
-            <RHFInput
-              form={form}
-              label="Address"
-              name="address"
-              required
-              disabled
-            />
+            <AddressSelection form={form} />
+            <RHFInput form={form} label="Address" name="address" required />
             <RHFInput
               form={form}
               label="Hotel Description"

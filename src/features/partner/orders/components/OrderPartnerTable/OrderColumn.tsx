@@ -23,7 +23,7 @@ import {
 import React, { createContext, useContext } from 'react';
 import { useOrderPartnerTable } from '@/features/partner/orders/hooks';
 import { formatCurrency } from '@/lib/utils';
-import { MAP_PAYMENT_TYPE } from '@/constants';
+import { MAP_ORDER_STATUS, MAP_PAYMENT_TYPE, ORDER_STATUS } from '@/constants';
 import { TOrderPartnerTable } from '@/features/partner/orders/components/OrderPartnerTable/type';
 
 export const OrderPartnerTableContext = createContext<TOrderPartnerTable>({
@@ -121,7 +121,33 @@ export const orderPartnerColumns: ColumnDef<any>[] = [
     accessorKey: 'status',
     header: () => <div>Status</div>,
     cell: ({ row }) => {
-      return <div>{row.getValue('status')}</div>;
+      return (
+        <div>
+          <span
+            className={`px-2 py-1 rounded-full text-xs font-medium ${
+              row.getValue('status') === ORDER_STATUS.CONFIRMED
+                ? 'bg-green-100 text-green-600'
+                : row.getValue('status') === ORDER_STATUS.PENDING
+                ? 'bg-yellow-100 text-yellow-600'
+                : row.getValue('status') === ORDER_STATUS.FAILED
+                ? 'bg-red-100 text-red-600'
+                : row.getValue('status') === ORDER_STATUS.CANCELED
+                ? 'bg-red-100 text-red-600'
+                : row.getValue('status') === ORDER_STATUS.REFUNDED
+                ? 'bg-orange-100 text-orange-600'
+                : row.getValue('status') === ORDER_STATUS.PENDING_REFUND
+                ? 'bg-orange-100 text-orange-600'
+                : row.getValue('status') === ORDER_STATUS.NO_SHOW
+                ? 'bg-orange-100 text-orange-600'
+                : 'bg-gray-100 text-gray-600'
+            }`}
+          >
+            {MAP_ORDER_STATUS[
+              row.getValue('status') as keyof typeof MAP_ORDER_STATUS
+            ].toUpperCase()}
+          </span>
+        </div>
+      );
     },
   },
   {

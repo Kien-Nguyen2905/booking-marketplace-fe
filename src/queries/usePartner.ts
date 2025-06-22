@@ -1,4 +1,5 @@
-import partnerServices from '@/services/partner/partnerServices';
+import { UpdatePartnerByAdminBodyType } from '@/models';
+import { partnerServices } from '@/services/partner';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const useGetAllPartnersQuery = (queryString = '') => {
@@ -52,6 +53,19 @@ export const useUpdatePartnerStatusMutation = (id: string | number) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: partnerServices.updatePartnerStatus,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['partner', id],
+      });
+    },
+  });
+};
+
+export const useUpdatePartnerByAdminMutation = (id: string | number) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (body: UpdatePartnerByAdminBodyType) =>
+      partnerServices.updatePartnerByAdmin(id, body),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['partner', id],

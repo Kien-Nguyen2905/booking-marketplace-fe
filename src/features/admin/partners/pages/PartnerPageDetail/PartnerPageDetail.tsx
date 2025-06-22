@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/carousel';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+import { PartnerForm } from '@/features/admin/partners/components';
 const PartnerPageDetail = () => {
   const {
     partner,
@@ -24,6 +25,12 @@ const PartnerPageDetail = () => {
     wardListHotel,
     handleUpdateStatusPartner,
     statusSubmit,
+    openModal,
+    handleCloseModal,
+    handleOpenModal,
+    form,
+    handleUpdatePartnerByAdmin,
+    isSubmittingByAdmin,
   } = usePartnerPageDetail();
 
   if (isLoading) {
@@ -140,6 +147,11 @@ const PartnerPageDetail = () => {
             </div>
           </div>
         )}
+      </div>
+      <div className="flex justify-end pt-4">
+        <Button onClick={handleOpenModal} className="w-[120px] h-10 relative">
+          Update
+        </Button>
       </div>
       <div className="pt-4">
         <div className="flex items-center gap-2">
@@ -284,6 +296,13 @@ const PartnerPageDetail = () => {
           </>
         )}
       </div>
+      <PartnerForm
+        onSubmit={handleUpdatePartnerByAdmin}
+        isSubmitting={isSubmittingByAdmin}
+        open={openModal}
+        onClose={handleCloseModal}
+        form={form}
+      />
     </div>
   );
 };

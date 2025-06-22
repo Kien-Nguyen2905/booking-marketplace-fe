@@ -137,6 +137,8 @@ export const orderColumns: ColumnDef<any>[] = [
                 ? 'bg-orange-100 text-orange-600'
                 : row.getValue('status') === ORDER_STATUS.PENDING_REFUND
                 ? 'bg-orange-100 text-orange-600'
+                : row.getValue('status') === ORDER_STATUS.NO_SHOW
+                ? 'bg-orange-100 text-orange-600'
                 : 'bg-gray-100 text-gray-600'
             }`}
           >

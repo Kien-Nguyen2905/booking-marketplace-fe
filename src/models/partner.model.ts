@@ -126,6 +126,12 @@ export const UpdatePartnerStatusBodySchema = PartnerSchema.pick({
 
 export const UpdatePartnerStatusResSchema = PartnerSchema;
 
+export const UpdatePartnerByAdminBodySchema = UpdatePartnerBodySchema.omit({
+  code: true,
+});
+
+export const UpdatePartnerByAdminResSchema = PartnerSchema;
+
 export type GetPartnerByUserIdResType = z.infer<
   typeof GetPartnerByUserIdResSchema
 >;
@@ -142,4 +148,10 @@ export type UpdatePartnerStatusBodyType = z.infer<
 >;
 export type UpdatePartnerStatusResType = z.infer<
   typeof UpdatePartnerStatusResSchema
+>;
+export type UpdatePartnerByAdminBodyType = z.infer<
+  typeof UpdatePartnerByAdminBodySchema
+>;
+export type UpdatePartnerByAdminResType = z.infer<
+  typeof UpdatePartnerByAdminResSchema
 >;
