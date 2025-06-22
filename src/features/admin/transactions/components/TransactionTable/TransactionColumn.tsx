@@ -24,6 +24,7 @@ import React, { createContext, useContext } from 'react';
 import { useTransactionTable } from '@/features/admin/transactions/hooks/useTransactionTable';
 import { formatCurrency } from '@/lib/utils';
 import { TTransactionTable } from '@/features/admin/transactions/components/TransactionTable/type';
+import { MAP_TRANSACTION_TYPE, TRANSACTION_TYPE } from '@/constants';
 
 export const TransactionTableContext = createContext<TTransactionTable>({
   setSelectedTransaction: () => {},
@@ -110,7 +111,19 @@ export const transactionColumns: ColumnDef<any>[] = [
   {
     accessorKey: 'type',
     header: 'Type',
-    cell: ({ row }) => <div>{row.getValue('type')}</div>,
+    cell: ({ row }) => (
+      <span
+        className={`px-2 py-1 rounded-full text-xs font-medium ${
+          row.getValue('type') === TRANSACTION_TYPE.IN
+            ? 'bg-blue-100 text-blue-600'
+            : 'bg-red-100 text-red-600'
+        }`}
+      >
+        {MAP_TRANSACTION_TYPE[
+          row.getValue('type') as keyof typeof MAP_TRANSACTION_TYPE
+        ].toUpperCase()}
+      </span>
+    ),
   },
   {
     accessorKey: 'transactionDate',

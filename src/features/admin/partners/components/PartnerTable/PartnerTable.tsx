@@ -18,12 +18,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { userColumns } from '@/features/admin/users/components/UserTable/UserColumn';
 import { CPagination, LoadingTable, RHFInput } from '@/components';
 import { Search } from 'lucide-react';
 import { Form } from '@/components/ui/form';
 import { PARTNER_STATUS_LIST } from '@/constants';
 import { usePartnerTable } from '@/features/admin/partners/hooks';
+import { partnerColumns } from '@/features/admin/partners/components/PartnerTable/PartnerColumn';
 
 const PartnerTable = () => {
   const {
@@ -85,12 +85,17 @@ const PartnerTable = () => {
         </div>
         <div className="rounded-md border">
           {isLoading ? <LoadingTable /> : <div className="h-[3px]"></div>}
-          <Table>
+          <Table className="table-fixed min-w-[1000px]">
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      className={
+                        header.column.columnDef.meta?.width || 'w-full'
+                      }
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -106,7 +111,7 @@ const PartnerTable = () => {
               {isLoading ? (
                 <TableRow>
                   <TableCell
-                    colSpan={userColumns?.length || 5}
+                    colSpan={partnerColumns?.length + 1 || 5}
                     className="h-24 text-center"
                   >
                     Loading...
@@ -128,7 +133,7 @@ const PartnerTable = () => {
               ) : (
                 <TableRow>
                   <TableCell
-                    colSpan={userColumns?.length || 5}
+                    colSpan={partnerColumns?.length + 1 || 5}
                     className="h-24 text-center"
                   >
                     No results.

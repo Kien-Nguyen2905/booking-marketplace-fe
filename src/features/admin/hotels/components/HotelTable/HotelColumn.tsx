@@ -85,9 +85,7 @@ export const hotelColumns: ColumnDef<any>[] = [
   },
   {
     accessorKey: 'type',
-    header: () => {
-      return <div>Type</div>;
-    },
+    header: 'Type',
     cell: ({ row }) => (
       <div>{MAP_HOTEL_TYPE[row.getValue('type') as HotelTypeType]}</div>
     ),
@@ -122,21 +120,20 @@ export const hotelColumns: ColumnDef<any>[] = [
     accessorKey: 'status',
     header: 'Status',
     cell: ({ row }) => {
-      const status = row.getValue('status') as string;
       return (
         <div>
           <span
             className={`px-2 py-1 rounded-full text-xs font-medium ${
-              status === HOTEL_STATUS.ACTIVE
+              row.getValue('status') === HOTEL_STATUS.ACTIVE
                 ? 'bg-green-100 text-green-800'
-                : status === HOTEL_STATUS.PENDING
+                : row.getValue('status') === HOTEL_STATUS.PENDING
                 ? 'bg-yellow-100 text-yellow-800'
-                : status === HOTEL_STATUS.INACTIVE
+                : row.getValue('status') === HOTEL_STATUS.INACTIVE
                 ? 'bg-red-100 text-red-800'
                 : 'bg-gray-100 text-gray-800'
             }`}
           >
-            {status}
+            {row.getValue('status')}
           </span>
         </div>
       );
@@ -144,22 +141,7 @@ export const hotelColumns: ColumnDef<any>[] = [
   },
   {
     accessorKey: 'createdAt',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          className="hover:bg-transparent"
-        >
-          Date
-          {column.getIsSorted() === 'asc' ? (
-            <ChevronUp className="ml-2 h-4 w-4" />
-          ) : column.getIsSorted() === 'desc' ? (
-            <ChevronDown className="ml-2 h-4 w-4" />
-          ) : null}
-        </Button>
-      );
-    },
+    header: 'Date',
     cell: ({ row }) => {
       const dateValue = row.getValue('createdAt') as string;
       return <div>{format(new Date(dateValue), 'dd/MM/yyyy')}</div>;

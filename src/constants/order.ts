@@ -16,6 +16,17 @@ export const ORDER_STATUS_LIST = Object.values(ORDER_STATUS).map((value) => ({
   label: value,
 }));
 
+export const MAP_ORDER_STATUS = {
+  PENDING: 'Pending',
+  CONFIRMED: 'Confirmed',
+  FAILED: 'Failed',
+  CANCELED: 'Canceled',
+  PENDING_REFUND: 'Pending Refund',
+  REFUNDED: 'Refunded',
+  CHECKOUT: 'Checkout',
+  NO_SHOW: 'No Show',
+};
+
 export const PAYMENT_TYPE = {
   BANKING: 'BANKING',
   PAY_AT_HOTEL: 'PAY_AT_HOTEL',

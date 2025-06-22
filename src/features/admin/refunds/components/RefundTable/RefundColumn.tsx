@@ -24,6 +24,7 @@ import React, { createContext, useContext } from 'react';
 import { formatCurrency } from '@/lib/utils';
 import { TRefundTable } from '@/features/admin/refunds/components/RefundTable/type';
 import { useRefundTable } from '@/features/admin/refunds/hooks/useRefundTable';
+import { REFUND_STATUS } from '@/constants';
 
 export const RefundTableContext = createContext<TRefundTable>({
   setSelectedRefund: () => {},
@@ -115,7 +116,17 @@ export const refundColumns: ColumnDef<any>[] = [
   {
     accessorKey: 'status',
     header: 'Status',
-    cell: ({ row }) => <div>{row.getValue('status')}</div>,
+    cell: ({ row }) => (
+      <span
+        className={`px-2 py-1 rounded-full text-xs font-medium ${
+          row.getValue('status') === REFUND_STATUS.COMPLETED
+            ? 'bg-green-100 text-green-600'
+            : 'bg-yellow-100 text-yellow-600'
+        }`}
+      >
+        {row.getValue('status')}
+      </span>
+    ),
   },
   {
     accessorKey: 'createdAt',

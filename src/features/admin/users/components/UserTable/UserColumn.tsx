@@ -1,5 +1,11 @@
 import { Button } from '@/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
+declare module '@tanstack/react-table' {
+  // eslint-disable-next-line
+  interface ColumnMeta<TData, TValue> {
+    width?: string;
+  }
+}
 import { ChevronDown, ChevronUp, Eye, MoreHorizontal } from 'lucide-react';
 import { format } from 'date-fns';
 import {
@@ -53,12 +59,20 @@ export const userColumns: ColumnDef<any>[] = [
     header: () => {
       return <div className="pl-4">Full Name</div>;
     },
-    cell: ({ row }) => <div className="pl-4">{row.getValue('fullName')}</div>,
+    cell: ({ row }) => (
+      <div className="pl-4 truncate line-clamp-1">
+        {row.getValue('fullName')}
+      </div>
+    ),
+    meta: { width: 'w-[220px]' },
   },
   {
     accessorKey: 'email',
     header: 'Email',
-    cell: ({ row }) => <div>{row.getValue('email')}</div>,
+    cell: ({ row }) => (
+      <div className="truncate line-clamp-1">{row.getValue('email')}</div>
+    ),
+    meta: { width: 'w-[260px]' },
   },
   {
     accessorKey: 'role',

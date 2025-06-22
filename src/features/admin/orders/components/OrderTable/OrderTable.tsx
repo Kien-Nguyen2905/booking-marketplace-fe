@@ -27,6 +27,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import {
+  MAP_ORDER_STATUS,
   MAP_PAYMENT_TYPE,
   ORDER_STATUS_LIST,
   PAYMENT_TYPE_LIST,
@@ -168,7 +169,11 @@ const OrderTable = () => {
                       <SelectContent>
                         {ORDER_STATUS_LIST.map((item) => (
                           <SelectItem key={item.value} value={item.value}>
-                            {item.label}
+                            {
+                              MAP_ORDER_STATUS[
+                                item.label as keyof typeof MAP_ORDER_STATUS
+                              ]
+                            }
                           </SelectItem>
                         ))}
                       </SelectContent>

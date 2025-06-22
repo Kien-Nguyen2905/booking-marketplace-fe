@@ -68,7 +68,7 @@ const UserTable = () => {
                 onChange={(value) => onSearch(value as string)}
                 form={form}
                 name="search"
-                placeholder="Search"
+                placeholder="Search by name"
                 classNameInput="!py-[3px] pr-[20px] 2xl:!py-[9px] !h-9"
               />
               <div className="absolute text-gray-400 w-[17px] h-[17px] 2xl:w-[30px] 2xl:h-[30px] flex justify-center items-center right-1 -translate-y-1/2 top-1/2">
@@ -133,12 +133,17 @@ const UserTable = () => {
           </div>
           <div className="rounded-md border">
             {isLoading ? <LoadingTable /> : <div className="h-[3px]"></div>}
-            <Table>
+            <Table className="table-fixed min-w-[1000px]">
               <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow key={headerGroup.id}>
                     {headerGroup.headers.map((header) => (
-                      <TableHead key={header.id}>
+                      <TableHead
+                        key={header.id}
+                        className={
+                          header.column.columnDef.meta?.width || 'w-full'
+                        }
+                      >
                         {header.isPlaceholder
                           ? null
                           : flexRender(
@@ -154,7 +159,7 @@ const UserTable = () => {
                 {isLoading ? (
                   <TableRow>
                     <TableCell
-                      colSpan={userColumns?.length || 5}
+                      colSpan={userColumns?.length + 1 || 5}
                       className="h-24 text-center"
                     >
                       Loading...
@@ -176,7 +181,7 @@ const UserTable = () => {
                 ) : (
                   <TableRow>
                     <TableCell
-                      colSpan={userColumns?.length || 5}
+                      colSpan={userColumns?.length + 1 || 5}
                       className="h-24 text-center"
                     >
                       No results.
