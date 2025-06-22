@@ -52,8 +52,6 @@ const UserView: FC<TUserViewProps> = ({ open, onOpenChange, selectedUser }) => {
                             ? 'bg-blue-100 text-blue-800'
                             : user.role.name === 'PARTNER'
                             ? 'bg-purple-100 text-purple-800'
-                            : user.role.name === 'EMPLOYEE'
-                            ? 'bg-green-100 text-green-800'
                             : 'bg-gray-100 text-gray-800'
                         }`}
                       >

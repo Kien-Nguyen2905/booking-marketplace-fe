@@ -134,23 +134,6 @@ export const MANAGEMENT_NAV_LINKS: Dashboard = {
       icon: CalendarFold,
     },
   },
-  EMPLOYEE: {
-    ROOT: {
-      href: ROUTES.PARTNER.ROOT,
-      name: 'Dashboard',
-      icon: PanelsTopLeft,
-    },
-    ROOMS: {
-      href: ROUTES.PARTNER.ROOMS,
-      name: 'Rooms',
-      icon: Bed,
-    },
-    ORDERS: {
-      href: ROUTES.PARTNER.ORDERS,
-      name: 'Orders',
-      icon: CalendarFold,
-    },
-  },
 };
 
 export const NAV_LINKS = [
@@ -195,13 +178,6 @@ export const DASHBOARD_NAV_LINKS: Record<string, DashboardLink[]> = {
       name: 'Profile',
       icon: User,
     },
-    {
-      href: null,
-      name: 'Logout',
-      icon: LogOut,
-    },
-  ],
-  EMPLOYEE: [
     {
       href: null,
       name: 'Logout',

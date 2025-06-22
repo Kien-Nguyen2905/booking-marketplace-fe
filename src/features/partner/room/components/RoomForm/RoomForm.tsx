@@ -86,7 +86,7 @@ const RoomForm = ({
                   required
                   type="number"
                   label="Quantity"
-                  min={1}
+                  min={0}
                 />
                 <RHFInput
                   form={form}

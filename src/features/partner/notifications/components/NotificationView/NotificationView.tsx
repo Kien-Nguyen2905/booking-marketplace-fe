@@ -10,7 +10,7 @@ import { format } from 'date-fns';
 import { NOTIFY_TYPE } from '@/constants';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { AlertCircle, Info, RotateCcw } from 'lucide-react';
+import { Info, RotateCcw } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -42,16 +42,6 @@ const NotificationView: FC<TNotificationViewProps> = ({
           <Badge variant="destructive" className="flex items-center gap-1">
             <RotateCcw className="h-3 w-3" />
             Refund
-          </Badge>
-        );
-      case NOTIFY_TYPE.DEMAND:
-        return (
-          <Badge
-            variant="secondary"
-            className="flex items-center gap-1 bg-amber-100 text-amber-700 hover:bg-amber-200"
-          >
-            <AlertCircle className="h-3 w-3" />
-            Demand
           </Badge>
         );
       case NOTIFY_TYPE.INFORM:
@@ -87,30 +77,6 @@ const NotificationView: FC<TNotificationViewProps> = ({
                     Please review this refund request and process accordingly.
                     You may need to check the booking details and contact the
                     customer.
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        );
-      case NOTIFY_TYPE.DEMAND:
-        return (
-          <Card className="border-amber-100">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-base font-medium text-amber-600">
-                Action Required
-              </CardTitle>
-              <CardDescription>
-                Your attention is needed on this matter
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <p className="text-sm">{selectedNotification.message}</p>
-                <div className="rounded-md bg-amber-50 p-3">
-                  <p className="text-xs text-amber-600">
-                    This notification requires your immediate action. Please
-                    review and respond as soon as possible.
                   </p>
                 </div>
               </div>

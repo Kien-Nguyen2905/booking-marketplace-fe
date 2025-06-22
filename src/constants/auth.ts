@@ -13,7 +13,6 @@ export const ROLE_NAME = {
   ADMIN: 'ADMIN',
   CUSTOMER: 'CUSTOMER',
   PARTNER: 'PARTNER',
-  EMPLOYEE: 'EMPLOYEE',
 };
 
 export const PRIVATE_MANAGEMENT = Object.values(ROLE_NAME);

@@ -29,12 +29,7 @@ export const GetUsersQuerySchema = z
     limit: z.coerce.number().int().positive().default(10),
     search: z.string().optional(),
     role: z
-      .enum([
-        ROLE_NAME.ADMIN,
-        ROLE_NAME.CUSTOMER,
-        ROLE_NAME.PARTNER,
-        ROLE_NAME.EMPLOYEE,
-      ])
+      .enum([ROLE_NAME.ADMIN, ROLE_NAME.CUSTOMER, ROLE_NAME.PARTNER])
       .optional(),
     status: z
       .enum([UserStatus.ACTIVE, UserStatus.INACTIVE])

@@ -176,7 +176,7 @@ export const ERROR_ROOM_MESSAGES = {
     invalidNumber: 'Invalid price',
   },
   quantity: {
-    min: 'Quantity must be a than 0',
+    min: 'Quantity must be a than or equal 0',
     invalidNumber: 'Invalid quantity',
   },
   rangeLimitDate: {

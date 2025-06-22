@@ -12,7 +12,7 @@ export const RoomSchema = z.object({
   quantity: z
     .number({ message: ERROR_ROOM_MESSAGES.quantity.invalidNumber })
     .int({ message: ERROR_ROOM_MESSAGES.quantity.invalidNumber })
-    .min(1, { message: ERROR_ROOM_MESSAGES.quantity.min }),
+    .min(0, { message: ERROR_ROOM_MESSAGES.quantity.min }),
   rangeLimitDate: z
     .number({ message: ERROR_ROOM_MESSAGES.rangeLimitDate.invalidNumber })
     .int({ message: ERROR_ROOM_MESSAGES.rangeLimitDate.invalidNumber })

@@ -102,9 +102,21 @@ export const hotelColumns: ColumnDef<any>[] = [
   {
     accessorKey: 'reputationScore',
     header: () => <ReputationHeader />,
-    cell: ({ row }) => (
-      <div className="pl-4">{row.getValue('reputationScore')}</div>
-    ),
+    cell: ({ row }) => {
+      return (
+        <span
+          className={`flex justify-center px-2 py-1 rounded-full text-xs font-medium ${
+            Number(row.getValue('reputationScore')) > 100
+              ? 'bg-green-100 text-green-800'
+              : Number(row.getValue('reputationScore')) > 50
+              ? 'bg-yellow-100 text-yellow-800'
+              : 'bg-red-100 text-red-800'
+          }`}
+        >
+          {row.getValue('reputationScore')}
+        </span>
+      );
+    },
   },
   {
     accessorKey: 'status',

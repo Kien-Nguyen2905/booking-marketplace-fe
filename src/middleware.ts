@@ -2,10 +2,10 @@ import { COOKIE_NAMES, ROUTES, ROLE_NAME } from '@/constants';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-const managePaths = ['/admin', '/partner', '/employee'];
+const managePaths = ['/admin', '/partner'];
 const oauthPaths = ['/login-google', '/oauth-google'];
 const privatePaths = [...managePaths, '/account', '/order', '/payment'];
-const validRoles = Object.values(ROLE_NAME); // ['CUSTOMER', 'ADMIN', 'PARTNER', 'EMPLOYEE']
+const validRoles = Object.values(ROLE_NAME); // ['CUSTOMER', 'ADMIN', 'PARTNER',]
 
 const getRedirectUrl = (request: NextRequest, path: string): URL => {
   try {
@@ -30,12 +30,6 @@ export function middleware(request: NextRequest) {
       return NextResponse.redirect(getRedirectUrl(request, ROUTES.HOME));
     }
     if (pathname.startsWith('/admin') && role !== ROLE_NAME.ADMIN) {
-      return NextResponse.redirect(getRedirectUrl(request, ROUTES.HOME));
-    }
-    if (
-      pathname.startsWith('/partner') &&
-      ![ROLE_NAME.PARTNER, ROLE_NAME.EMPLOYEE].includes(role)
-    ) {
       return NextResponse.redirect(getRedirectUrl(request, ROUTES.HOME));
     }
 

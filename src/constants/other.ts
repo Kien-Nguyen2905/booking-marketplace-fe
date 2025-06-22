@@ -18,10 +18,6 @@ export const ROLE_VALUE = [
     label: 'Partner',
   },
   {
-    value: 'employee',
-    label: 'Employee',
-  },
-  {
     value: 'customer',
     label: 'Customer',
   },

@@ -10,13 +10,14 @@ import {
 import {
   AMENITY_CATEGORY,
   ERROR_MESSAGES,
+  HOTEL_STATUS,
   MAX_ROOM_PAY_AT_HOTEL,
   POLICY_TYPE,
   PolicyType,
   ROUTES,
   SUCCESS_MESSAGES,
 } from '@/constants';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GetRoomTypeByIdResType } from '@/models/room-type.model';
 import { useSearchParams } from 'next/navigation';
 import { useCreateWishlistMutation } from '@/queries';
@@ -185,6 +186,12 @@ export const useHotelDetailPage = () => {
     setIsLoadingNavigate(true);
     router.push(`${ROUTES.ORDER}?code=${code}`);
   };
+
+  useEffect(() => {
+    if (hotel && hotel.status !== HOTEL_STATUS.ACTIVE) {
+      router.push(ROUTES.HOME);
+    }
+  }, [hotel]);
 
   return {
     hotelId: id,
