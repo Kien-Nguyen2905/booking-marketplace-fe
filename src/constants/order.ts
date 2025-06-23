@@ -41,7 +41,7 @@ export const PAYMENT_TYPE_LIST = Object.values(PAYMENT_TYPE).map((value) => ({
 
 export const MAP_PAYMENT_TYPE = {
   BANKING: 'Banking',
-  PAY_AT_HOTEL: 'Pay at Hotel',
+  PAY_AT_HOTEL: 'Hotel',
 };
 
 export const TRANSACTION_TYPE = {

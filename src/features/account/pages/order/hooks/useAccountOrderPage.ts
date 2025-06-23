@@ -35,7 +35,8 @@ export const useAccountOrderPage = () => {
   const formQuery = useForm<{
     dateFrom: Date | null;
     dateTo: Date | null;
-    search: string;
+    status: string;
+    paymentType: string;
   }>({
     defaultValues: {
       dateFrom: searchParams.get('dateFrom')
@@ -44,7 +45,8 @@ export const useAccountOrderPage = () => {
       dateTo: searchParams.get('dateTo')
         ? parse(searchParams.get('dateTo') || '', 'dd-MM-yyyy', new Date())
         : null,
-      search: searchParams.get('search') || '',
+      status: searchParams.get('status') || '',
+      paymentType: searchParams.get('paymentType') || '',
     },
   });
 
@@ -74,10 +76,25 @@ export const useAccountOrderPage = () => {
     const newQueryString = setParamsDefault(params);
     router.push(`${pathname}?${newQueryString}`);
   };
+
+  const onStatusChange = () => {
+    params.set('status', formQuery.watch('status'));
+    const newQueryString = setParamsDefault(params);
+    router.push(`${pathname}?${newQueryString}`);
+  };
+
+  const onPaymentTypeChange = () => {
+    params.set('paymentType', formQuery.watch('paymentType'));
+    const newQueryString = setParamsDefault(params);
+    router.push(`${pathname}?${newQueryString}`);
+  };
+
   const onResetValues = () => {
     formQuery.reset({
       dateFrom: null,
       dateTo: null,
+      status: '',
+      paymentType: '',
     });
   };
   const onReset = () => {
@@ -133,5 +150,7 @@ export const useAccountOrderPage = () => {
     setOpenReview,
     onCloseReview,
     onOpenReview,
+    onStatusChange,
+    onPaymentTypeChange,
   };
 };

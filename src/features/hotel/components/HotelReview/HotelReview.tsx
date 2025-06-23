@@ -13,28 +13,34 @@ const HotelReview: FC<THotelReviewProps> = ({ reviewData = [] }) => {
   return (
     <div className="py-6">
       {/* Review header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-        <div>
-          <h2 className="text-2xl font-bold mb-2">Guest Reviews</h2>
-          <div className="flex items-center gap-2">
-            <div className="flex">
-              {[...Array(5)].map((_, index) => (
-                <Star
-                  key={index}
-                  size={20}
-                  className={`${
-                    index < Math.floor(averageRating)
-                      ? 'fill-[#FFD700] text-[#FFD700]'
-                      : 'fill-none text-gray-300'
-                  }`}
-                />
-              ))}
+      {reviewData.length > 0 ? (
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+          <div>
+            <h2 className="text-2xl font-bold mb-2">Guest Reviews</h2>
+            <div className="flex items-center gap-2">
+              <div className="flex">
+                {[...Array(5)].map((_, index) => (
+                  <Star
+                    key={index}
+                    size={20}
+                    className={`${
+                      index < Math.floor(averageRating)
+                        ? 'fill-[#FFD700] text-[#FFD700]'
+                        : 'fill-none text-gray-300'
+                    }`}
+                  />
+                ))}
+              </div>
+              <span className="font-semibold">
+                {averageRating.toFixed(1)}/5
+              </span>
+              <span className="text-gray-500">({totalReviews} reviews)</span>
             </div>
-            <span className="font-semibold">{averageRating.toFixed(1)}/5</span>
-            <span className="text-gray-500">({totalReviews} reviews)</span>
           </div>
         </div>
-      </div>
+      ) : (
+        <h2 className="text-2xl font-bold mb-2">No reviews yet</h2>
+      )}
       {/* Review list */}
       <div className="space-y-6">
         {displayedReviews.map((review) => (
