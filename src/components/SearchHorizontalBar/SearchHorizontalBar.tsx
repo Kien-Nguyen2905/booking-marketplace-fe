@@ -135,7 +135,7 @@ const SearchHorizontalBar = () => {
 
         {/* People Selector */}
         <div
-          className={`relative w-[220px] ${query.province ? '' : 'w-[440px]'}`}
+          className={`relative w-[270px] ${query.province ? '' : 'w-[490px]'}`}
           ref={peopleContainerRef}
         >
           <div
@@ -157,7 +157,7 @@ const SearchHorizontalBar = () => {
               <Button
                 size="icon"
                 variant="ghost"
-                className="h-6 w-6 rounded-full"
+                className="h-6 w-6 rounded-full absolute right-2 top-1/2 -translate-y-1/2"
                 onClick={(e) => {
                   e.stopPropagation();
                   closeSelectors();
