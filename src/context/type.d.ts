@@ -28,4 +28,6 @@ export type TMainContextProviderProps = {
   partnerProfile: GetPartnerByUserIdResType | null;
   socket: Socket | undefined;
   setSocket: SetStateAction<Socket | undefined>;
+  mode: 'login' | 'register' | 'password';
+  setMode: SetStateAction<'login' | 'register' | 'password'>;
 };

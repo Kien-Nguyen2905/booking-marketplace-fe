@@ -7,5 +7,4 @@ export type TMenuProps = {
   closeMenu: () => void;
   profile: GetUserProfileResType | null;
   handleLogout: () => void;
-  openLoginModal?: () => void;
 };

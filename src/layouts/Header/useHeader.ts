@@ -1,11 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import { useModalAuth } from '@/components/ModalAuth/useModalAuth';
 import { useLogout } from '@/hooks';
 import { useAppContext } from '@/context/AppProvider';
 
 export const useHeader = () => {
   const { role, isAuthenticated, profile, isPendingPartner } = useAppContext();
-  const { openLoginModal } = useModalAuth();
   const { handleLogout } = useLogout();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSelector, setActiveSelector] = useState<
@@ -62,7 +60,6 @@ export const useHeader = () => {
     setActiveSelector,
     menuRef,
     handleLogout,
-    openLoginModal,
     role,
     isAuthenticated,
     profile,

@@ -48,6 +48,8 @@ interface AppContextProps {
   setPartnerProfile: (partnerProfile: GetPartnerByUserIdResType | null) => void;
   socket: Socket | undefined;
   setSocket: (socket: Socket | undefined) => void;
+  mode: 'login' | 'register' | 'password';
+  setMode: (mode: 'login' | 'register' | 'password') => void;
 }
 
 const defaultContext: AppContextProps = {
@@ -71,6 +73,8 @@ const defaultContext: AppContextProps = {
   setPartnerProfile: () => null,
   socket: undefined,
   setSocket: () => null,
+  mode: 'login',
+  setMode: () => null,
 };
 
 const AppContext = createContext<AppContextProps>(defaultContext);
@@ -84,6 +88,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
 
   const [email, setEmail] = useState('');
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [mode, setMode] = useState<'login' | 'register' | 'password'>('login');
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [role, setRole] = useState('');
@@ -193,6 +198,8 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
       setPartnerProfile,
       socket,
       setSocket,
+      mode,
+      setMode,
     }),
     [
       isOpenModal,
@@ -207,6 +214,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
       isPendingPartner,
       partnerProfile,
       socket,
+      mode,
     ],
   );
   return (

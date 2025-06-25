@@ -9,6 +9,7 @@ import { getInitials } from '@/lib/utils';
 import { DASHBOARD_NAV_LINKS, NAV_LINKS } from '@/constants';
 import { usePathname } from 'next/navigation';
 import { useAppContext } from '@/context/AppProvider';
+import { useModalAuth } from '@/components/ModalAuth/useModalAuth';
 
 const Menu: FC<TMenuProps> = ({
   menuRef,
@@ -17,8 +18,9 @@ const Menu: FC<TMenuProps> = ({
   closeMenu,
   profile,
   handleLogout,
-  openLoginModal,
 }) => {
+  const { openLoginModal, openRegisterModal } = useModalAuth();
+
   const { role } = useAppContext();
   const pathname = usePathname();
   const navLinks =
@@ -88,10 +90,19 @@ const Menu: FC<TMenuProps> = ({
                 className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
                 onClick={() => {
                   closeMenu();
-                  openLoginModal && openLoginModal();
+                  openLoginModal();
                 }}
               >
-                Login / Register
+                Login
+              </button>
+              <button
+                className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                onClick={() => {
+                  closeMenu();
+                  openRegisterModal();
+                }}
+              >
+                Register
               </button>
             </div>
           )}

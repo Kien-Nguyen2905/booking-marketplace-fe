@@ -15,7 +15,6 @@ const Header = () => {
     closeMenu,
     menuRef,
     handleLogout,
-    openLoginModal,
     role,
     profile,
     isPendingPartner,
@@ -59,7 +58,6 @@ const Header = () => {
                 closeMenu={closeMenu}
                 profile={profile}
                 handleLogout={handleLogout}
-                openLoginModal={openLoginModal}
               />
             </div>
           </div>

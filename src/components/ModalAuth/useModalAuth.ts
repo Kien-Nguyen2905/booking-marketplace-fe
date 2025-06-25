@@ -1,18 +1,15 @@
 import { useAppContext } from '@/context/AppProvider';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 
 export const useModalAuth = () => {
-  const { toggleModal, isOpenModal } = useAppContext();
+  const { toggleModal, isOpenModal, mode, setMode } = useAppContext();
   const router = useRouter();
-  const [mode, setMode] = useState<'login' | 'register' | 'password'>('login');
 
   const switchMode = (mode: 'login' | 'register' | 'password') => {
     setMode(mode);
   };
 
   const closeModal = () => {
-    setMode('login');
     toggleModal();
   };
 
@@ -20,8 +17,6 @@ export const useModalAuth = () => {
     setMode('login');
     router.push('/login-google');
   };
-  // Handle logout
-  const handleLogout = () => {};
 
   // Open auth modal in login mode
   const openLoginModal = () => {
@@ -47,7 +42,6 @@ export const useModalAuth = () => {
     closeModal,
     mode,
     switchMode,
-    handleLogout,
     openLoginModal,
     openRegisterModal,
     openForgotPasswordModal,
