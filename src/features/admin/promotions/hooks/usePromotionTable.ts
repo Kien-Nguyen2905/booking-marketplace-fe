@@ -9,7 +9,7 @@ import {
 } from '@/queries';
 import { useDebounce } from '@/hooks';
 import { useReactTable, getCoreRowModel } from '@tanstack/react-table';
-import { LIMIT, NOTIFY_TYPE, ROUTES, SUCCESS_MESSAGES } from '@/constants';
+import { LIMIT, ROUTES, SUCCESS_MESSAGES } from '@/constants';
 import { normalizeToUTC, setParamsDefault } from '@/lib/utils';
 import {
   CreatePromotionBodySchema,
@@ -248,7 +248,6 @@ export const usePromotionTable = () => {
           '% and we will share ' +
           Math.round(promotion.sharePercentage * 100) +
           '% to partner',
-        type: NOTIFY_TYPE.INFORM,
         recipientId: null,
       });
       if (data?.message) {

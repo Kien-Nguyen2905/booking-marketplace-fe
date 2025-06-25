@@ -38,7 +38,6 @@ export const useDashboardHeader = () => {
   };
 
   const onOpenModal = (notification: NotifyType) => {
-    if (!notification || notification.readAt) return;
     setSelectedNotification(notification);
     setIsConfirmModalOpen(true);
   };
