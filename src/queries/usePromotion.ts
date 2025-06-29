@@ -1,5 +1,5 @@
 import { UpdatePromotionBodyType } from '@/models/promotion.model';
-import promotionServices from '@/services/promotion/promotionServices';
+import { promotionServices } from '@/services/promotion';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const useGetAllPromotionsQuery = (queryString = '') => {
@@ -63,5 +63,17 @@ export const useGetPromotionsByValidFromQuery = (queryString = '') => {
   return useQuery({
     queryKey: ['promotions', queryString],
     queryFn: () => promotionServices.getPromotionsByValidFrom(queryString),
+  });
+};
+
+export const useCreateNotifyPromotionMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: promotionServices.createNotifyPromotion,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['promotions'],
+      });
+    },
   });
 };

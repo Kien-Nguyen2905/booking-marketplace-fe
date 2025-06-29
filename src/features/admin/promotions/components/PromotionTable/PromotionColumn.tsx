@@ -138,20 +138,22 @@ export const ActionsCell = ({ row }: { row: any }) => {
           className="cursor-pointer"
         >
           <Eye className="mr-2 h-4 w-4" />
-          <span>View details</span>
+          <span>View detail</span>
         </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={() => {
-            // Use setTimeout to ensure the state update has time to process
-            setTimeout(() => {
-              handleCreateNotify(promotion);
-            }, 0);
-          }}
-          className="cursor-pointer"
-        >
-          <Bell className="mr-2 h-4 w-4" />
-          <span>Notify</span>
-        </DropdownMenuItem>
+        {!promotion.notifiedAt && (
+          <DropdownMenuItem
+            onClick={() => {
+              // Use setTimeout to ensure the state update has time to process
+              setTimeout(() => {
+                handleCreateNotify(promotion);
+              }, 0);
+            }}
+            className="cursor-pointer"
+          >
+            <Bell className="mr-2 h-4 w-4" />
+            <span>Notify</span>
+          </DropdownMenuItem>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

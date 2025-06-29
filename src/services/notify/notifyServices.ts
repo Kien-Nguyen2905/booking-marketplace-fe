@@ -1,6 +1,4 @@
-import { EmptyDataResponse } from '@/models';
 import {
-  CreateMultipleNotifyBodyType,
   CreateNotifyBodyType,
   CreateNotifyResType,
   GetNotifiesByRecipientIdResType,
@@ -19,13 +17,6 @@ const notifyServices = {
   createNotify: (body: CreateNotifyBodyType) => {
     return instance.post<SuccessResponse<CreateNotifyResType>>(
       `/notifications`,
-      body,
-    );
-  },
-
-  createMultipleNotify: (body: CreateMultipleNotifyBodyType) => {
-    return instance.post<SuccessResponse<EmptyDataResponse>>(
-      `/notifications/multiple-partner`,
       body,
     );
   },

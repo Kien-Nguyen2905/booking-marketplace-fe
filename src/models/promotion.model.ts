@@ -1,4 +1,5 @@
 import { ERROR_PROMOTION_MESSAGES } from '@/constants';
+import { NotifySchema } from '@/models/notify.model';
 import { endOfDay } from 'date-fns';
 import { z } from 'zod';
 
@@ -28,6 +29,7 @@ export const PromotionSchema = z.object({
   }),
   createdById: z.number().int().positive(),
   deletedAt: z.date().nullable(),
+  notifiedAt: z.date().nullable(),
   createdAt: z.coerce.date().nullable(),
   updatedAt: z.date().nullable(),
 });
@@ -64,28 +66,11 @@ export const CreatePromotionBodySchema = PromotionSchema.omit({
   id: true,
   createdById: true,
   deletedAt: true,
+  notifiedAt: true,
   createdAt: true,
   updatedAt: true,
-})
-  .strict()
-  .superRefine(
-    ({ percentage, sharePercentage, validFrom, validUntil }, ctx) => {
-      if (sharePercentage > percentage) {
-        ctx.addIssue({
-          code: 'custom',
-          message: 'Share percentage must be less or equal than percentage',
-          path: ['sharePercentage'],
-        });
-      }
-      if (validUntil <= validFrom) {
-        ctx.addIssue({
-          code: 'custom',
-          message: 'Valid until must be greater than valid from',
-          path: ['validUntil'],
-        });
-      }
-    },
-  );
+}).strict();
+
 export const CreatePromotionResSchema = PromotionSchema;
 
 export const UpdatePromotionBodySchema = CreatePromotionBodySchema;
@@ -93,6 +78,19 @@ export const UpdatePromotionBodySchema = CreatePromotionBodySchema;
 export const UpdatePromotionResSchema = PromotionSchema;
 
 export const DeletePromotionResSchema = PromotionSchema;
+
+export const CreateNotifyPromotionBodySchema = NotifySchema.omit({
+  id: true,
+  createdAt: true,
+  createdById: true,
+  readAt: true,
+})
+  .extend({
+    promotionId: z.number(),
+  })
+  .strict();
+
+export const CreateNotifyPromotionResSchema = NotifySchema;
 
 export type GetPromotionResType = z.infer<typeof GetPromotionResSchema>;
 
@@ -111,3 +109,10 @@ export type UpdatePromotionBodyType = z.infer<typeof UpdatePromotionBodySchema>;
 export type UpdatePromotionResType = z.infer<typeof UpdatePromotionResSchema>;
 
 export type DeletePromotionResType = z.infer<typeof DeletePromotionResSchema>;
+
+export type CreateNotifyPromotionBodyType = z.infer<
+  typeof CreateNotifyPromotionBodySchema
+>;
+export type CreateNotifyPromotionResType = z.infer<
+  typeof CreateNotifyPromotionResSchema
+>;

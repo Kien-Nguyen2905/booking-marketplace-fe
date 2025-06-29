@@ -31,15 +31,3 @@ export const useCreateNotifyMutation = () => {
     },
   });
 };
-
-export const useCreateMultipleNotifyMutation = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: notifyServices.createMultipleNotify,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['notifies'],
-      });
-    },
-  });
-};

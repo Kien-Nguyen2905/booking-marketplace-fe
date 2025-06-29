@@ -1,7 +1,7 @@
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import {
-  useCreateMultipleNotifyMutation,
+  useCreateNotifyPromotionMutation,
   useCreatePromotionMutation,
   useDeletePromotionMutation,
   useGetAllPromotionsQuery,
@@ -28,8 +28,8 @@ export const usePromotionTable = () => {
   const searchParams = useSearchParams();
   const [orderBy, setOrderBy] = useState('');
   const [order, setOrder] = useState('');
-  const { mutateAsync: createMultipleNotify } =
-    useCreateMultipleNotifyMutation();
+  const { mutateAsync: createNotifyPromotion } =
+    useCreateNotifyPromotionMutation();
   const { mutateAsync: createPromotion, isPending: isSubmittingCreate } =
     useCreatePromotionMutation();
   const { mutateAsync: updatePromotion, isPending: isSubmittingUpdate } =
@@ -168,6 +168,7 @@ export const usePromotionTable = () => {
 
   const onOpenModal = () => {
     setOpen(true);
+    setSelectedPromotion(null);
   };
 
   const handleCreatePromotion = async (values: CreatePromotionBodyType) => {
@@ -233,8 +234,9 @@ export const usePromotionTable = () => {
     : handleCreatePromotion;
 
   const handleCreateNotify = async (promotion: PromotionType) => {
+    if (!promotion.id) return;
     try {
-      const { data } = await createMultipleNotify({
+      const { data } = await createNotifyPromotion({
         title: promotion.title,
         message:
           'Promotion: ' +
@@ -249,6 +251,7 @@ export const usePromotionTable = () => {
           Math.round(promotion.sharePercentage * 100) +
           '% to partner',
         recipientId: null,
+        promotionId: promotion.id,
       });
       if (data?.message) {
         showToast({

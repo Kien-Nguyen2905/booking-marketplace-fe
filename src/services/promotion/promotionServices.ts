@@ -1,4 +1,6 @@
 import {
+  CreateNotifyPromotionBodyType,
+  CreateNotifyPromotionResType,
   CreatePromotionBodyType,
   CreatePromotionResType,
   DeletePromotionResType,
@@ -42,6 +44,12 @@ const promotionServices = {
   getPromotionsByValidFrom: (queryString: string = '') => {
     return instance.get<SuccessResponse<GetPromotionByValidFromResType>>(
       `/promotions/valid${queryString ? `?${queryString}` : ''}`,
+    );
+  },
+  createNotifyPromotion: (body: CreateNotifyPromotionBodyType) => {
+    return instance.post<SuccessResponse<CreateNotifyPromotionResType>>(
+      `/promotions/notify`,
+      body,
     );
   },
 };
