@@ -66,7 +66,7 @@ export const ActionsCell = ({ row }: { row: any }) => {
         <Link href={ROUTES.ADMIN.HOTELS + `/${hotel.id}`}>
           <DropdownMenuItem className="cursor-pointer">
             <Eye className="mr-2 h-4 w-4" />
-            <span>View details</span>
+            <span>View detail</span>
           </DropdownMenuItem>
         </Link>
       </DropdownMenuContent>

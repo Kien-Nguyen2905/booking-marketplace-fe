@@ -25,7 +25,7 @@ const CouponView: FC<TCouponViewProps> = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Coupon</DialogTitle>
+          <DialogTitle>Coupon ID: #{selectedCoupon?.id}</DialogTitle>
           {selectedCoupon && (
             <div className="flex items-center justify-between text-sm">
               <span>

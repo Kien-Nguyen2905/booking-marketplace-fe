@@ -70,26 +70,26 @@ export const useRevenueTable = () => {
       const workbook = new ExcelJS.Workbook();
       const worksheet = workbook.addWorksheet('Doanh thu Đối tác');
       worksheet.columns = [
-        { header: 'Tên đối tác', key: 'partnerName', width: 25 },
-        { header: 'Tên khách sạn', key: 'hotelName', width: 25 },
-        { header: 'Số tài khoản ngân hàng', key: 'accountNumber', width: 25 },
-        { header: 'Tên ngân hàng', key: 'bankAccount', width: 20 },
-        { header: 'Tên chủ tài khoản', key: 'bankName', width: 20 },
-        { header: 'Đơn', key: 'countOrder', width: 10 },
+        { header: 'Tên đối tác', key: 'partnerName', width: 15 },
+        { header: 'Tên khách sạn', key: 'hotelName', width: 15 },
+        { header: 'Số tài khoản', key: 'accountNumber', width: 15 },
+        { header: 'Tên ngân hàng', key: 'bankAccount', width: 15 },
+        { header: 'Tên chủ tài khoản', key: 'bankName', width: 15 },
         { header: 'Tổng giá trị đơn', key: 'totalOrderValue', width: 15 },
         {
-          header: 'Tổng tiền thanh toán qua nền tảng',
-          key: 'totalPrice',
-          width: 15,
-        },
-        {
-          header: 'Tổng tiền thanh toán tại khách sạn',
-          key: 'hotelPayment',
+          header: 'Tổng thanh toán qua nền tảng',
+          key: 'totalBankingPayment',
           width: 25,
         },
-        { header: 'Tổng hoa hồng', key: 'commissionAmount', width: 15 },
-        { header: 'Số tiền cần chuyển', key: 'transferAmount', width: 25 },
-        { header: 'Hành động chuyển tiền', key: 'transferAction', width: 15 },
+        {
+          header: 'Tổng thanh toán tại khách sạn',
+          key: 'totalHotelPayment',
+          width: 25,
+        },
+        { header: 'Lợi nhuận', key: 'platformProfit', width: 15 },
+        { header: 'Lợi nhuận đối tác', key: 'partnerProfit', width: 15 },
+        { header: 'Số tiền cần chuyển', key: 'transferAmount', width: 15 },
+        { header: 'Hành động', key: 'transferAction', width: 15 },
         { header: 'Ngày bắt đầu', key: 'startDate', width: 15 },
         { header: 'Ngày kết thúc', key: 'endDate', width: 15 },
       ];
@@ -97,9 +97,9 @@ export const useRevenueTable = () => {
       exportsData.forEach((item) => {
         const transferAction =
           item.transferAmount > 0
-            ? 'Chuyển cho đối tác'
+            ? 'Sàn chuyển cho đối tác'
             : item.transferAmount < 0
-            ? 'Đối tác trả nợ'
+            ? 'Đối tác trả nợ sàn'
             : 'Không cần chuyển khoản';
 
         const row = worksheet.addRow({
@@ -108,11 +108,11 @@ export const useRevenueTable = () => {
           accountNumber: item.accountNumber,
           bankName: item.bankName,
           bankAccount: item.bankAccount,
-          countOrder: item.countOrder,
           totalOrderValue: formatCurrency(item.totalOrderValue),
-          totalPrice: formatCurrency(item.totalPrice),
-          hotelPayment: formatCurrency(item.hotelPayment),
-          commissionAmount: formatCurrency(item.commissionAmount),
+          totalBankingPayment: formatCurrency(item.totalBankingPayment),
+          totalHotelPayment: formatCurrency(item.totalHotelPayment),
+          platformProfit: formatCurrency(item.platformProfit),
+          partnerProfit: formatCurrency(item.partnerProfit),
           transferAmount: formatCurrency(item.transferAmount),
           transferAction,
           startDate: format(item.startDate, 'dd-MM-yyyy'),

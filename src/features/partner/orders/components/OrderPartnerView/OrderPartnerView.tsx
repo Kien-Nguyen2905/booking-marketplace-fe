@@ -223,6 +223,42 @@ const OrderPartnerView: FC<TOrderViewProps> = ({
                 </span>
               </div>
 
+              <div className="flex justify-between py-2">
+                <span className="text-gray-600">Service fee</span>
+                <span className="font-medium">
+                  {formatCurrency(order?.serviceFeeAmount || 0)}
+                </span>
+              </div>
+
+              <div className="flex justify-between py-2">
+                <span className="text-gray-600">VAT</span>
+                <span className="font-medium">
+                  {formatCurrency(order?.vatAmount || 0)}
+                </span>
+              </div>
+              <div className="flex justify-between py-2">
+                <span className="text-gray-600">Subtotal</span>
+                <span className="font-medium">
+                  {formatCurrency(
+                    (order?.totalPrice || 0) +
+                      (order?.serviceFeeAmount || 0) +
+                      (order?.vatAmount || 0),
+                  )}
+                </span>
+              </div>
+
+              {order?.promotionId && (
+                <>
+                  <Separator className="my-2" />
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-600">Promotion discount</span>
+                    <span className="font-medium text-green-500">
+                      -{formatCurrency(order?.promotionAmount)}
+                    </span>
+                  </div>
+                </>
+              )}
+
               {(order?.pointDiscount || 0) > 0 && (
                 <div className="flex justify-between py-2">
                   <span className="text-gray-600">Point discount</span>
@@ -240,36 +276,6 @@ const OrderPartnerView: FC<TOrderViewProps> = ({
                   </span>
                 </div>
               )}
-
-              {order?.promotionId && (
-                <div className="flex justify-between py-2">
-                  <span className="text-gray-600">Promotion discount</span>
-                  <span className="font-medium text-green-500">
-                    -{formatCurrency(order?.promotionAmount)}
-                  </span>
-                </div>
-              )}
-
-              <div className="flex justify-between py-2">
-                <span className="text-gray-600">Service fee</span>
-                <span className="font-medium">
-                  {formatCurrency(order?.serviceFeeAmount || 0)}
-                </span>
-              </div>
-
-              <div className="flex justify-between py-2">
-                <span className="text-gray-600">VAT</span>
-                <span className="font-medium">
-                  {formatCurrency(order?.vatAmount || 0)}
-                </span>
-              </div>
-
-              <div className="flex justify-between py-2">
-                <span className="text-gray-600">Commission</span>
-                <span className="font-medium">
-                  {formatCurrency(order?.commissionAmount || 0)}
-                </span>
-              </div>
 
               <Separator className="my-2" />
 

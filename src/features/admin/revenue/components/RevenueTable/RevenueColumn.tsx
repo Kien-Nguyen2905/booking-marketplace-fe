@@ -42,22 +42,24 @@ export const revenueColumns: ColumnDef<any>[] = [
     ),
   },
   {
-    accessorKey: 'commissionAmount',
-    header: 'Commission',
+    accessorKey: 'partnerProfit',
+    header: 'Partner',
     cell: ({ row }) => (
-      <div>{formatCurrency(row.getValue('commissionAmount'))}</div>
+      <div>{formatCurrency(row.getValue('partnerProfit'))}</div>
     ),
   },
   {
-    accessorKey: 'totalPrice',
+    accessorKey: 'totalBankingPayment',
     header: 'Paid Banking',
-    cell: ({ row }) => <div>{formatCurrency(row.getValue('totalPrice'))}</div>,
+    cell: ({ row }) => (
+      <div>{formatCurrency(row.getValue('totalBankingPayment'))}</div>
+    ),
   },
   {
-    accessorKey: 'hotelPayment',
+    accessorKey: 'totalHotelPayment',
     header: 'Paid Hotel',
     cell: ({ row }) => (
-      <div>{formatCurrency(row.getValue('hotelPayment'))}</div>
+      <div>{formatCurrency(row.getValue('totalHotelPayment'))}</div>
     ),
   },
   {

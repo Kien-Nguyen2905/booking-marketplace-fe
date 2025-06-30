@@ -137,6 +137,13 @@ export const formatCurrency = (
       }).format(value);
       return `${formatted} VND`;
     }
+    case 'NOT_VND': {
+      const formatted = new Intl.NumberFormat('vi-VN', {
+        maximumFractionDigits: 0,
+      }).format(value);
+      return `${formatted}`;
+    }
+
     case 'USD': {
       // Format USD with 2 decimal places
       return new Intl.NumberFormat('en-US', {
@@ -254,9 +261,7 @@ export const calculateCouponDiscount = (
 ): number => {
   if (!coupon) return 0;
   if (coupon.percentage) {
-    console.log(baseAmount);
-    console.log(coupon.percentage);
-    return baseAmount * coupon.percentage;
+    return Math.round(baseAmount * coupon.percentage);
   }
   return 0;
 };
@@ -266,18 +271,18 @@ export const calculateBaseAmount = (
   available: number,
   nights: number,
 ): number => {
-  return (price || 0) * available * nights;
+  return Math.round((price || 0) * available * nights);
 };
 
 export const calculateServiceFee = (
   baseAmount: number,
   serviceFeeRate: number = 0,
 ): number => {
-  return baseAmount * serviceFeeRate;
+  return Math.round(baseAmount * serviceFeeRate);
 };
 
 export const calculateVAT = (baseAmount: number, vatRate: number = 0) => {
-  return baseAmount * vatRate;
+  return Math.round(baseAmount * vatRate);
 };
 
 export const isDayDiscounted = (promotion: any, dateString: string) => {
@@ -292,11 +297,14 @@ export const isDayDiscounted = (promotion: any, dateString: string) => {
       dateParsed.getDate(),
     ),
   );
+
   const validFrom = promotion.validFrom && new Date(promotion.validFrom);
   const validUntil = promotion.validUntil && new Date(promotion.validUntil);
-
+  // Áp dụng nếu:
+  // - ngày >= validFrom (bao gồm ngày bắt đầu)
+  // - ngày < validUntil (không bao gồm ngày kết thúc)
   if (validFrom && validUntil) {
-    return date >= validFrom && date <= validUntil;
+    return date >= validFrom && date < validUntil;
   }
   return false;
 };
@@ -320,7 +328,7 @@ export const calculateTotalPromotionDiscount = (
         (room?.price || 0) * booking.available * promotion.percentage;
     }
   });
-  return totalPromotionDiscount;
+  return Math.round(totalPromotionDiscount);
 };
 
 export const countDateDiscountPromotion = (
@@ -346,17 +354,18 @@ export const countDateDiscountPromotion = (
  * @param input Thông tin đơn hàng
  * @returns Kết quả bao gồm lợi nhuận sàn, đối tác, và các giá trị khác
  */
+
 export const calculateBookingProfit = (input: TBookingInput): TProfitResult => {
   const {
-    basePrice: P,
-    numberOfNights: N,
-    promotionNights: K,
-    promotionPercentage: Pr,
-    promotionSharePercentage: Sp,
-    serviceFeeRate: S_rate,
-    vatRate: V_rate,
-    couponPercentage: C,
-    pointsDiscount: D_points,
+    basePrice: P, // giá cơ bản * số phòng * số đêm
+    numberOfNights: N, // số đêm
+    promotionNights: K, // số đêm giảm giá
+    promotionPercentage: Pr, // % giảm giá
+    promotionSharePercentage: Sp, // % chia sẻ giảm giá
+    serviceFeeRate: S_rate, // % phí dịch vụ
+    vatRate: V_rate, // % VAT
+    couponPercentage: C, // % coupon
+    pointsDiscount: D_points, // điểm * 1000 ra thành tiền
   } = input;
 
   // Tính giảm giá từ promotion (D_p)
@@ -385,12 +394,13 @@ export const calculateBookingProfit = (input: TBookingInput): TProfitResult => {
   const platformProfit = Math.round(
     platformBaseProfit - promotionShare - couponDiscount - D_points,
   );
+
   const partnerProfit = Math.round(partnerBaseProfit + promotionShare);
 
   return {
     platformProfit,
     partnerProfit,
-    finalAmount,
+    finalAmount: finalAmount < 0 ? 0 : finalAmount,
     subtotalAfterPromotion,
     promotionDiscount,
     couponDiscount,

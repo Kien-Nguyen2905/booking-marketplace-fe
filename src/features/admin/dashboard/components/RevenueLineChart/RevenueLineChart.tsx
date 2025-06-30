@@ -1,5 +1,5 @@
 'use client';
-import { CartesianGrid, Line, LineChart, XAxis } from 'recharts';
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts';
 import {
   Card,
   CardContent,
@@ -14,6 +14,7 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 import { format, parse } from 'date-fns';
+import { formatCurrency } from '@/lib/utils';
 const chartConfig = {
   desktop: {
     label: 'Desktop',
@@ -32,12 +33,13 @@ const RevenueLineChart = ({
         <CardTitle>Revenue</CardTitle>
         <CardDescription className="text-xs"></CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-0">
         <ChartContainer config={chartConfig}>
           <LineChart
             accessibilityLayer
             data={chartData}
             margin={{
+              top: 12,
               left: 12,
               right: 12,
             }}
@@ -64,6 +66,14 @@ const RevenueLineChart = ({
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent indicator="dashed" />}
+            />
+            <YAxis
+              dataKey="revenue"
+              axisLine={false}
+              tickLine={false}
+              orientation="left"
+              tickFormatter={(value) => formatCurrency(value, 'NOT_VND')}
+              width={60}
             />
             <Line
               dataKey="revenue"

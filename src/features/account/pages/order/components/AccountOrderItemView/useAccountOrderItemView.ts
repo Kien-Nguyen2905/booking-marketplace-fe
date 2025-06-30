@@ -1,9 +1,15 @@
-import { POLICY_TYPE, SUCCESS_MESSAGES } from '@/constants';
+import {
+  ERROR_MESSAGES,
+  ORDER_STATUS,
+  POLICY_TYPE,
+  SUCCESS_MESSAGES,
+} from '@/constants';
 import { handleErrorApi } from '@/lib/helper';
 import { showToast } from '@/lib/toast';
+import { getNowUTC7 } from '@/lib/utils';
 import { useUpdateMyOrderMutation } from '@/queries';
 import { useGetOrderByIdQuery } from '@/queries/useOrder';
-import { addHours, isBefore, startOfDay } from 'date-fns';
+import { startOfDay, subHours } from 'date-fns';
 import { useEffect, useState } from 'react';
 
 export const useAccountOrderItemView = (id?: string | number) => {
@@ -17,10 +23,22 @@ export const useAccountOrderItemView = (id?: string | number) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [actionType, setActionType] = useState<
-    'PENDING_REFUND' | 'CANCELED' | null
+    typeof ORDER_STATUS.PENDING_REFUND | typeof ORDER_STATUS.CANCELED | null
   >(null);
-  const handleOpenDialog = (type: 'PENDING_REFUND' | 'CANCELED') => {
-    setActionType(type);
+  const handleOpenDialog = () => {
+    if (order && order.room.policy === POLICY_TYPE.FREE_CANCELLATION) {
+      const checkinDate = subHours(order.checkinDate, 7);
+      const nowUTC7 = getNowUTC7();
+      const today = startOfDay(nowUTC7);
+      if (
+        order.room.policy === POLICY_TYPE.FREE_CANCELLATION &&
+        today.getTime() < checkinDate.getTime()
+      ) {
+        setActionType(ORDER_STATUS.PENDING_REFUND);
+      }
+    } else {
+      setActionType(ORDER_STATUS.CANCELED);
+    }
     setShowActionDialog(true);
   };
 
@@ -30,41 +48,23 @@ export const useAccountOrderItemView = (id?: string | number) => {
     setActionType(null);
   };
 
-  const handleUpdateMyOrder = async (status: 'PENDING_REFUND' | 'CANCELED') => {
+  const handleUpdateMyOrder = async (
+    status: typeof ORDER_STATUS.PENDING_REFUND | typeof ORDER_STATUS.CANCELED,
+  ) => {
     if (!order) return;
-    if (
-      !order.user.accountNumber ||
-      !order.user.bankAccount ||
-      !order.user.bankName
-    ) {
-      showToast({
-        type: 'warning',
-        message: 'Please update profile bank information',
-      });
-      return;
-    }
-
-    try {
-      if (order.room.policy === POLICY_TYPE.FREE_CANCELLATION) {
-        const currentDate = new Date();
-        const currentDateUTC7 = new Date(
-          currentDate.toLocaleString('en-US', {
-            timeZone: 'Asia/Ho_Chi_Minh',
-          }),
-        );
-
-        const checkinDate = addHours(order.checkinDate, 7);
-
-        const today = startOfDay(currentDateUTC7);
-
-        if (!isBefore(today, checkinDate)) {
-          showToast({
-            type: 'error',
-            message: 'Cannot request refund after check-in date',
-          });
-          return;
-        }
+    if (actionType === ORDER_STATUS.PENDING_REFUND)
+      if (
+        !order.user.accountNumber ||
+        !order.user.bankAccount ||
+        !order.user.bankName
+      ) {
+        showToast({
+          type: 'warning',
+          message: ERROR_MESSAGES.BANK_INFO,
+        });
+        return;
       }
+    try {
       const { data } = await updateMyOrder({
         status,
         reason: cancelReason,
@@ -82,10 +82,18 @@ export const useAccountOrderItemView = (id?: string | number) => {
 
   useEffect(() => {
     if (!order) return;
-    if (order.room.policy === POLICY_TYPE.FREE_CANCELLATION) {
-      setActionType('PENDING_REFUND');
+    if (order && order.room.policy === POLICY_TYPE.FREE_CANCELLATION) {
+      const checkinDate = subHours(order.checkinDate, 7);
+      const nowUTC7 = getNowUTC7();
+      const today = startOfDay(nowUTC7);
+      if (
+        order.room.policy === POLICY_TYPE.FREE_CANCELLATION &&
+        today.getTime() < checkinDate.getTime()
+      ) {
+        setActionType(ORDER_STATUS.PENDING_REFUND);
+      }
     } else {
-      setActionType('CANCELED');
+      setActionType(ORDER_STATUS.CANCELED);
     }
   }, [order]);
   return {

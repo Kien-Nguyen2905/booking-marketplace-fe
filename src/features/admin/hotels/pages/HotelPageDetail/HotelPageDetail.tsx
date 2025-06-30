@@ -51,7 +51,6 @@ const HotelPageDetail = () => {
   }
   return (
     <div>
-      {hotel?.name}
       <div className="pt-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -70,22 +69,25 @@ const HotelPageDetail = () => {
               {hotel?.status}
             </span>
           </div>
-          <Button
-            variant={
-              hotel.status === HOTEL_STATUS.ACTIVE ? 'destructive' : 'default'
-            }
-            onClick={handleUpdateStatusHotel}
-            disabled={isPendingUpdateHotel}
-            className="w-[110px h-9 relative"
-          >
-            {isPendingUpdateHotel ? (
-              <LoadingButton />
-            ) : hotel.status === HOTEL_STATUS.ACTIVE ? (
-              'Inactive'
-            ) : (
-              'Active'
-            )}
-          </Button>
+          <div className="flex items-center gap-2">
+            <ButtonBack link={ROUTES.ADMIN.HOTELS} />
+            <Button
+              variant={
+                hotel.status === HOTEL_STATUS.ACTIVE ? 'destructive' : 'default'
+              }
+              onClick={handleUpdateStatusHotel}
+              disabled={isPendingUpdateHotel}
+              className="w-[110px h-9 relative"
+            >
+              {isPendingUpdateHotel ? (
+                <LoadingButton />
+              ) : hotel.status === HOTEL_STATUS.ACTIVE ? (
+                'Inactive'
+              ) : (
+                'Active'
+              )}
+            </Button>
+          </div>
         </div>
         <div className="pt-4">
           <Carousel className="w-full cursor-grab">

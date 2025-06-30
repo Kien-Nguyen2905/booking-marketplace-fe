@@ -1,4 +1,5 @@
 export { AdminDashboardMain } from './DashboardMain';
 export { RevenueLineChart } from './RevenueLineChart';
 export { DishBarChart } from './DishBarChart';
-export { CommissionLineChart } from './CommissionLineChart';
+export { ProfitLineChart } from './ProfitLineChart';
+export { PartnerProfitLineChart } from './PartnerProfitLineChart';

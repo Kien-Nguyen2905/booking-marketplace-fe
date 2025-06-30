@@ -8,12 +8,7 @@ import {
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { formatCurrency, getColorStatus } from '@/lib/utils';
-import {
-  MAP_PAYMENT_TYPE,
-  MAP_POLICY,
-  ORDER_STATUS,
-  POLICY_TYPE,
-} from '@/constants';
+import { MAP_PAYMENT_TYPE, MAP_POLICY, ORDER_STATUS } from '@/constants';
 import { useAccountOrderItemView } from '@/features/account/pages/order/components/AccountOrderItemView/useAccountOrderItemView';
 import { TAccountOrderItemViewProps } from '@/features/account/pages/order/components/AccountOrderItemView/type';
 import { format } from 'date-fns';
@@ -266,19 +261,13 @@ const AccountOrderItemView: FC<TAccountOrderItemViewProps> = ({
         {order?.status === ORDER_STATUS.CONFIRMED && (
           <div className="flex justify-end">
             <Button
-              onClick={() =>
-                handleOpenDialog(
-                  order?.room.policy === POLICY_TYPE.FREE_CANCELLATION
-                    ? 'PENDING_REFUND'
-                    : 'CANCELED',
-                )
-              }
+              onClick={() => handleOpenDialog()}
               disabled={isPending}
               className="bg-orange-500 hover:bg-orange-600 h-10 w-[110px] relative"
             >
               {isPending ? (
                 <LoadingButton />
-              ) : order?.room.policy === POLICY_TYPE.FREE_CANCELLATION ? (
+              ) : actionType === ORDER_STATUS.PENDING_REFUND ? (
                 'REFUND'
               ) : (
                 'CANCEL'

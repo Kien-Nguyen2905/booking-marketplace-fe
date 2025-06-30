@@ -14,6 +14,7 @@ export const ERROR_MESSAGES = {
   COUPON_NOT_FOUND: 'Coupon not found',
   POINT_NOT_ENOUGH: 'Point not enough',
   POLICY_NOT_ALLOW_BOOKING: 'Policy not allow booking more than 5 rooms',
+  BANK_INFO: 'Please update profile bank information',
 };
 
 export const ERROR_AUTH_MESSAGES = {

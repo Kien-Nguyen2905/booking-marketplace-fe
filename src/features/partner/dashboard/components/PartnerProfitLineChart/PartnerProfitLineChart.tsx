@@ -1,5 +1,5 @@
 'use client';
-import { CartesianGrid, Line, LineChart, XAxis } from 'recharts';
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts';
 import {
   Card,
   CardContent,
@@ -14,6 +14,7 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 import { format, parse } from 'date-fns';
+import { formatCurrency } from '@/lib/utils';
 const chartConfig = {
   desktop: {
     label: 'Desktop',
@@ -21,23 +22,25 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const PartnerRevenueLineChart = ({
+const PartnerProfitLineChart = ({
   chartData,
 }: {
-  chartData: { date: string; revenue: number }[];
+  chartData: { date: string; profit: number }[];
 }) => {
+  console.log(chartData);
   return (
     <Card className="h-full">
       <CardHeader>
-        <CardTitle>Revenue</CardTitle>
+        <CardTitle>Profit</CardTitle>
         <CardDescription className="text-xs"></CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-0">
         <ChartContainer config={chartConfig}>
           <LineChart
             accessibilityLayer
             data={chartData}
             margin={{
+              top: 12,
               left: 12,
               right: 12,
             }}
@@ -65,8 +68,16 @@ const PartnerRevenueLineChart = ({
               cursor={false}
               content={<ChartTooltipContent indicator="dashed" />}
             />
+            <YAxis
+              dataKey="profit"
+              axisLine={false}
+              tickLine={false}
+              orientation="left"
+              tickFormatter={(value) => formatCurrency(value, 'NOT_VND')}
+              width={60}
+            />
             <Line
-              dataKey="revenue"
+              dataKey="profit"
               type="linear"
               stroke="var(--color-primary)"
               strokeWidth={2}
@@ -79,4 +90,4 @@ const PartnerRevenueLineChart = ({
   );
 };
 
-export default PartnerRevenueLineChart;
+export default PartnerProfitLineChart;

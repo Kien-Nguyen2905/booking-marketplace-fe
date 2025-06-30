@@ -2,11 +2,12 @@ import {
   useGetFindHotelsQuery,
   useGetPromotionsByValidFromQuery,
 } from '@/queries';
-import { HOTEL_PARAMS, LIMIT } from '@/constants';
-import { useSearchParams } from 'next/navigation';
+import { HOTEL_PARAMS, LIMIT, ROUTES } from '@/constants';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useDebounce } from '@/hooks';
 export const useHotelPage = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const [queryString, setQueryString] = useState(
     searchParams.toString() || `limit=${LIMIT}&page=1`,
@@ -52,6 +53,9 @@ export const useHotelPage = () => {
     if (typeof window !== 'undefined' && searchParams) {
       const params = searchParams.toString();
       setQueryString(params);
+    }
+    if (!start || !end || !adult || !available) {
+      router.push(ROUTES.HOME);
     }
   }, [searchParams]);
   return {

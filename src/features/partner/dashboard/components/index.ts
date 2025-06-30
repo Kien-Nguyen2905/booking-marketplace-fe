@@ -1,3 +1,3 @@
 export { PartnerDashboardMain } from './PartnerDashboardMain';
-export { PartnerRevenueLineChart } from './PartnerRevenueLineChart';
+export { PartnerProfitLineChart } from './PartnerProfitLineChart';
 export { PartnerDishBarChart } from './PartnerDishBarChart';

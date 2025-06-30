@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import React, { FC } from 'react';
 import { TCancelDialogProps } from '@/components/CancelDialog/type';
+import { ORDER_STATUS } from '@/constants';
 
 const CancelDialog: FC<TCancelDialogProps> = ({
   showActionDialog,
@@ -29,7 +30,7 @@ const CancelDialog: FC<TCancelDialogProps> = ({
         <DialogContent className="w-full max-w-md">
           <DialogHeader>
             <DialogTitle>
-              {actionType === 'CANCELED'
+              {actionType === ORDER_STATUS.CANCELED
                 ? 'Cancel Order'
                 : 'Cancel and Refund Order'}
             </DialogTitle>
@@ -37,7 +38,7 @@ const CancelDialog: FC<TCancelDialogProps> = ({
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="actionReason" className="text-sm font-medium">
-                {actionType === 'CANCELED'
+                {actionType === ORDER_STATUS.CANCELED
                   ? 'Cancellation'
                   : 'Cancellation/Refund'}{' '}
                 Reason <span className="text-red-500">*</span>
@@ -68,7 +69,7 @@ const CancelDialog: FC<TCancelDialogProps> = ({
                 {isSubmitting
                   ? 'Processing...'
                   : `Confirm ${
-                      actionType === 'CANCELED' ? 'Cancel' : 'Refund'
+                      actionType === ORDER_STATUS.CANCELED ? 'Cancel' : 'Refund'
                     }`}
               </Button>
             </div>

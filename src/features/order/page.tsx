@@ -288,6 +288,7 @@ const OrderPage = () => {
                         checkOut &&
                         Array.from({ length: nights }).map((_, index) => {
                           const currentDate = new Date(checkIn);
+                          // Tăng số ngày tương ứng với index (0 -> đêm đầu, 1 -> đêm tiếp theo, ...)
                           currentDate.setDate(currentDate.getDate() + index);
                           const dateString = format(currentDate, 'dd-MM-yyyy');
                           const isDiscounted = isDayDiscounted(

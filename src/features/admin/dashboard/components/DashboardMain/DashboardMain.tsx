@@ -8,7 +8,7 @@ import { DishBarChart } from '@/features/admin/dashboard/components/DishBarChart
 import useDashboardMain from '@/features/admin/dashboard/hooks/useDashboardMain';
 import { RHFInput, RHFPickDate } from '@/components';
 import { Form } from '@/components/ui/form';
-import { CommissionLineChart } from '@/features/admin/dashboard/components/CommissionLineChart';
+import { ProfitLineChart } from '@/features/admin/dashboard/components/ProfitLineChart';
 import { PartnerProfitLineChart } from '@/features/admin/dashboard/components/PartnerProfitLineChart';
 import { CalendarPlus, DollarSign, Percent, UserRound } from 'lucide-react';
 
@@ -84,18 +84,18 @@ const AdminDashboardMain = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {formatCurrency(metric?.totalPartner as number)}
+              {formatCurrency(metric?.totalPartnerProfit as number)}
             </div>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Commission</CardTitle>
+            <CardTitle className="text-sm font-medium">Profit</CardTitle>
             <Percent size={16} />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {formatCurrency(metric?.totalCommission as number)}
+              {formatCurrency(metric?.totalPlatformProfit as number)}
             </div>
           </CardContent>
         </Card>
@@ -120,13 +120,13 @@ const AdminDashboardMain = () => {
           <DishBarChart chartData={metric?.hotels as any} />
         </div>
         <div className="lg:col-span-4">
-          <CommissionLineChart
-            chartData={metric?.totalCommissionInRange as any}
+          <ProfitLineChart
+            chartData={metric?.totalPlatformProfitInRange as any}
           />
         </div>
         <div className="lg:col-span-4">
           <PartnerProfitLineChart
-            chartData={metric?.totalPartnerInRange as any}
+            chartData={metric?.totalPartnerProfitInRange as any}
           />
         </div>
       </div>

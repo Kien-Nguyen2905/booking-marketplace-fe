@@ -67,7 +67,7 @@ const PartnerDishBarChart = ({
       <CardHeader>
         <CardTitle>Ranking room types</CardTitle>
         <CardDescription className="text-xs">
-          The ranking of room types based on the number of orders confirmed
+          The ranking of room types based on the number of successful orders
         </CardDescription>
       </CardHeader>
       <CardContent className="my-auto">

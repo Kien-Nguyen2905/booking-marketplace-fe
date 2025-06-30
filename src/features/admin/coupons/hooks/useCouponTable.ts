@@ -63,6 +63,7 @@ export const useCouponTable = () => {
   });
 
   const onOpenModal = () => {
+    setSelectedCoupon(null);
     setOpen(true);
   };
 
@@ -102,11 +103,13 @@ export const useCouponTable = () => {
       description: '',
     });
   };
+
   const onCloseModal = () => {
     setOpen(false);
     setSelectedCoupon(null);
     onResetForm();
   };
+
   const handleDeleteCoupon = async () => {
     try {
       if (!selectedCoupon?.id) return;
@@ -137,6 +140,7 @@ export const useCouponTable = () => {
       handleErrorApi({ error, setError: form.setError });
     }
   };
+
   const handleUpdateCoupon = async (values: UpdateCouponBodyType) => {
     try {
       if (!selectedCoupon?.id) return;
@@ -166,12 +170,16 @@ export const useCouponTable = () => {
         amount: selectedCoupon.amount,
         description: selectedCoupon.description,
       });
+    } else {
+      onResetForm();
     }
-  }, [selectedCoupon, form]);
+  }, [selectedCoupon, form, open]);
+
   useEffect(() => {
     setOrderBy(searchParams.get('orderBy') || '');
     setOrder(searchParams.get('order') || '');
   }, [pathname, form, searchParams]);
+
   return {
     isLoading,
     selectedCoupon,

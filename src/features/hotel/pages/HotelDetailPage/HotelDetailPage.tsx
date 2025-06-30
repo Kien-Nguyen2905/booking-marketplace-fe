@@ -15,7 +15,6 @@ import {
   BookmarkPlus,
   CalendarOff,
   CheckCircle2,
-  CircleAlert,
   HandCoins,
   House,
   Info,
@@ -232,13 +231,14 @@ const HotelDetailPage = () => {
                                       </div>
                                       {item.policy ===
                                         POLICY_TYPE.FREE_CANCELLATION && (
-                                        <div className=" flex items-start gap-1 text-gray-500 mt-1">
-                                          <CircleAlert
-                                            size={14}
+                                        <div className="flex items-start gap-1 text-gray-500 mt-1">
+                                          <HandCoins
+                                            size={16}
                                             className="text-green-500"
                                           />
                                           <span className="text-xs">
-                                            Before {startDateParams}
+                                            Get all refund when cancel before{' '}
+                                            {startDateParams}
                                           </span>
                                         </div>
                                       )}

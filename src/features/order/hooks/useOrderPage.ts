@@ -4,11 +4,11 @@ import {
   SUCCESS_MESSAGES,
   PAYMENT_TYPE,
   POLICY_TYPE,
+  PERCENTAGE,
 } from '@/constants';
 import {
   calculateTotalPromotionDiscount,
   clearBooking,
-  countDateDiscountPromotion,
   getBooking,
 } from '@/lib/utils';
 import {
@@ -38,7 +38,6 @@ import {
   calculateCouponDiscount,
   calculateServiceFee,
   calculateVAT,
-  calculateBookingProfit,
 } from '@/lib/utils';
 import { useCreateOrderMutation } from '@/queries/useOrder';
 import { CreateOrderBodyType } from '@/models';
@@ -79,12 +78,6 @@ export const useOrderPage = () => {
     new Date();
 
   const nights = checkIn && checkOut ? differenceInDays(checkOut, checkIn) : 0;
-
-  const countDateDiscount = countDateDiscountPromotion(
-    checkIn,
-    promotion,
-    nights,
-  );
 
   const queryStringAvailable =
     booking?.startDate && booking?.endDate
@@ -144,31 +137,42 @@ export const useOrderPage = () => {
     ? calculateCouponDiscount(coupon, subtotalAmount)
     : 0;
 
-  const totalPromotionDiscount = calculateTotalPromotionDiscount(
-    checkIn,
-    checkOut,
-    promotion,
-    room,
-    booking,
-    nights,
+  const totalPromotionDiscount =
+    calculateTotalPromotionDiscount(
+      checkIn,
+      checkOut,
+      promotion,
+      room,
+      booking,
+      nights,
+    ) || 0;
+
+  const subtotalAfterPromotionAmount =
+    baseAmount - totalPromotionDiscount + serviceFeeAmount + vatAmount;
+
+  const platformBaseProfitAmount =
+    subtotalAfterPromotionAmount * PERCENTAGE.COMMISSION;
+  const promotionShareAmount =
+    (promotion?.sharePercentage || 0) * totalPromotionDiscount || 0;
+
+  const platformProfit = Math.round(
+    platformBaseProfitAmount -
+      promotionShareAmount -
+      couponDiscountAmount -
+      pointDiscountAmount,
   );
 
-  // Function to calculate the total amount after all discounts
-  const totalAmount =
+  const partnerBaseProfitAmount =
+    PERCENTAGE.PARTNER * subtotalAfterPromotionAmount;
+
+  const partnerProfit = Math.round(
+    partnerBaseProfitAmount + promotionShareAmount,
+  );
+
+  const calculateTotalAmount =
     subtotalAmount -
     (couponDiscountAmount + pointDiscountAmount + totalPromotionDiscount);
-
-  const resultProfit = calculateBookingProfit({
-    basePrice: (room?.price || 0) * (booking?.available || 0) * nights,
-    numberOfNights: nights,
-    promotionNights: countDateDiscount,
-    promotionPercentage: promotion?.percentage || 0,
-    promotionSharePercentage: promotion?.sharePercentage || 0,
-    serviceFeeRate: roomType?.serviceFeeRate || 0,
-    vatRate: hotel?.vat || 0,
-    couponPercentage: coupon?.percentage || 0,
-    pointsDiscount: pointDiscountAmount,
-  });
+  const totalAmount = calculateTotalAmount < 0 ? 0 : calculateTotalAmount;
 
   const handleApplyCoupon = async (values: { code: string }) => {
     try {
@@ -207,6 +211,13 @@ export const useOrderPage = () => {
   const handleCreateOrder = async (values: CreateCustomerBodyType) => {
     if (!booking || !profile || !room) return;
     setIsCreatingOrder(true);
+    if (totalAmount !== platformProfit + partnerProfit) {
+      showToast({
+        type: 'error',
+        message: ERROR_MESSAGES.SOMETHING_WRONG,
+      });
+      return;
+    }
     try {
       const order: CreateOrderBodyType = {
         ...values,
@@ -229,7 +240,8 @@ export const useOrderPage = () => {
         vatAmount: vatAmount,
         serviceFeeAmount: serviceFeeAmount,
         totalPrice: totalAmount,
-        commissionAmount: resultProfit.platformProfit,
+        platformProfit,
+        partnerProfit,
         paymentType:
           room.policy === POLICY_TYPE.PAY_AT_HOTEL
             ? PAYMENT_TYPE.PAY_AT_HOTEL
@@ -237,7 +249,10 @@ export const useOrderPage = () => {
       };
       const { data } = await createOrder(order);
       if (data.data.id) {
-        if (data.data.paymentType === PAYMENT_TYPE.PAY_AT_HOTEL) {
+        if (
+          totalAmount === 0 ||
+          data.data.paymentType === PAYMENT_TYPE.PAY_AT_HOTEL
+        ) {
           showToast({
             type: 'success',
             message: SUCCESS_MESSAGES.CREATED,

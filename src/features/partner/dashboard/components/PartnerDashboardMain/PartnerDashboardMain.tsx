@@ -7,7 +7,7 @@ import { RHFInput, RHFPickDate } from '@/components';
 import { Form } from '@/components/ui/form';
 import { usePartnerDashboardPage } from '@/features/partner/dashboard/hooks';
 import { PartnerDishBarChart } from '@/features/partner/dashboard/components/PartnerDishBarChart';
-import { PartnerRevenueLineChart } from '@/features/partner/dashboard/components/PartnerRevenueLineChart';
+import { PartnerProfitLineChart } from '@/features/partner/dashboard/components/PartnerProfitLineChart';
 import {
   CalendarCheck,
   CalendarClock,
@@ -85,12 +85,12 @@ const PartnerDashboardMain = () => {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Commission</CardTitle>
+            <CardTitle className="text-sm font-medium">Profit</CardTitle>
             <Percent size={16} />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {formatCurrency(metric?.totalCommission as number)}
+              {formatCurrency(metric?.totalProfit as number)}
             </div>
           </CardContent>
         </Card>
@@ -159,8 +159,8 @@ const PartnerDashboardMain = () => {
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-8">
         <div className="lg:col-span-4">
-          <PartnerRevenueLineChart
-            chartData={metric?.totalRevenueInRange as any}
+          <PartnerProfitLineChart
+            chartData={metric?.totalProfitInRange as any}
           />
         </div>
         <div className="lg:col-span-4">
