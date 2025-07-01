@@ -4,21 +4,15 @@ import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { useExportPartnerRevenueQuery } from '@/queries';
 import ExcelJS from 'exceljs';
 import { showToast } from '@/lib/toast';
-import { useDebounce } from '@/hooks';
 import { revenueColumns } from '@/features/admin/revenue/components/RevenueTable/RevenueColumn';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { formatCurrency } from '@/lib/utils';
 
 export const useRevenueTable = () => {
   const searchParams = useSearchParams();
-  const { data, isLoading: isLoadingExports } = useExportPartnerRevenueQuery(
+  const { data, isLoading } = useExportPartnerRevenueQuery(
     searchParams.toString(),
   );
-
-  const isLoading = useDebounce({
-    initialValue: isLoadingExports,
-    delay: 700,
-  });
 
   const form = useForm<{ dateFrom: Date | null; dateTo: Date | null }>({
     defaultValues: {

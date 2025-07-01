@@ -2,7 +2,6 @@ import { useGetMyOrdersQuery } from '@/queries/useOrder';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { LIMIT, ROUTES } from '@/constants';
-import { useDebounce } from '@/hooks';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import { OrderType } from '@/models';
@@ -13,13 +12,9 @@ import { useForm } from 'react-hook-form';
 export const useAccountOrderPage = () => {
   const searchParams = useSearchParams();
 
-  const { data: allOrderData, isLoading: isLoadingOrders } =
-    useGetMyOrdersQuery(searchParams.toString() || `limit=${LIMIT}&page=1`);
-
-  const isLoading = useDebounce({
-    initialValue: isLoadingOrders,
-    delay: 700,
-  });
+  const { data: allOrderData, isLoading } = useGetMyOrdersQuery(
+    searchParams.toString() || `limit=${LIMIT}&page=1`,
+  );
 
   const router = useRouter();
   const pathname = usePathname();

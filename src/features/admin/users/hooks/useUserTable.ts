@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { debounce } from 'lodash';
 import { useGetUsers } from '@/queries';
-import { useDebounce } from '@/hooks';
 import { useReactTable, getCoreRowModel } from '@tanstack/react-table';
 import { userColumns } from '@/features/admin/users/components/UserTable/UserColumn';
 import { LIMIT, ROUTES } from '@/constants';
@@ -11,14 +10,9 @@ import { setParamsDefault } from '@/lib/utils';
 import { GetUserProfileResType } from '@/models';
 export const useUserTable = () => {
   const searchParams = useSearchParams();
-  const { data: allUserData, isLoading: isLoadingGetUsers } = useGetUsers(
+  const { data: allUserData, isLoading } = useGetUsers(
     searchParams.toString() || `limit=${LIMIT}&page=1`,
   );
-
-  const isLoading = useDebounce({
-    initialValue: isLoadingGetUsers,
-    delay: 700,
-  });
 
   const router = useRouter();
   const pathname = usePathname();

@@ -1,6 +1,5 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { LIMIT, SUCCESS_MESSAGES } from '@/constants';
-import { useDebounce } from '@/hooks';
 import {
   useDeleteCouponMutation,
   useGetAllCouponsQuery,
@@ -26,8 +25,9 @@ export const useCouponTable = () => {
   const searchParams = useSearchParams();
   const [orderBy, setOrderBy] = useState('');
   const [order, setOrder] = useState('');
-  const { data: allCouponData, isLoading: isLoadingCoupon } =
-    useGetAllCouponsQuery(searchParams.toString() || `limit=${LIMIT}&page=1`);
+  const { data: allCouponData, isLoading } = useGetAllCouponsQuery(
+    searchParams.toString() || `limit=${LIMIT}&page=1`,
+  );
   const { mutateAsync: createCoupon, isPending: isSubmittingCreate } =
     useCreateCouponMutation();
   const { mutateAsync: updateCoupon, isPending: isSubmittingUpdate } =
@@ -36,11 +36,6 @@ export const useCouponTable = () => {
     useDeleteCouponMutation();
   const [selectedCoupon, setSelectedCoupon] = useState<CouponType | null>(null);
   const [open, setOpen] = useState(false);
-
-  const isLoading = useDebounce({
-    initialValue: isLoadingCoupon,
-    delay: 700,
-  });
 
   const router = useRouter();
   const pathname = usePathname();

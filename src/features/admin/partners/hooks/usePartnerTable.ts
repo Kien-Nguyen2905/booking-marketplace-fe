@@ -1,6 +1,5 @@
 import { LIMIT, ROUTES } from '@/constants';
 import { partnerColumns } from '@/features/admin/partners/components/PartnerTable/PartnerColumn';
-import { useDebounce } from '@/hooks';
 import { setParamsDefault } from '@/lib/utils';
 import { useGetAllPartnersQuery } from '@/queries';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
@@ -11,13 +10,9 @@ import { useForm } from 'react-hook-form';
 
 export const usePartnerTable = () => {
   const searchParams = useSearchParams();
-  const { data: allPartnerData, isLoading: isLoadingGetAllUsers } =
-    useGetAllPartnersQuery(searchParams.toString() || `limit=${LIMIT}&page=1`);
-
-  const isLoading = useDebounce({
-    initialValue: isLoadingGetAllUsers,
-    delay: 700,
-  });
+  const { data: allPartnerData, isLoading } = useGetAllPartnersQuery(
+    searchParams.toString() || `limit=${LIMIT}&page=1`,
+  );
 
   const router = useRouter();
   const pathname = usePathname();

@@ -1,6 +1,5 @@
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { useDebounce } from '@/hooks';
 import { LIMIT, ROUTES } from '@/constants';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
@@ -21,13 +20,8 @@ export const useRefundTable = () => {
   const {
     data: allRefundData,
     refetch: refetchAllRefunds,
-    isLoading: isLoadingRefunds,
+    isLoading,
   } = useGetAllRefundsQuery(searchParams.toString() || `limit=${LIMIT}&page=1`);
-
-  const isLoading = useDebounce({
-    initialValue: isLoadingRefunds,
-    delay: 700,
-  });
 
   const router = useRouter();
   const pathname = usePathname();

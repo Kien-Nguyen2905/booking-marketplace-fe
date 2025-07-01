@@ -1,6 +1,5 @@
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { useDebounce } from '@/hooks';
 import { LIMIT, ROUTES } from '@/constants';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
@@ -17,15 +16,9 @@ export const useTransactionTable = () => {
   const [orderBy, setOrderBy] = useState('');
   const [order, setOrder] = useState('');
 
-  const { data: allTransactionData, isLoading: isLoadingTransactions } =
-    useGetAllTransactionsQuery(
-      searchParams.toString() || `limit=${LIMIT}&page=1`,
-    );
-
-  const isLoading = useDebounce({
-    initialValue: isLoadingTransactions,
-    delay: 700,
-  });
+  const { data: allTransactionData, isLoading } = useGetAllTransactionsQuery(
+    searchParams.toString() || `limit=${LIMIT}&page=1`,
+  );
 
   const router = useRouter();
   const pathname = usePathname();

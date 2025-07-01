@@ -1,6 +1,5 @@
 import { useGetMetricsPartnerDashboardQuery } from '@/queries';
 import { format } from 'date-fns';
-import { useDebounce } from '@/hooks/useDebounce';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { parse } from 'date-fns';
@@ -8,17 +7,10 @@ import { useAppContext } from '@/context/AppProvider';
 const usePartnerDashboardPage = () => {
   const { partnerProfile } = useAppContext();
   const searchParams = useSearchParams();
-  console.log(partnerProfile?.hotel?.id?.toString());
-  const { data, isLoading: isLoadingExports } =
-    useGetMetricsPartnerDashboardQuery(
-      partnerProfile?.hotel?.id?.toString() || '',
-      searchParams.toString(),
-    );
-
-  const isLoading = useDebounce({
-    initialValue: isLoadingExports,
-    delay: 700,
-  });
+  const { data, isLoading } = useGetMetricsPartnerDashboardQuery(
+    partnerProfile?.hotel?.id?.toString() || '',
+    searchParams.toString(),
+  );
 
   const form = useForm<{ dateFrom: Date | null; dateTo: Date | null }>({
     defaultValues: {

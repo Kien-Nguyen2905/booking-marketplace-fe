@@ -7,7 +7,6 @@ import {
   useGetAllPromotionsQuery,
   useUpdatePromotionMutation,
 } from '@/queries';
-import { useDebounce } from '@/hooks';
 import { useReactTable, getCoreRowModel } from '@tanstack/react-table';
 import { LIMIT, ROUTES, SUCCESS_MESSAGES } from '@/constants';
 import { normalizeToUTC, setParamsDefault } from '@/lib/utils';
@@ -36,14 +35,9 @@ export const usePromotionTable = () => {
     useUpdatePromotionMutation();
   const { mutateAsync: deletePromotion, isPending: isSubmittingDelete } =
     useDeletePromotionMutation();
-  const { data: allPromotionData, isLoading: isLoadingPromotions } =
-    useGetAllPromotionsQuery(
-      searchParams.toString() || `limit=${LIMIT}&page=1`,
-    );
-  const isLoading = useDebounce({
-    initialValue: isLoadingPromotions,
-    delay: 700,
-  });
+  const { data: allPromotionData, isLoading } = useGetAllPromotionsQuery(
+    searchParams.toString() || `limit=${LIMIT}&page=1`,
+  );
 
   const router = useRouter();
   const pathname = usePathname();

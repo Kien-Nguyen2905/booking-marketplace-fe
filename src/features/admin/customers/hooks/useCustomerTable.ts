@@ -1,6 +1,5 @@
 import { useSearchParams } from 'next/navigation';
 import { LIMIT, ROUTES } from '@/constants';
-import { useDebounce } from '@/hooks';
 import { useReactTable } from '@tanstack/react-table';
 import { getCoreRowModel } from '@tanstack/react-table';
 import { useForm } from 'react-hook-form';
@@ -14,13 +13,9 @@ import { useEffect } from 'react';
 
 export const useCustomerTable = () => {
   const searchParams = useSearchParams();
-  const { data: allCustomerData, isLoading: isLoadingGetAllUsers } =
-    useGetCustomersQuery(searchParams.toString() || `limit=${LIMIT}&page=1`);
-
-  const isLoading = useDebounce({
-    initialValue: isLoadingGetAllUsers,
-    delay: 700,
-  });
+  const { data: allCustomerData, isLoading } = useGetCustomersQuery(
+    searchParams.toString() || `limit=${LIMIT}&page=1`,
+  );
 
   const router = useRouter();
   const pathname = usePathname();

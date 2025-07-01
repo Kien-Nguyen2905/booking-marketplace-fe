@@ -14,11 +14,6 @@ const refundServices = {
     );
   },
 
-  getAllMyRefunds: (queryString: string = '') => {
-    return instance.get<SuccessResponse<GetRefundsResType>>(
-      `/refunds/me${queryString ? `?${queryString}` : ''}`,
-    );
-  },
   getRefundById: (id: number | string) => {
     return instance.get<SuccessResponse<GetRefundResType>>(`/refunds/${id}`);
   },

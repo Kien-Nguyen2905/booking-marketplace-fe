@@ -1,6 +1,5 @@
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { useDebounce } from '@/hooks';
 import { LIMIT, ROUTES } from '@/constants';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
@@ -18,13 +17,9 @@ export const useOrderTable = () => {
   const [orderBy, setOrderBy] = useState('');
   const [order, setOrder] = useState('');
 
-  const { data: allOrderData, isLoading: isLoadingOrders } =
-    useGetAllOrdersQuery(searchParams.toString() || `limit=${LIMIT}&page=1`);
-
-  const isLoading = useDebounce({
-    initialValue: isLoadingOrders,
-    delay: 700,
-  });
+  const { data: allOrderData, isLoading } = useGetAllOrdersQuery(
+    searchParams.toString() || `limit=${LIMIT}&page=1`,
+  );
 
   const router = useRouter();
   const pathname = usePathname();

@@ -57,4 +57,3 @@ export type GetCustomersResType = z.infer<typeof GetCustomersResSchema>;
 export type GetCustomerResType = z.infer<typeof GetCustomerResSchema>;
 
 export type CreateCustomerBodyType = z.infer<typeof CreateCustomerBodySchema>;
-export type CreateCustomerResType = z.infer<typeof CreateCustomerResSchema>;

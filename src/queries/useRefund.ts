@@ -9,13 +9,6 @@ export const useGetAllRefundsQuery = (queryString: string = '') => {
   });
 };
 
-export const useGetAllMyRefundsQuery = (queryString: string = '') => {
-  return useQuery({
-    queryKey: ['refunds-me', queryString],
-    queryFn: () => refundServices.getAllMyRefunds(queryString),
-  });
-};
-
 export const useGetRefundByIdQuery = (id: number | string) => {
   return useQuery({
     queryKey: ['refunds', id],

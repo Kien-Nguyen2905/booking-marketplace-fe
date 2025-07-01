@@ -1,6 +1,5 @@
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { useDebounce } from '@/hooks';
 import { LIMIT, ROUTES } from '@/constants';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
@@ -21,16 +20,10 @@ export const useOrderPartnerTable = () => {
   const [order, setOrder] = useState('');
   const hotelId = partnerProfile?.hotel?.id || 0;
 
-  const { data: allOrderData, isLoading: isLoadingOrders } =
-    useGetOrdersByHotelIdQuery(
-      `${hotelId}?${searchParams.toString()}` ||
-        `${hotelId}?limit=${LIMIT}&page=1`,
-    );
-
-  const isLoading = useDebounce({
-    initialValue: isLoadingOrders,
-    delay: 700,
-  });
+  const { data: allOrderData, isLoading } = useGetOrdersByHotelIdQuery(
+    `${hotelId}?${searchParams.toString()}` ||
+      `${hotelId}?limit=${LIMIT}&page=1`,
+  );
 
   const router = useRouter();
   const pathname = usePathname();

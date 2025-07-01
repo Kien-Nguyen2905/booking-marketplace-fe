@@ -1,6 +1,5 @@
 import { useGetNotifiesByRecipientIdQuery } from '@/queries';
 import { LIMIT } from '@/constants';
-import { useDebounce } from '@/hooks';
 import { useSearchParams } from 'next/navigation';
 import { NotifyType } from '@/models/notify.model';
 import { useState } from 'react';
@@ -11,15 +10,12 @@ import { handleErrorApi } from '@/lib/helper';
 
 export const usePartnerNotification = () => {
   const searchParams = useSearchParams();
-  const { data: allNotificationData, isLoading: isLoadingNotification } =
+  const { data: allNotificationData, isLoading } =
     useGetNotifiesByRecipientIdQuery(
       searchParams.toString() || `limit=${LIMIT}&page=1`,
     );
   const { mutateAsync: readNotify, isPending } = useReadNotifyMutation();
-  const isLoading = useDebounce({
-    initialValue: isLoadingNotification,
-    delay: 700,
-  });
+
   const [selectedNotification, setSelectedNotification] =
     useState<NotifyType | null>(null);
   const [open, setOpen] = useState(false);

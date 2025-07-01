@@ -5,7 +5,6 @@ import {
 import { HOTEL_PARAMS, LIMIT, ROUTES } from '@/constants';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { useDebounce } from '@/hooks';
 export const useHotelPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -61,7 +60,7 @@ export const useHotelPage = () => {
   return {
     hotels,
     pagination: hotelsData?.data?.data,
-    isLoading: useDebounce({ initialValue: isLoading, delay: 500 }),
+    isLoading,
     queryStringDetail,
     promotion: promotionToday || promotionNotToday,
   };

@@ -1,19 +1,13 @@
 import { useGetMetricsDashboardQuery } from '@/queries';
 import { format } from 'date-fns';
-import { useDebounce } from '@/hooks/useDebounce';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { parse } from 'date-fns';
 const useDashboardMain = () => {
   const searchParams = useSearchParams();
-  const { data, isLoading: isLoadingExports } = useGetMetricsDashboardQuery(
+  const { data, isLoading } = useGetMetricsDashboardQuery(
     searchParams.toString(),
   );
-
-  const isLoading = useDebounce({
-    initialValue: isLoadingExports,
-    delay: 700,
-  });
 
   const form = useForm<{ dateFrom: Date | null; dateTo: Date | null }>({
     defaultValues: {

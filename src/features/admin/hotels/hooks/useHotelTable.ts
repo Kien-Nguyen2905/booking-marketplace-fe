@@ -1,6 +1,5 @@
 import { LIMIT, ROUTES } from '@/constants';
 import { hotelColumns } from '@/features/admin/hotels/components/HotelTable/HotelColumn';
-import { useDebounce } from '@/hooks';
 import { setParamsDefault } from '@/lib/utils';
 import { useGetHotelsQuery } from '@/queries';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
@@ -11,16 +10,12 @@ import { useForm } from 'react-hook-form';
 
 export const useHotelTable = () => {
   const searchParams = useSearchParams();
-  const { data: hotelsData, isLoading: isLoadingGetHotels } = useGetHotelsQuery(
+  const { data: hotelsData, isLoading } = useGetHotelsQuery(
     searchParams.toString() || `limit=${LIMIT}&page=1`,
   );
 
   const [orderBy, setOrderBy] = useState('');
   const [order, setOrder] = useState('');
-  const isLoading = useDebounce({
-    initialValue: isLoadingGetHotels,
-    delay: 700,
-  });
 
   const router = useRouter();
   const pathname = usePathname();
