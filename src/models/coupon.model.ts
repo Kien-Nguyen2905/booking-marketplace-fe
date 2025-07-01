@@ -19,7 +19,7 @@ export const CouponSchema = z.object({
   percentage: z
     .number({ message: ERROR_COUPON_MESSAGES.percentage.required })
     .min(0, { message: ERROR_COUPON_MESSAGES.percentage.min })
-    .max(15, { message: ERROR_COUPON_MESSAGES.percentage.max })
+    .max(100, { message: ERROR_COUPON_MESSAGES.percentage.max })
     .int({ message: ERROR_COUPON_MESSAGES.percentage.invalidNumber }),
   available: z.number().int().default(0),
   createdById: z.number().int().positive(),

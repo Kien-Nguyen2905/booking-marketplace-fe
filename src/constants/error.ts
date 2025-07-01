@@ -231,7 +231,7 @@ export const ERROR_COUPON_MESSAGES = {
   percentage: {
     required: 'Percentage is required',
     min: 'Percentage must be a than 0',
-    max: 'Percentage must not exceed 15 percent',
+    max: 'Percentage must not exceed 100 percent',
     invalidNumber: 'Invalid percentage',
   },
 };
