@@ -31,7 +31,11 @@ const RevenueLineChart = ({
     <Card>
       <CardHeader>
         <CardTitle>Revenue</CardTitle>
-        <CardDescription className="text-xs"></CardDescription>
+        {chartData?.length > 0 && (
+          <CardDescription className="text-xs">
+            {chartData?.[0].date} - {chartData?.[chartData.length - 1].date}
+          </CardDescription>
+        )}
       </CardHeader>
       <CardContent className="px-0">
         <ChartContainer config={chartConfig}>

@@ -17,7 +17,7 @@ export const RoomSchema = z.object({
     .number({ message: ERROR_ROOM_MESSAGES.rangeLimitDate.invalidNumber })
     .int({ message: ERROR_ROOM_MESSAGES.rangeLimitDate.invalidNumber })
     .min(0, { message: ERROR_ROOM_MESSAGES.rangeLimitDate.min })
-    .max(7, { message: ERROR_ROOM_MESSAGES.rangeLimitDate.max })
+    .max(100, { message: ERROR_ROOM_MESSAGES.rangeLimitDate.max })
     .optional(),
   policy: z.enum([
     POLICY_TYPE.NON_REFUNDABLE,

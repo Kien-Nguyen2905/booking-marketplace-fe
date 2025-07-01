@@ -11,6 +11,7 @@ import { Form } from '@/components/ui/form';
 import { ProfitLineChart } from '@/features/admin/dashboard/components/ProfitLineChart';
 import { PartnerProfitLineChart } from '@/features/admin/dashboard/components/PartnerProfitLineChart';
 import { CalendarPlus, DollarSign, Percent, UserRound } from 'lucide-react';
+import { OverlappingLineChart } from '@/features/admin/dashboard/components/OverlappingLineChart';
 
 const AdminDashboardMain = () => {
   const {
@@ -127,6 +128,12 @@ const AdminDashboardMain = () => {
         <div className="lg:col-span-4">
           <PartnerProfitLineChart
             chartData={metric?.totalPartnerProfitInRange as any}
+          />
+        </div>
+        <div className="md:col-span-8">
+          <OverlappingLineChart
+            platformProfitData={metric?.totalPlatformProfitInRange as any}
+            partnerProfitData={metric?.totalPartnerProfitInRange as any}
           />
         </div>
       </div>

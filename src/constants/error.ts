@@ -182,7 +182,7 @@ export const ERROR_ROOM_MESSAGES = {
   },
   rangeLimitDate: {
     invalidNumber: 'Invalid range limit date',
-    max: 'Range limit date must not exceed 7 days',
+    max: 'Range limit date must not exceed 100 days',
     min: 'Range limit date must be a than 0',
   },
 };

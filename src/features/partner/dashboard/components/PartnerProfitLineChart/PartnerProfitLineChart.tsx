@@ -16,9 +16,9 @@ import {
 import { format, parse } from 'date-fns';
 import { formatCurrency } from '@/lib/utils';
 const chartConfig = {
-  desktop: {
-    label: 'Desktop',
-    color: 'hsl(var(--color-primary))',
+  profit: {
+    label: 'Profit',
+    color: 'var(--color-primary)',
   },
 } satisfies ChartConfig;
 
@@ -32,7 +32,11 @@ const PartnerProfitLineChart = ({
     <Card className="h-full">
       <CardHeader>
         <CardTitle>Profit</CardTitle>
-        <CardDescription className="text-xs"></CardDescription>
+        {chartData?.length > 0 && (
+          <CardDescription className="text-xs">
+            {chartData?.[0].date} - {chartData?.[chartData.length - 1].date}
+          </CardDescription>
+        )}
       </CardHeader>
       <CardContent className="px-0">
         <ChartContainer config={chartConfig}>
@@ -79,7 +83,7 @@ const PartnerProfitLineChart = ({
             <Line
               dataKey="profit"
               type="linear"
-              stroke="var(--color-primary)"
+              stroke="var(--color-profit)"
               strokeWidth={2}
               dot={false}
             />

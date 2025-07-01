@@ -1,5 +1,5 @@
 'use client';
-import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts';
+import { CartesianGrid, Line, LineChart, XAxis } from 'recharts';
 import {
   Card,
   CardContent,
@@ -14,22 +14,39 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 import { format, parse } from 'date-fns';
-import { formatCurrency } from '@/lib/utils';
 const chartConfig = {
-  profit: {
-    label: 'Profit',
+  platformProfit: {
+    label: 'Platform ',
     color: 'var(--chart-1)',
   },
+  partnerProfit: {
+    label: 'Partner ',
+    color: 'var(--chart-2)',
+  },
 } satisfies ChartConfig;
-const ProfitLineChart = ({
-  chartData,
+
+const OverlappingLineChart = ({
+  platformProfitData,
+  partnerProfitData,
 }: {
-  chartData: { date: string; profit: number }[];
+  platformProfitData: { date: string; profit: number }[];
+  partnerProfitData: { date: string; partnerProfit: number }[];
 }) => {
+  const chartData = platformProfitData?.map((platformItem) => {
+    const partnerItem = partnerProfitData.find(
+      (m) => m.date === platformItem.date,
+    );
+    return {
+      date: platformItem.date,
+      platformProfit: platformItem.profit,
+      partnerProfit: partnerItem?.partnerProfit ?? 0,
+    };
+  });
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Platform Profit</CardTitle>
+        <CardTitle>Platform & Partner Profit</CardTitle>
         {chartData?.length > 0 && (
           <CardDescription className="text-xs">
             {chartData?.[0].date} - {chartData?.[chartData.length - 1].date}
@@ -42,6 +59,7 @@ const ProfitLineChart = ({
             accessibilityLayer
             data={chartData}
             margin={{
+              top: 12,
               left: 12,
               right: 12,
             }}
@@ -52,7 +70,6 @@ const ProfitLineChart = ({
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              interval={0}
               tickFormatter={(value) => {
                 if (chartData.length < 8) {
                   const date = parse(value, 'yyyy-MM-dd', new Date());
@@ -69,18 +86,18 @@ const ProfitLineChart = ({
               cursor={false}
               content={<ChartTooltipContent indicator="dashed" />}
             />
-            <YAxis
-              dataKey="profit"
-              axisLine={false}
-              tickLine={false}
-              orientation="left"
-              tickFormatter={(value) => formatCurrency(value, 'NOT_VND')}
-              width={60}
+
+            <Line
+              dataKey="partnerProfit"
+              type="monotone"
+              stroke="var(--color-partnerProfit)"
+              strokeWidth={2}
+              dot={false}
             />
             <Line
-              dataKey="profit"
-              type="linear"
-              stroke="var(--color-profit)"
+              dataKey="platformProfit"
+              type="monotone"
+              stroke="var(--color-platformProfit)"
               strokeWidth={2}
               dot={false}
             />
@@ -91,4 +108,4 @@ const ProfitLineChart = ({
   );
 };
 
-export default ProfitLineChart;
+export default OverlappingLineChart;
