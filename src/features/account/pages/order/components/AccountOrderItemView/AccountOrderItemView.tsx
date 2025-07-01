@@ -259,6 +259,7 @@ const AccountOrderItemView: FC<TAccountOrderItemViewProps> = ({
         </Card>
 
         {order?.status === ORDER_STATUS.CONFIRMED && (
+          // addHours(order.checkinDate, 7).getTime() > getNowUTC7().getTime() &&
           <div className="flex justify-end">
             <Button
               onClick={() => handleOpenDialog()}

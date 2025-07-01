@@ -6,10 +6,8 @@ import {
 } from '@/constants';
 import { handleErrorApi } from '@/lib/helper';
 import { showToast } from '@/lib/toast';
-import { getNowUTC7 } from '@/lib/utils';
 import { useUpdateMyOrderMutation } from '@/queries';
 import { useGetOrderByIdQuery } from '@/queries/useOrder';
-import { startOfDay, subHours } from 'date-fns';
 import { useEffect, useState } from 'react';
 
 export const useAccountOrderItemView = (id?: string | number) => {
@@ -25,17 +23,10 @@ export const useAccountOrderItemView = (id?: string | number) => {
   const [actionType, setActionType] = useState<
     typeof ORDER_STATUS.PENDING_REFUND | typeof ORDER_STATUS.CANCELED | null
   >(null);
+
   const handleOpenDialog = () => {
     if (order && order.room.policy === POLICY_TYPE.FREE_CANCELLATION) {
-      const checkinDate = subHours(order.checkinDate, 7);
-      const nowUTC7 = getNowUTC7();
-      const today = startOfDay(nowUTC7);
-      if (
-        order.room.policy === POLICY_TYPE.FREE_CANCELLATION &&
-        today.getTime() < checkinDate.getTime()
-      ) {
-        setActionType(ORDER_STATUS.PENDING_REFUND);
-      }
+      setActionType(ORDER_STATUS.PENDING_REFUND);
     } else {
       setActionType(ORDER_STATUS.CANCELED);
     }
@@ -83,15 +74,7 @@ export const useAccountOrderItemView = (id?: string | number) => {
   useEffect(() => {
     if (!order) return;
     if (order && order.room.policy === POLICY_TYPE.FREE_CANCELLATION) {
-      const checkinDate = subHours(order.checkinDate, 7);
-      const nowUTC7 = getNowUTC7();
-      const today = startOfDay(nowUTC7);
-      if (
-        order.room.policy === POLICY_TYPE.FREE_CANCELLATION &&
-        today.getTime() < checkinDate.getTime()
-      ) {
-        setActionType(ORDER_STATUS.PENDING_REFUND);
-      }
+      setActionType(ORDER_STATUS.PENDING_REFUND);
     } else {
       setActionType(ORDER_STATUS.CANCELED);
     }

@@ -237,8 +237,8 @@ const HotelDetailPage = () => {
                                             className="text-green-500"
                                           />
                                           <span className="text-xs">
-                                            Get all refund when cancel before{' '}
-                                            {startDateParams}
+                                            Get all refund when cancel before
+                                            14:00 {startDateParams}
                                           </span>
                                         </div>
                                       )}
