@@ -96,7 +96,7 @@ const PartnerInformation: FC<TPartnerInformationProps> = ({ partner }) => {
                   />
                   <RHFInput
                     form={form}
-                    name="birth"
+                    name="birthday"
                     label="Birthday"
                     required
                     placeholder="Pick your birthday"

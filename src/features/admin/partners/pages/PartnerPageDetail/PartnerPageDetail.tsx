@@ -85,7 +85,7 @@ const PartnerPageDetail = () => {
               </div>
               <div className="flex gap-1">
                 <p className="font-semibold">Birth:</p>
-                <p>{format(partner.birth, 'dd/MM/yyyy')}</p>
+                <p>{format(partner.birthday, 'dd/MM/yyyy')}</p>
               </div>
             </div>
             <div className="space-y-2">
