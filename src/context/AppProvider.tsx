@@ -142,7 +142,6 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
         if (role !== data.data.data.role.name) {
           handleLogout();
           removeEmailLocalStorage();
-          window.location.reload();
         }
       }
       setSocket(generateSocketInstance());

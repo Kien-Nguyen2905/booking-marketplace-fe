@@ -38,7 +38,6 @@ export const useLogin = () => {
       ) {
         router.push(ROUTES.TWO_FA_PAGE);
         setPayloadLogin(value);
-        closeModal();
         return;
       }
       navigateWithLogin({
@@ -56,7 +55,6 @@ export const useLogin = () => {
       closeModal();
     } catch (error: any) {
       handleErrorApi({ error, setError: form.setError });
-    } finally {
       setIsLoading(false);
     }
   };

@@ -77,7 +77,7 @@ const HotelPageDetail = () => {
               }
               onClick={handleUpdateStatusHotel}
               disabled={isPendingUpdateHotel}
-              className="w-[110px h-9 relative"
+              className="w-[110px] h-9 relative"
             >
               {isPendingUpdateHotel ? (
                 <LoadingButton />

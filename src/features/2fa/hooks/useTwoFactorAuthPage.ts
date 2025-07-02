@@ -16,10 +16,14 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export const useTwoFactorAuthPage = () => {
-  const { payloadLogin, setPayloadLogin, setIsAuthenticated, setRole } =
-    useAppContext();
-  const { mutateAsync: verify2FA, isPending: isVerifying } =
-    useVerify2FAMutation();
+  const {
+    payloadLogin,
+    setPayloadLogin,
+    setIsAuthenticated,
+    setRole,
+    toggleModal,
+  } = useAppContext();
+  const { mutateAsync: verify2FA } = useVerify2FAMutation();
   const { mutateAsync: send2FA, isPending: isSending } =
     useForgotTwoFactorAuthMutation();
   const router = useRouter();
@@ -28,12 +32,14 @@ export const useTwoFactorAuthPage = () => {
   const [otpError, setOtpError] = useState('');
   const { time, startTimer, resetTimer } = useTimeCountdown();
 
+  const [isVerifying, setIsVerifying] = useState(false);
+
   const handleOtpChange = (value: string) => {
     setOtpValue(value);
   };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsVerifying(true);
     try {
       if (!payloadLogin) {
         return;
@@ -53,8 +59,10 @@ export const useTwoFactorAuthPage = () => {
       });
       resetTimer();
       setPayloadLogin(null);
+      toggleModal();
     } catch (error: any) {
       handleErrorApi({ error, setErrorText: setOtpError });
+      setIsVerifying(false);
     }
   };
 
@@ -62,6 +70,7 @@ export const useTwoFactorAuthPage = () => {
     router.push(ROUTES.HOME);
     setPayloadLogin(null);
     resetTimer();
+    toggleModal();
   };
 
   const handleForgot2FA = async () => {
@@ -85,9 +94,9 @@ export const useTwoFactorAuthPage = () => {
 
   useEffect(() => {
     if (!payloadLogin) {
-      handleGoBack();
+      router.push(ROUTES.HOME);
     }
-  }, [payloadLogin, handleGoBack]);
+  }, [payloadLogin, router]);
 
   return {
     otpValue,
