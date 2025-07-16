@@ -70,6 +70,8 @@ export const useHotelPageDetail = () => {
         vat: hotel?.vat * 100,
         rating: hotel?.rating,
         images: hotel?.images,
+        lat: hotel?.lat,
+        lon: hotel?.lon,
         status:
           hotel?.status === HOTEL_STATUS.ACTIVE
             ? HOTEL_STATUS.INACTIVE
