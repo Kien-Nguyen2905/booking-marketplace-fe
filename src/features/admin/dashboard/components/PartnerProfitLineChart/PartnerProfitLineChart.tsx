@@ -45,7 +45,7 @@ const PartnerProfitLineChart = ({
             margin={{
               top: 12,
               left: 12,
-              right: 12,
+              right: 20,
             }}
           >
             <CartesianGrid vertical={false} />

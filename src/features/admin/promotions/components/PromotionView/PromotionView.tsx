@@ -25,7 +25,9 @@ const PromotionView: FC<TPromotionViewProps> = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Promotion</DialogTitle>
+          <DialogTitle>
+            Promotion{selectedPromotion?.id && ` ID: #${selectedPromotion?.id}`}
+          </DialogTitle>
           {selectedPromotion && (
             <div className="flex items-center justify-between text-sm">
               <span>

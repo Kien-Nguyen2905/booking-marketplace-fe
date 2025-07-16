@@ -25,7 +25,7 @@ import { showToast } from '@/lib/toast';
 import { handleErrorApi } from '@/lib/helper';
 import { useAppContext } from '@/context/AppProvider';
 import { eachDayOfInterval, parse, startOfDay, subDays } from 'date-fns';
-import { saveBooking } from '@/lib/utils';
+import { saveBooking, setVersionHotelLocalStorage } from '@/lib/utils';
 
 export const useHotelDetailPage = () => {
   const { profile, toggleModal } = useAppContext();
@@ -182,7 +182,18 @@ export const useHotelDetailPage = () => {
       child: childParam,
       available: availableParam,
     };
+    const versionData = {
+      hotel: hotel?.updatedAt ?? null,
+      roomType:
+        hotel?.roomType?.find((roomType) => roomType.id === roomTypeId)
+          ?.updatedAt ?? null,
+      room:
+        hotel?.roomType
+          ?.find((roomType) => roomType.id === roomTypeId)
+          ?.room.find((room) => room.id === roomId)?.updatedAt ?? null,
+    };
     const code = saveBooking(booking);
+    setVersionHotelLocalStorage(code, JSON.stringify(versionData));
     setIsLoadingNavigate(true);
     router.push(`${ROUTES.ORDER}?code=${code}`);
   };
@@ -191,7 +202,17 @@ export const useHotelDetailPage = () => {
     if (hotel && hotel.status !== HOTEL_STATUS.ACTIVE) {
       router.push(ROUTES.HOME);
     }
-  }, [hotel]);
+    if (startDateParams && endDateParams) {
+      const startDate = parse(startDateParams, 'dd-MM-yyyy', new Date());
+      const endDate = parse(endDateParams, 'dd-MM-yyyy', new Date());
+      if (
+        startOfDay(startDate) < startOfDay(new Date()) ||
+        startOfDay(startDate) >= startOfDay(endDate)
+      ) {
+        router.push(ROUTES.HOME);
+      }
+    }
+  }, [hotel, startDateParams, endDateParams]);
 
   return {
     hotelId: id,

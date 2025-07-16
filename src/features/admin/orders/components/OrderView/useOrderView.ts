@@ -1,10 +1,13 @@
-import { SUCCESS_MESSAGES } from '@/constants';
+import { ERROR_MESSAGES, SUCCESS_MESSAGES } from '@/constants';
 import { handleErrorApi } from '@/lib/helper';
 import { showToast } from '@/lib/toast';
 import { useCreateRefundMutation } from '@/queries';
 import { useGetOrderByIdQuery } from '@/queries/useOrder';
 
-export const useOrderView = (id?: string | number) => {
+export const useOrderView = (
+  id?: string | number,
+  onOpenChange?: () => void,
+) => {
   const { data: orderData } = useGetOrderByIdQuery(id as number);
   const order = orderData?.data.data;
   const { mutateAsync: createRefund, isPending } = useCreateRefundMutation();
@@ -18,7 +21,7 @@ export const useOrderView = (id?: string | number) => {
     ) {
       showToast({
         type: 'error',
-        message: 'User bank information is not complete',
+        message: ERROR_MESSAGES.USER_BANK_INFO_INCOMPLETE,
       });
       return;
     }
@@ -33,6 +36,7 @@ export const useOrderView = (id?: string | number) => {
           type: 'success',
           message: SUCCESS_MESSAGES.CREATED,
         });
+        onOpenChange?.();
       }
     } catch (error) {
       handleErrorApi({ error });

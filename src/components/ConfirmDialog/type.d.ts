@@ -6,7 +6,7 @@ export type TConfirmDialogProps = {
   isLoading: boolean;
   handleConfirm: () => void;
   title: string;
-  description: string | ReactNode;
+  description?: string | ReactNode;
   confirmText: string;
   variant:
     | 'default'
@@ -15,4 +15,5 @@ export type TConfirmDialogProps = {
     | 'secondary'
     | 'ghost'
     | 'link';
+  descriptionComponent?: string | ReactNode;
 };

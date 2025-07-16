@@ -30,13 +30,13 @@ const ProfileHeader: FC = () => {
         value={images}
         onChange={onImageChange}
         maxNumber={1}
-        maxFileSize={1024 * 1024 * 3}
+        maxFileSize={1024 * 1024 * 1}
         onError={(error) => {
           showToast({
             type: 'error',
             message: error?.maxFileSize
               ? ERROR_MESSAGES.FILE.SIZE_EXCEEDS_LIMIT
-              : ERROR_MESSAGES.SOMETHING_WRONG,
+              : ERROR_MESSAGES.UPLOAD_ERROR,
           });
         }}
         dataURLKey="dataURL"

@@ -53,7 +53,6 @@ const MultipleUploading: FC<TMultipleUploadingProps> = ({
         acceptType={['jpg', 'jpeg', 'png', 'webp']}
         dataURLKey="dataURL"
         onError={(error) => {
-          console.log(error);
           showToast({
             type: 'error',
             message: error?.maxFileSize
@@ -62,7 +61,7 @@ const MultipleUploading: FC<TMultipleUploadingProps> = ({
               ? ERROR_MESSAGES.FILE.MAX_NUMBER_EXCEEDED
               : error?.acceptType
               ? ERROR_MESSAGES.FILE.INVALID_TYPE
-              : ERROR_MESSAGES.SOMETHING_WRONG,
+              : ERROR_MESSAGES.UPLOAD_ERROR,
           });
         }}
       >

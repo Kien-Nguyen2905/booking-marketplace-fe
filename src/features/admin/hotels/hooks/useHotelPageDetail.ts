@@ -43,12 +43,14 @@ export const useHotelPageDetail = () => {
     setIsModalOpen(true);
   };
   const hotel = hotelData?.data.data;
-  const amenityServices = hotel?.hotelAmenity.filter(
-    (amenity) => amenity.amenity.category === AMENITY_CATEGORY.SERVICE,
-  );
-  const amenityPublic = hotel?.hotelAmenity.filter(
-    (amenity) => amenity.amenity.category === AMENITY_CATEGORY.PUBLIC,
-  );
+  const amenityServices =
+    hotel?.hotelAmenity?.filter(
+      (amenity) => amenity.amenity.category === AMENITY_CATEGORY.SERVICE,
+    ) || [];
+  const amenityPublic =
+    hotel?.hotelAmenity?.filter(
+      (amenity) => amenity.amenity.category === AMENITY_CATEGORY.PUBLIC,
+    ) || [];
 
   const handleUpdateStatusHotel = async () => {
     if (!hotel) return;

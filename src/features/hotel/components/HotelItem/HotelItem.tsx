@@ -125,12 +125,12 @@ const HotelItem: FC<THotelItemProps> = ({
               <div className="mb-2 flex flex-col items-end">
                 {promotion && promotion?.percentage > 0 && (
                   <div className="text-gray-500 text-sm line-through mb-1">
-                    {formatCurrency(hotel.room[0].price)}
+                    {formatCurrency(hotel.room[0]?.price)}
                   </div>
                 )}
                 <div className="text-orange-500 text-xl font-bold">
                   {formatCurrency(
-                    hotel.room[0].price * (1 - (promotion?.percentage || 0)),
+                    hotel.room[0]?.price * (1 - (promotion?.percentage || 0)),
                   )}
                 </div>
                 <div className="text-xs text-gray-500">

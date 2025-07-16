@@ -1,5 +1,10 @@
 import { useMultipleUploading } from '@/components/MultipleUploading/useMultipleUploading';
-import { RoomBedType, ROUTES, SUCCESS_MESSAGES } from '@/constants';
+import {
+  ERROR_MESSAGES,
+  RoomBedType,
+  ROUTES,
+  SUCCESS_MESSAGES,
+} from '@/constants';
 import { useAppContext } from '@/context/AppProvider';
 import { handleErrorApi } from '@/lib/helper';
 import { showToast } from '@/lib/toast';
@@ -127,7 +132,7 @@ export const usePartnerCreateRoomTypesPage = () => {
       if (roomBeds.length === 0) {
         showToast({
           type: 'error',
-          message: 'Please select at least one bedroom',
+          message: ERROR_MESSAGES.SELECT_ROOM_TYPE,
         });
         return;
       }
@@ -194,6 +199,7 @@ export const usePartnerCreateRoomTypesPage = () => {
     onCancelAddRoomBed,
     onAddRoomBed,
   };
+
   return {
     form,
     uploader,

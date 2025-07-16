@@ -25,7 +25,7 @@ const HotelPage = () => {
               <HotelItemSkeleton key={index} />
             ))
           ) : hotels?.length > 0 ? (
-            <div className="">
+            <div className="pb-10 space-y-10">
               <div className="space-y-4">
                 {hotels.map((hotel) => (
                   <div key={hotel.id}>

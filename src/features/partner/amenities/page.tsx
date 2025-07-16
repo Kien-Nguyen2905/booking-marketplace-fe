@@ -1,6 +1,5 @@
 'use client';
 import React from 'react';
-
 import { usePartnerAmenitiesPage } from '@/features/partner/amenities/hooks';
 import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components';
@@ -8,6 +7,7 @@ import {
   ComboboxAmenity,
   PartnerAmenitiesTable,
 } from '@/features/partner/amenities/components';
+import { AMENITY_CATEGORY_FILTER } from '@/constants';
 
 const PartnerAmenitiesPage = () => {
   const {
@@ -23,7 +23,6 @@ const PartnerAmenitiesPage = () => {
     setSelectedType,
     filteredAvailableAmenities,
     isLoading,
-    AMENITY_CATEGORY_FILTER,
   } = usePartnerAmenitiesPage();
   if (isLoading) return <LoadingButton />;
   return (

@@ -44,7 +44,6 @@ export const useProfileInfo = () => {
         });
       }
     } catch (error) {
-      console.log(error);
       handleErrorApi({ error, setError: form.setError });
     }
   };

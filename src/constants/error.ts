@@ -15,6 +15,8 @@ export const ERROR_MESSAGES = {
   POINT_NOT_ENOUGH: 'Point not enough',
   POLICY_NOT_ALLOW_BOOKING: 'Policy not allow booking more than 5 rooms',
   BANK_INFO: 'Please update profile bank information',
+  USER_BANK_INFO_INCOMPLETE: 'User bank information is not complete',
+  SELECT_ROOM_TYPE: 'Please select at least one bedroom',
 };
 
 export const ERROR_AUTH_MESSAGES = {
@@ -32,8 +34,7 @@ export const ERROR_AUTH_MESSAGES = {
     required: 'Full name is required',
     minLength: 'Full name must be at least 2 characters long',
     maxLength: 'Full name must not exceed 255 characters',
-    invalidCharacters:
-      'Full name must only contain letters, without numbers or special characters.',
+    invalidCharacters: 'Full name must only contain letters',
   },
   confirmPassword: {
     required: 'Confirm password is required',
@@ -64,6 +65,7 @@ export const ERROR_AUTH_MESSAGES = {
     required: 'Phone number is required',
     minLength: 'Phone number must be at least 9 characters long',
     maxLength: 'Phone number must not exceed 20 characters',
+    invalidCharacters: 'Phone number must only contain numbers',
   },
   accountNumber: {
     required: 'Account number is required',
@@ -76,6 +78,7 @@ export const ERROR_AUTH_MESSAGES = {
   bankName: {
     required: 'Bank name is required',
     maxLength: 'Bank name must not exceed 255 characters',
+    invalidCharacters: 'Bank name must only contain letters',
   },
 };
 
@@ -108,8 +111,7 @@ export const ERROR_PARTNER_MESSAGES = {
     maxLength: 'Company name must not exceed 255 characters',
   },
   bankName: {
-    invalidCharacters:
-      'Bank name must only contain letters, without numbers or special characters.',
+    invalidCharacters: 'Bank name must only contain letters',
   },
 };
 

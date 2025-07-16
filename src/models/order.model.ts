@@ -112,6 +112,13 @@ export const CreateOrderBodySchema = OrderSchema.omit({
     fullName: z.string().max(100),
     phoneNumber: z.string().max(20),
     email: z.string().email(),
+    version: z.object({
+      hotel: z.string(),
+      roomType: z.string(),
+      room: z.string(),
+      coupon: z.string().optional(),
+      promotion: z.string().optional(),
+    }),
   })
   .strict()
   .superRefine(({ checkinDate, checkoutDate }, ctx) => {

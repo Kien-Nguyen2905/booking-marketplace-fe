@@ -12,8 +12,9 @@ export default function useReviewHotel(
    */
   const calculateAverageRating = (): number => {
     if (reviews.length === 0) return 0;
-    const sum = reviews.reduce((acc, review) => acc + review.rating, 0);
-    return sum / reviews.length;
+    const sum =
+      reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length;
+    return Math.round(sum * 2) / 2;
   };
 
   const averageRating = calculateAverageRating();

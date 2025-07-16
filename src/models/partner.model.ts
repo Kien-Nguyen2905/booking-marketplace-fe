@@ -6,27 +6,33 @@ export const PartnerSchema = z.object({
   id: z.number().int().positive(),
   userId: z.number().int().positive(),
   fullName: z
-    .string({ required_error: ERROR_AUTH_MESSAGES.fullName.required })
-    .nonempty({ message: ERROR_AUTH_MESSAGES.fullName.required })
+    .string()
     .trim()
+    .nonempty({ message: ERROR_AUTH_MESSAGES.fullName.required })
     .max(255, { message: ERROR_AUTH_MESSAGES.fullName.maxLength })
     .regex(/^[A-Za-zÀ-ỹ\s]+$/, {
       message: ERROR_AUTH_MESSAGES.fullName.invalidCharacters,
     }),
   email: z
-    .string({ required_error: ERROR_AUTH_MESSAGES.email.required })
+    .string()
     .nonempty({ message: ERROR_AUTH_MESSAGES.email.required })
     .email({ message: ERROR_AUTH_MESSAGES.email.invalid })
     .max(255, { message: ERROR_AUTH_MESSAGES.email.maxLength }),
   phoneNumber: z
     .string()
     .nonempty({ message: ERROR_AUTH_MESSAGES.phoneNumber.required })
+    .regex(/^[0-9]+$/, {
+      message: ERROR_AUTH_MESSAGES.phoneNumber.invalidCharacters,
+    })
     .min(9, { message: ERROR_AUTH_MESSAGES.phoneNumber.minLength })
     .max(20, { message: ERROR_AUTH_MESSAGES.phoneNumber.maxLength })
     .nullable(),
   idCard: z
     .string()
     .nonempty({ message: ERROR_PARTNER_MESSAGES.idCard.required })
+    .regex(/^[0-9]+$/, {
+      message: ERROR_PARTNER_MESSAGES.idCard.invalid,
+    })
     .max(50, { message: ERROR_PARTNER_MESSAGES.idCard.maxLength }),
   birthday: z.coerce.date(),
   gender: z

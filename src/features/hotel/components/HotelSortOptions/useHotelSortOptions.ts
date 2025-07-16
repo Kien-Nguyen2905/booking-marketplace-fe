@@ -1,4 +1,5 @@
-import { SORT_OPTIONS_HOTEL } from '@/constants';
+import { LIMIT_HOTEL, SORT_OPTIONS_HOTEL } from '@/constants';
+import { setParamsDefault } from '@/lib/utils';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -24,8 +25,17 @@ export const useHotelSortOptions = () => {
 
     params.set('orderBy', selectedOption.orderBy);
     params.set('order', selectedOption.order);
+    const newQueryString = setParamsDefault(params, LIMIT_HOTEL);
 
-    router.push(`${pathname}?${params.toString()}`);
+    router.push(`${pathname}?${newQueryString}`);
+  };
+
+  const onResetSort = () => {
+    params.delete('orderBy');
+    params.delete('order');
+    const newQueryString = setParamsDefault(params, LIMIT_HOTEL);
+    router.push(`${pathname}?${newQueryString}`);
+    setSelectedSort('');
   };
 
   useEffect(() => {
@@ -42,5 +52,6 @@ export const useHotelSortOptions = () => {
     selectedSort,
     onSortChange,
     sortOptions: SORT_OPTIONS_HOTEL,
+    onResetSort,
   };
 };

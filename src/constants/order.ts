@@ -67,3 +67,5 @@ export const PREFIX_CONTENT_ORDER = {
   PAY: 'BKP',
   REFUND: 'BKR',
 };
+
+export const MINIMUM_AMOUNT = 2000;

@@ -30,7 +30,7 @@ const PartnerRoomTypesPage = () => {
         href={ROUTES.PARTNER.ROOM_TYPES_CREATE}
         className="flex justify-end"
       >
-        <Button>Add Room Type</Button>
+        <Button>Add</Button>
       </Link>
       <div className="border rounded-lg h-max p-4">
         <Table>
@@ -66,12 +66,14 @@ const PartnerRoomTypesPage = () => {
                 <TableRow key={roomType.id}>
                   <TableCell>
                     {roomType.images?.length > 0 && (
-                      <Image
-                        src={roomType.images[0]}
-                        alt={roomType.type}
-                        width={50}
-                        height={50}
-                      />
+                      <div className="overflow-hidden w-[50px] h-[50px] flex items-center justify-center">
+                        <Image
+                          src={roomType.images[0]}
+                          alt={roomType.type}
+                          width={50}
+                          height={50}
+                        />
+                      </div>
                     )}
                   </TableCell>
                   <TableCell>{roomType.type}</TableCell>
@@ -94,7 +96,7 @@ const PartnerRoomTypesPage = () => {
                         >
                           <DropdownMenuItem className="cursor-pointer">
                             <Eye className="mr-2 h-4 w-4" />
-                            <span>View</span>
+                            <span>View detail</span>
                           </DropdownMenuItem>
                         </Link>
                       </DropdownMenuContent>

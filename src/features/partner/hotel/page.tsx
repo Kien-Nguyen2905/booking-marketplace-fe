@@ -28,16 +28,16 @@ const PartnerHotelPage = () => {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
-        <p>Partner ID: #{hotel?.partnerId}</p>
+        <p>Hotel ID: #{hotel?.id}</p>
         <span
           className={`text-xs font-bold ${
             hotel?.status === HOTEL_STATUS.ACTIVE
-              ? 'text-green-800'
+              ? 'text-green-600'
               : hotel?.status === HOTEL_STATUS.PENDING
-              ? 'text-yellow-800'
+              ? 'text-yellow-600'
               : hotel?.status === HOTEL_STATUS.INACTIVE
-              ? 'text-red-800'
-              : 'text-gray-800'
+              ? 'text-red-600'
+              : 'text-gray-600'
           }`}
         >
           {hotel?.status}
@@ -45,9 +45,7 @@ const PartnerHotelPage = () => {
       </div>
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(handleUpdateHotel, (errors) =>
-            console.log('Form validation errors:', errors),
-          )}
+          onSubmit={form.handleSubmit(handleUpdateHotel)}
           className="space-y-4 h-max"
         >
           <div className="h-max">
@@ -134,15 +132,17 @@ const PartnerHotelPage = () => {
               )}
             />
           </div>
-          <div className="flex justify-end">
-            <Button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-[120px] h-10 relative"
-            >
-              {isSubmitting ? <LoadingButton /> : 'Save'}
-            </Button>
-          </div>
+          {hotel?.status === HOTEL_STATUS.ACTIVE && (
+            <div className="flex justify-end">
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-[120px] h-10 relative"
+              >
+                {isSubmitting ? <LoadingButton /> : 'Save'}
+              </Button>
+            </div>
+          )}
         </form>
       </Form>
     </div>

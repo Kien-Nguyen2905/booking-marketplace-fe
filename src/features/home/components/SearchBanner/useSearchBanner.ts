@@ -7,8 +7,10 @@ import { PEOPLE_SELECTOR_OPTIONS, DEFAULT_PEOPLE_COUNT } from '@/constants';
 import queryString from 'query-string';
 import { formattedDateDisplay, formattedPeopleDisplay } from '@/lib/utils';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { LIMIT, ROUTES } from '@/constants';
+import { LIMIT_HOTEL, ROUTES } from '@/constants';
 import { useGetProvincesQuery } from '@/queries';
+import { LocationType } from '@/components/LocationSelector/type';
+import { showToast } from '@/lib/toast';
 
 export const useSearchBanner = () => {
   const { data: provincesData } = useGetProvincesQuery();
@@ -20,9 +22,7 @@ export const useSearchBanner = () => {
     })) || [];
   const searchParams = useSearchParams();
   const pathname = usePathname();
-
   const query = queryString.parse(searchParams.toString());
-
   const router = useRouter();
   // Refs for positioning dropdowns
   const locationContainerRef = useRef<HTMLDivElement>(null);
@@ -31,7 +31,9 @@ export const useSearchBanner = () => {
 
   const [activeSelector, setActiveSelector] = useState<string | null>(null);
 
-  const [selectedLocation, setSelectedLocation] = useState<any | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<LocationType | null>(
+    null,
+  );
   const [selectedDateRange, setSelectedDateRange] = useState<
     DateRange | undefined
   >(undefined);
@@ -60,7 +62,7 @@ export const useSearchBanner = () => {
     setActiveSelector(activeSelector === 'people' ? null : 'people');
   };
 
-  const handleLocationChange = (location: any) => {
+  const handleLocationChange = (location: LocationType) => {
     setSelectedLocation(location);
     setActiveSelector(null);
   };
@@ -106,7 +108,16 @@ export const useSearchBanner = () => {
     if (selectedDateRange?.to) {
       query.end = format(selectedDateRange.to, 'dd-MM-yyyy');
     }
-
+    if (
+      selectedDateRange?.from?.getTime() === selectedDateRange?.to?.getTime()
+    ) {
+      showToast({
+        type: 'warning',
+        message: 'Date invalid',
+      });
+      setIsLoading(false);
+      return;
+    }
     // Extract counts from selectedPeople
     const adults = selectedPeople.find((p) => p.id === 'adults')?.count || 0;
     const children =
@@ -117,7 +128,11 @@ export const useSearchBanner = () => {
     if (children) query.child = children;
     if (rooms) query.available = rooms;
 
-    const queryStr = queryString.stringify({ ...query, page: 1, limit: LIMIT });
+    const queryStr = queryString.stringify({
+      ...query,
+      page: 1,
+      limit: LIMIT_HOTEL,
+    });
 
     // Navigate to hotel page with search parameters
     if (pathname === ROUTES.HOTEL) {
@@ -175,15 +190,24 @@ export const useSearchBanner = () => {
       // Set location if available
       if (query.province && provinces.length > 0) {
         setSelectedLocation({
-          code: query.province,
-          name: provinces.find(
-            (province: any) => province.code.toString() === query.province,
-          )?.name,
+          code: +query.province,
+          name:
+            provinces?.find(
+              (province: any) => province.code.toString() === query.province,
+            )?.name || '',
+          id:
+            provinces?.find(
+              (province: any) => province.code.toString() === query.province,
+            )?.code || 0,
         });
       }
 
       // Parse dates using date-fns parse function
       if (query.start || query.end) {
+        if (query.start === query.end) {
+          router.push(ROUTES.HOME);
+          return;
+        }
         let from: Date | undefined = undefined;
         let to: Date | undefined = undefined;
 
@@ -259,7 +283,6 @@ export const useSearchBanner = () => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [activeSelector, closeSelectors]);
-
   return {
     activeSelector,
     selectedLocation,

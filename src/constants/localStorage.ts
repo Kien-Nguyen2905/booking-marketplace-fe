@@ -8,4 +8,5 @@ export const LOCAL_STORAGE = {
   BOOKING: 'booking',
   PAYMENT_TIMER: 'paymentTimer',
   CHAT_HISTORY: 'chatHistory',
+  VERSION_HOTEL: 'versionHotel',
 };

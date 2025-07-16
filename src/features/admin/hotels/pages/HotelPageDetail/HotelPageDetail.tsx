@@ -58,12 +58,12 @@ const HotelPageDetail = () => {
             <span
               className={`text-xs font-bold ${
                 hotel?.status === HOTEL_STATUS.ACTIVE
-                  ? 'text-green-800'
+                  ? 'text-green-600'
                   : hotel?.status === HOTEL_STATUS.PENDING
-                  ? 'text-yellow-800'
+                  ? 'text-yellow-600'
                   : hotel?.status === HOTEL_STATUS.INACTIVE
-                  ? 'text-red-800'
-                  : 'text-gray-800'
+                  ? 'text-red-600'
+                  : 'text-gray-600'
               }`}
             >
               {hotel?.status}
@@ -180,7 +180,7 @@ const HotelPageDetail = () => {
           {amenityPublic && amenityPublic?.length > 0 && (
             <div className="bg-white p-4 rounded-lg border border-gray-200">
               <h3 className="text-lg font-semibold text-[var(--blue-dark)] mb-4 flex items-center">
-                <Info className="mr-2 h-4 w-4" /> Public Areas
+                <Info className="mr-2 h-4 w-4" /> Public
               </h3>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {amenityPublic.map((amenity, index) => (
@@ -270,7 +270,7 @@ const HotelPageDetail = () => {
                             </div>
                             {(item?.rangeLimitDate || 0) > 0 && (
                               <span className="text-xs text-gray-500 mt-1">
-                                Limit range booking: {item.rangeLimitDate} days
+                                Limit booking: {item.rangeLimitDate} nights
                               </span>
                             )}
                             {item.notePolicy && (

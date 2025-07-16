@@ -76,7 +76,7 @@ const RoomCarousel: FC<TRoomCarouselProps> = ({
           onClick={() => handleOpenRoomDetails(room)}
         >
           <Info size={16} className="mr-2" />
-          View Details
+          View detail
         </Button>
       </div>
     </div>

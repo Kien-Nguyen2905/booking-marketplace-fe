@@ -18,7 +18,13 @@ import {
 } from '@/models/room-type.model';
 import { useEffect, useState } from 'react';
 import { GetAmenityResType } from '@/models/amenity.model';
-import { RoomBedType, ROUTES, SUCCESS_MESSAGES } from '@/constants';
+import {
+  AMENITY_CATEGORY,
+  ERROR_MESSAGES,
+  RoomBedType,
+  ROUTES,
+  SUCCESS_MESSAGES,
+} from '@/constants';
 import { handleErrorApi } from '@/lib/helper';
 import { showToast } from '@/lib/toast';
 import { useRouter } from 'next/navigation';
@@ -43,7 +49,9 @@ export const usePartnerRoomTypeDetailPage = () => {
   const { data: amenitiesData } = useGetAmenitiesQuery();
 
   const allAmenities =
-    amenitiesData?.data.data.filter((item) => item.category === 'ROOM') || [];
+    amenitiesData?.data.data.filter(
+      (item) => item.category === AMENITY_CATEGORY.ROOM,
+    ) || [];
 
   const [amenities, setAmenities] = useState<GetAmenityResType[]>(
     roomType?.amenities || [],
@@ -149,7 +157,7 @@ export const usePartnerRoomTypeDetailPage = () => {
       if (roomBeds.length === 0) {
         showToast({
           type: 'error',
-          message: 'Please select at least one bedroom',
+          message: ERROR_MESSAGES.SELECT_ROOM_TYPE,
         });
         return;
       }
@@ -228,7 +236,7 @@ export const usePartnerRoomTypeDetailPage = () => {
         router.push(ROUTES.PARTNER.ROOM_TYPES);
       }
     } catch (error) {
-      handleErrorApi({ error, setError: form.setError });
+      handleErrorApi({ error });
     }
   };
 

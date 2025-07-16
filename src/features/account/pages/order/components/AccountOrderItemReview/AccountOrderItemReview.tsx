@@ -28,9 +28,7 @@ const AccountOrderItemReview: FC<TAccountOrderItemReviewProps> = ({
         </DialogHeader>
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(handleCreateReview, (error) => {
-              console.log(error);
-            })}
+            onSubmit={form.handleSubmit(handleCreateReview)}
             className="space-y-4"
           >
             <RHFInput

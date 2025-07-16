@@ -58,6 +58,7 @@ export const usePartnerHotelPage = () => {
 
   const handleUpdateHotel = async (values: UpdateHotelBodyType) => {
     setIsSubmitting(true);
+    if (hotel?.status === HOTEL_STATUS.INACTIVE) return;
     try {
       const imageUrls = await uploader.uploadAllImages();
       if (imageUrls) {

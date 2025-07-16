@@ -62,14 +62,16 @@ export const ActionsCell = ({ row }: { row: any }) => {
           <MoreHorizontal className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
-        <Link href={ROUTES.ADMIN.HOTELS + `/${hotel.id}`}>
-          <DropdownMenuItem className="cursor-pointer">
-            <Eye className="mr-2 h-4 w-4" />
-            <span>View detail</span>
-          </DropdownMenuItem>
-        </Link>
-      </DropdownMenuContent>
+      {hotel.status !== HOTEL_STATUS.PENDING && (
+        <DropdownMenuContent align="end" className="w-56">
+          <Link href={ROUTES.ADMIN.HOTELS + `/${hotel.id}`}>
+            <DropdownMenuItem className="cursor-pointer">
+              <Eye className="mr-2 h-4 w-4" />
+              <span>View detail</span>
+            </DropdownMenuItem>
+          </Link>
+        </DropdownMenuContent>
+      )}
     </DropdownMenu>
   );
 };
@@ -105,10 +107,10 @@ export const hotelColumns: ColumnDef<any>[] = [
         <span
           className={`flex justify-center px-2 py-1 rounded-full text-xs font-medium ${
             Number(row.getValue('reputationScore')) > 100
-              ? 'bg-green-100 text-green-800'
+              ? 'bg-green-100 text-green-600'
               : Number(row.getValue('reputationScore')) > 50
-              ? 'bg-yellow-100 text-yellow-800'
-              : 'bg-red-100 text-red-800'
+              ? 'bg-yellow-100 text-yellow-600'
+              : 'bg-red-100 text-red-600'
           }`}
         >
           {row.getValue('reputationScore')}
@@ -125,12 +127,12 @@ export const hotelColumns: ColumnDef<any>[] = [
           <span
             className={`px-2 py-1 rounded-full text-xs font-medium ${
               row.getValue('status') === HOTEL_STATUS.ACTIVE
-                ? 'bg-green-100 text-green-800'
+                ? 'bg-green-100 text-green-600'
                 : row.getValue('status') === HOTEL_STATUS.PENDING
-                ? 'bg-yellow-100 text-yellow-800'
+                ? 'bg-yellow-100 text-yellow-600'
                 : row.getValue('status') === HOTEL_STATUS.INACTIVE
-                ? 'bg-red-100 text-red-800'
-                : 'bg-gray-100 text-gray-800'
+                ? 'bg-red-100 text-red-600'
+                : 'bg-gray-100 text-gray-600'
             }`}
           >
             {row.getValue('status')}

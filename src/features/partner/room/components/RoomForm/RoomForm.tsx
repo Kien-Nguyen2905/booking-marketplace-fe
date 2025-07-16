@@ -35,18 +35,18 @@ const RoomForm = ({
   } = useRoomForm(room, selectedRoomTypeId, onOpenChange);
   // Create warning message for dialog
   const createWarningMessage = () => {
-    if (!exceedingOrders || exceedingOrders.length === 0) return '';
+    if (!exceedingOrders || exceedingOrders.length === 0) return null;
 
     return (
       <div className="text-sm">
-        <p className="font-medium mb-2">
+        <div className="font-medium mb-2">
           Warning: There are orders containing more room quantity than the new
           room quantity{' '}
           <strong className="text-black font-bold">
             ({form.watch('quantity')} rooms)
           </strong>
           . Please note when guests check in to avoid mistakes.
-        </p>
+        </div>
         <div className="mt-2 max-h-[200px] overflow-y-auto">
           {exceedingOrders.map((order: any) => (
             <div
@@ -143,7 +143,7 @@ const RoomForm = ({
         isLoading={isSubmitting}
         handleConfirm={handleConfirmUpdate}
         title="Warning: Room quantity is not enough"
-        description={createWarningMessage()}
+        descriptionComponent={createWarningMessage()}
         confirmText="Confirm"
         variant="default"
       />

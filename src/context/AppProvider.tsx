@@ -7,7 +7,6 @@ import {
   getEmailLocalStorage,
   getPartnerLocalStorage,
   getRoleLocalStorage,
-  removeEmailLocalStorage,
   removePartnerLocalStorage,
 } from '@/lib/utils';
 import {
@@ -139,10 +138,10 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
           setIsPendingPartner(false);
           removePartnerLocalStorage();
         }
-        if (role !== data.data.data.role.name) {
-          handleLogout();
-          removeEmailLocalStorage();
-        }
+        // if (role !== data.data.data.role.name) {
+        //   handleLogout();
+        //   removeEmailLocalStorage();
+        // }
       }
       setSocket(generateSocketInstance());
     }

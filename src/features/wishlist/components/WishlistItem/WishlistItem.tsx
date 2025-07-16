@@ -78,7 +78,7 @@ const WishlistItem: FC<TWishlistItemProps> = ({
               variant="outline"
               className="w-full border-blue-primary text-blue-primary hover:bg-blue-light hover:text-blue-dark"
             >
-              View Details
+              View detail
             </Button>
           </Link>
         </CardFooter>

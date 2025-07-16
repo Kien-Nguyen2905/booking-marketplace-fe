@@ -5,11 +5,13 @@ import {
   PAYMENT_TYPE,
   POLICY_TYPE,
   PERCENTAGE,
+  MINIMUM_AMOUNT,
 } from '@/constants';
 import {
   calculateTotalPromotionDiscount,
   clearBooking,
   getBooking,
+  getVersionHotelLocalStorage,
 } from '@/lib/utils';
 import {
   useGetAvailableRoomsByRoomIdQuery,
@@ -58,6 +60,8 @@ export const useOrderPage = () => {
     (roomType) => roomType.id === booking?.roomTypeId,
   );
   const room = roomType?.room.find((room) => room.id === booking?.roomId);
+
+  const [versionHotel, setVersionHotel] = useState<any>(null);
 
   const queryStringPromotion =
     booking?.startDate && booking?.endDate
@@ -147,8 +151,7 @@ export const useOrderPage = () => {
       nights,
     ) || 0;
 
-  const subtotalAfterPromotionAmount =
-    baseAmount - totalPromotionDiscount + serviceFeeAmount + vatAmount;
+  const subtotalAfterPromotionAmount = subtotalAmount - totalPromotionDiscount;
 
   const platformBaseProfitAmount =
     subtotalAfterPromotionAmount * PERCENTAGE.COMMISSION;
@@ -170,9 +173,9 @@ export const useOrderPage = () => {
   );
 
   const calculateTotalAmount =
-    subtotalAmount -
-    (couponDiscountAmount + pointDiscountAmount + totalPromotionDiscount);
-  const totalAmount = calculateTotalAmount < 0 ? 0 : calculateTotalAmount;
+    subtotalAfterPromotionAmount - (couponDiscountAmount + pointDiscountAmount);
+  const totalAmount =
+    calculateTotalAmount < MINIMUM_AMOUNT ? 0 : calculateTotalAmount;
 
   const handleApplyCoupon = async (values: { code: string }) => {
     try {
@@ -211,7 +214,7 @@ export const useOrderPage = () => {
   const handleCreateOrder = async (values: CreateCustomerBodyType) => {
     if (!booking || !profile || !room) return;
     setIsCreatingOrder(true);
-    if (totalAmount !== platformProfit + partnerProfit) {
+    if (totalAmount - (platformProfit + partnerProfit) > 20) {
       showToast({
         type: 'error',
         message: ERROR_MESSAGES.SOMETHING_WRONG,
@@ -246,6 +249,11 @@ export const useOrderPage = () => {
           room.policy === POLICY_TYPE.PAY_AT_HOTEL
             ? PAYMENT_TYPE.PAY_AT_HOTEL
             : PAYMENT_TYPE.BANKING,
+        version: {
+          ...versionHotel,
+          coupon: coupon?.updatedAt,
+          promotion: promotion?.updatedAt,
+        },
       };
       const { data } = await createOrder(order);
       if (data.data.id) {
@@ -265,6 +273,7 @@ export const useOrderPage = () => {
       }
     } catch (error) {
       handleErrorApi({ error, setError: form.setError });
+      setIsCreatingOrder(false);
     }
   };
 
@@ -277,8 +286,11 @@ export const useOrderPage = () => {
         return;
       }
       const booking = getBooking(code);
-      if (booking) {
+      const version = getVersionHotelLocalStorage(code);
+
+      if (booking && version) {
         setBooking(booking);
+        setVersionHotel(version);
       } else {
         router.push(ROUTES.HOME);
       }
@@ -344,6 +356,26 @@ export const useOrderPage = () => {
   const maximumCheckInTime = checkIn
     ? set(addDays(new Date(checkIn), 1), { hours: 12, minutes: 0, seconds: 0 })
     : null;
+
+  // const simulateTwoOrders = async (values: CreateCustomerBodyType) => {
+  //   try {
+  //     // Gọi handleCreateOrder hai lần với cùng values
+  //     const results = await Promise.all([
+  //       handleCreateOrder(values), // Đơn hàng 1
+  //       handleCreateOrder(values), // Đơn hàng 2
+  //     ]);
+  //     showToast({
+  //       type: 'success',
+  //       message: 'Both orders processed. Check results for details.',
+  //     });
+  //   } catch (error) {
+  //     showToast({
+  //       type: 'error',
+  //       message: 'Simultaneous order failed',
+  //     });
+  //     return null;
+  //   }
+  // };
 
   return {
     booking,

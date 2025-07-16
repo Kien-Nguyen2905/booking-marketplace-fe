@@ -94,11 +94,7 @@ const PartnerRoomTypeDetailPage = () => {
       <div className="pb-20">
         <div className="pb-10">
           <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(handleUpdateRoomType, (error) => {
-                console.log(error);
-              })}
-            >
+            <form onSubmit={form.handleSubmit(handleUpdateRoomType)}>
               <div className="space-y-4">
                 <RHFInput
                   name="type"
@@ -148,10 +144,10 @@ const PartnerRoomTypeDetailPage = () => {
                 </div>
                 <RHFInput
                   form={form}
-                  label="Hotel Description"
+                  label="Room Type Description"
                   name="description"
                   required
-                  placeholder="Enter your hotel description"
+                  placeholder="Enter your room type description"
                   renderProp={(props: any, field: any) => (
                     <div className="grid gap-1">
                       <FormLabel

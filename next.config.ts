@@ -39,6 +39,11 @@ const nextConfig: NextConfig = {
         hostname: 'qr.sepay.vn',
         pathname: '**',
       },
+      {
+        protocol: 'https',
+        hostname: 'ik.imagekit.io',
+        pathname: '**',
+      },
     ],
   },
 };

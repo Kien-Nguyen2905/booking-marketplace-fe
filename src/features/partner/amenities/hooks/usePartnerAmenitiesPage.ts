@@ -10,11 +10,7 @@ import { GetAmenityResType } from '@/models/amenity.model';
 import { handleErrorApi } from '@/lib/helper';
 import { showToast } from '@/lib/toast';
 import { SUCCESS_MESSAGES } from '@/constants';
-const AMENITY_CATEGORY_FILTER = [
-  { value: 'ALL', label: 'All' },
-  { value: 'PUBLIC', label: 'Public' },
-  { value: 'SERVICE', label: 'Service' },
-];
+
 export const usePartnerAmenitiesPage = () => {
   const { partnerProfile } = useAppContext();
 
@@ -127,6 +123,5 @@ export const usePartnerAmenitiesPage = () => {
     setSelectedType,
     filteredAvailableAmenities,
     isLoading,
-    AMENITY_CATEGORY_FILTER,
   };
 };

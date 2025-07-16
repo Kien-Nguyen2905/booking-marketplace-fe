@@ -20,13 +20,18 @@ const ConfirmDialog: FC<TConfirmDialogProps> = ({
   description,
   confirmText,
   variant = 'destructive',
+  descriptionComponent,
 }) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
+          {!descriptionComponent ? (
+            <DialogDescription>{description}</DialogDescription>
+          ) : (
+            descriptionComponent
+          )}
         </DialogHeader>
         <DialogFooter className="gap-2 sm:justify-end">
           <Button

@@ -25,6 +25,7 @@ const OrderView: FC<TOrderViewProps> = ({
 }) => {
   const { order, handleCreateRefund, isPending } = useOrderView(
     selectedOrder?.id,
+    onOpenChange,
   );
 
   if (!selectedOrder) return null;

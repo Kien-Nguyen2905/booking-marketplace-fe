@@ -16,7 +16,6 @@ const DestinationShowcase = () => {
     paginationRef,
     nextBtnRef,
     prevBtnRef,
-    isBeginning,
     setIsBeginning,
     setSwiper,
   } = useDestinationShowcase();
@@ -51,8 +50,8 @@ const DestinationShowcase = () => {
         <Swiper
           modules={[Navigation, Pagination]}
           pagination={{
-            el: paginationRef.current,
             clickable: true,
+            el: paginationRef.current,
           }}
           slidesPerView={1.2}
           spaceBetween={16}
@@ -101,6 +100,7 @@ const DestinationShowcase = () => {
                 <h3 className="font-medium text-center">{destination?.name}</h3>
                 <p className="text-gray-500 text-sm text-center">
                   {destination?.accommodations} accommodations
+                  {/* {(Math.random() * 1000).toFixed(0)} accommodations */}
                 </p>
               </Link>
             </SwiperSlide>
@@ -115,16 +115,14 @@ const DestinationShowcase = () => {
             transition={{ duration: 0.5, delay: 0.6 }}
           ></motion.div>
 
-          {!isBeginning && (
-            <Button
-              ref={prevBtnRef}
-              variant="outline"
-              size="icon"
-              className="absolute left-0 top-[40%] -translate-y-1/2 rounded-full h-10 w-10 bg-white/80 backdrop-blur-sm shadow-md z-10 border-gray-200"
-            >
-              <ChevronLeft className="h-5 w-5 text-[var(--blue-primary)]" />
-            </Button>
-          )}
+          <Button
+            ref={prevBtnRef}
+            variant="outline"
+            size="icon"
+            className="absolute left-0 top-[40%] -translate-y-1/2 rounded-full h-10 w-10 bg-white/80 backdrop-blur-sm shadow-md z-10 border-gray-200"
+          >
+            <ChevronLeft className="h-5 w-5 text-[var(--blue-primary)]" />
+          </Button>
 
           <Button
             ref={nextBtnRef}

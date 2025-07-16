@@ -50,6 +50,15 @@ export const useUpdateRoomMutation = () => {
         queryKey: ['room-types'],
       });
     },
+    retry: (failureCount, error: any) => {
+      // Nếu là lỗi mạng (không có response) => retry
+      if (!error.response) return true;
+
+      const status = error.response.status;
+
+      // Retry nếu là lỗi 409
+      return [409].includes(status);
+    },
   });
 };
 

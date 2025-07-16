@@ -20,8 +20,8 @@ const TwoFactorAuthPage = () => {
 
   return (
     <OtpCard
-      title="Verify OTP"
-      subtitle="Enter the 6-digit code from your email"
+      title="Verify 2FA"
+      subtitle="Enter the 6-digit code from 2FA app"
       otpValue={otpValue}
       handleOtpChange={handleOtpChange}
       error={error}

@@ -34,20 +34,41 @@ const StartRating: FC<TStartRatingProps> = ({
 
   return (
     <div className="flex gap-[2px]">
-      {[...Array(maxRating)].map((_, index) => (
-        <Star
-          key={index}
-          size={size}
-          className={`${
-            index < Math.floor(currentRating)
-              ? 'fill-[#FFD700] text-[#FFD700]'
-              : 'fill-none text-gray-300'
-          } ${interactive ? 'cursor-pointer transition-colors' : ''}`}
-          onClick={interactive ? () => handleClick(index) : undefined}
-          onMouseEnter={interactive ? () => handleMouseEnter(index) : undefined}
-          onMouseLeave={interactive ? handleMouseLeave : undefined}
-        />
-      ))}
+      {[...Array(maxRating)].map((_, index) => {
+        // Check if this star should be fully filled
+        const isFullStar = index < Math.floor(currentRating);
+        // Check if this star should be half-filled
+        const isHalfStar =
+          !isFullStar &&
+          index < Math.ceil(currentRating) &&
+          currentRating % 1 !== 0;
+
+        return (
+          <div key={index} className="relative">
+            {/* Base star (empty or full) */}
+            <Star
+              size={size}
+              className={`${
+                isFullStar
+                  ? 'fill-[#FFD700] text-[#FFD700]'
+                  : 'fill-none text-gray-300'
+              } ${interactive ? 'cursor-pointer transition-colors' : ''}`}
+              onClick={interactive ? () => handleClick(index) : undefined}
+              onMouseEnter={
+                interactive ? () => handleMouseEnter(index) : undefined
+              }
+              onMouseLeave={interactive ? handleMouseLeave : undefined}
+            />
+
+            {/* Half star overlay */}
+            {isHalfStar && (
+              <div className="absolute top-0 left-0 w-1/2 overflow-hidden pointer-events-none">
+                <Star size={size} className="fill-[#FFD700] text-[#FFD700]" />
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };

@@ -22,15 +22,20 @@ export const handleErrorApi = ({
   if (error.status === 422 && (setError || setErrorText)) {
     if (Array.isArray(error.response.data.message)) {
       error.response.data.message.forEach((item: any) => {
-        if (setError) {
+        if (setError && item.path) {
           setError(item.path, {
             type: 'server',
             message: item.message,
           });
           return;
-        }
-        if (setErrorText) {
+        } else if (setErrorText) {
           setErrorText(item.message);
+          return;
+        } else {
+          showToast({
+            type: 'error',
+            message: item.message,
+          });
           return;
         }
       });

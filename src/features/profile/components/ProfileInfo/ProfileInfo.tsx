@@ -33,7 +33,6 @@ const ProfileInfo = () => {
                 form={form}
                 label="Phone number"
                 name="phoneNumber"
-                required
                 placeholder="Enter your phone number"
                 className="w-1/2"
               />
@@ -43,7 +42,6 @@ const ProfileInfo = () => {
                 form={form}
                 name="gender"
                 label="Gender"
-                required
                 placeholder="Select gender"
                 list={GENDER_VALUE}
                 className="w-1/2"
@@ -77,7 +75,6 @@ const ProfileInfo = () => {
                 form={form}
                 name="bankAccount"
                 label="Bank Account"
-                required
                 placeholder="Select bank account"
                 list={BANK_ACCOUNT}
                 isSearch

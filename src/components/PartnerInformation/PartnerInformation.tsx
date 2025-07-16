@@ -37,7 +37,6 @@ const PartnerInformation: FC<TPartnerInformationProps> = ({ partner }) => {
             <form
               onSubmit={form.handleSubmit(
                 partner ? handleUpdatePartner : handleCreatePartner,
-                (errors) => console.log('Form validation errors:', errors),
               )}
               className="space-y-6"
             >
@@ -165,6 +164,7 @@ const PartnerInformation: FC<TPartnerInformationProps> = ({ partner }) => {
                     className="w-1/3"
                   />
                 </div>
+                <AddressSelection form={form} />
                 <RHFInput
                   form={form}
                   label="Address"
@@ -172,7 +172,6 @@ const PartnerInformation: FC<TPartnerInformationProps> = ({ partner }) => {
                   required
                   placeholder="Enter your address"
                 />
-                <AddressSelection form={form} />
               </div>
               <div className="flex justify-end pt-2">
                 <Button

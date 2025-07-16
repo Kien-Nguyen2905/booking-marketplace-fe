@@ -33,9 +33,7 @@ const PartnerHotelInformation = () => {
         <CardContent>
           <Form {...form}>
             <form
-              onSubmit={form.handleSubmit(handleCreateHotel, (errors) =>
-                console.log('Form validation errors:', errors),
-              )}
+              onSubmit={form.handleSubmit(handleCreateHotel)}
               className="space-y-6"
             >
               <div className="grid gap-6">
@@ -82,7 +80,6 @@ const PartnerHotelInformation = () => {
                   form={form}
                   label="Hotel Description"
                   name="description"
-                  required
                   placeholder="Enter your hotel description"
                   renderProp={(props: any, field: any) => (
                     <div className="grid gap-1">
@@ -91,7 +88,7 @@ const PartnerHotelInformation = () => {
                         htmlFor={props.name}
                       >
                         {props.label}
-                        <RequiredField required={props.required} />
+                        <RequiredField required={true} />
                       </FormLabel>
                       <FormControl>
                         <Textarea
@@ -105,6 +102,7 @@ const PartnerHotelInformation = () => {
                     </div>
                   )}
                 />
+                <AddressSelection required form={form} />
                 <RHFInput
                   form={form}
                   label="Address"
@@ -112,7 +110,6 @@ const PartnerHotelInformation = () => {
                   required
                   placeholder="Enter your address"
                 />
-                <AddressSelection form={form} />
                 <MultipleUploading
                   label="Hotel Images"
                   description="Upload at least 3 images"

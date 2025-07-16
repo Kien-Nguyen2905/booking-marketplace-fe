@@ -5,26 +5,23 @@ import { z } from 'zod';
 export const UserSchema = z.object({
   id: z.number().int().positive(),
   email: z
-    .string({ required_error: ERROR_AUTH_MESSAGES.email.required })
-    .email({ message: ERROR_AUTH_MESSAGES.email.invalid })
-    .max(255, { message: ERROR_AUTH_MESSAGES.email.maxLength }),
+    .string()
+    .nonempty({ message: ERROR_AUTH_MESSAGES.email.required })
+    .max(255, { message: ERROR_AUTH_MESSAGES.email.maxLength })
+    .email({ message: ERROR_AUTH_MESSAGES.email.invalid }),
   password: z
-    .string({ required_error: ERROR_AUTH_MESSAGES.password.required })
+    .string()
+    .nonempty({ message: ERROR_AUTH_MESSAGES.password.required })
     .min(6, { message: ERROR_AUTH_MESSAGES.password.minLength })
     .max(50, { message: ERROR_AUTH_MESSAGES.password.maxLength }),
   fullName: z
     .string({ required_error: ERROR_AUTH_MESSAGES.fullName.required })
     .trim()
-    .min(2, { message: ERROR_AUTH_MESSAGES.fullName.minLength })
     .max(255, { message: ERROR_AUTH_MESSAGES.fullName.maxLength })
     .regex(/^[A-Za-zÀ-ỹ\s]+$/, {
       message: ERROR_AUTH_MESSAGES.fullName.invalidCharacters,
     }),
-  phoneNumber: z
-    .string()
-    .min(9, { message: ERROR_AUTH_MESSAGES.phoneNumber.minLength })
-    .max(20, { message: ERROR_AUTH_MESSAGES.phoneNumber.maxLength })
-    .nullable(),
+  phoneNumber: z.string().optional(),
   avatar: z.string().nullable(),
   totpSecret: z.string().max(255).nullable(),
   uriSecret: z.string().max(255).nullable(),
@@ -58,10 +55,14 @@ export const RegisterBodySchema = UserSchema.pick({
 })
   .extend({
     confirmPassword: z
-      .string({ required_error: ERROR_AUTH_MESSAGES.confirmPassword.required })
+      .string()
+      .nonempty({ message: ERROR_AUTH_MESSAGES.confirmPassword.required })
       .min(6, { message: ERROR_AUTH_MESSAGES.confirmPassword.minLength })
       .max(50, { message: ERROR_AUTH_MESSAGES.confirmPassword.maxLength }),
-    code: z.string().length(6, { message: ERROR_AUTH_MESSAGES.code.length }),
+    code: z
+      .string()
+      .nonempty({ message: ERROR_AUTH_MESSAGES.code.required })
+      .length(6, { message: ERROR_AUTH_MESSAGES.code.length }),
   })
   .strict()
   .superRefine(({ confirmPassword, password }, ctx) => {
@@ -157,20 +158,22 @@ export const GetAuthorizationUrlResSchema = z.object({
 export const ForgotPasswordBodySchema = z
   .object({
     email: z
-      .string({ required_error: ERROR_AUTH_MESSAGES.email.required })
+      .string()
+      .nonempty({ message: ERROR_AUTH_MESSAGES.email.required })
       .email({ message: ERROR_AUTH_MESSAGES.email.invalid })
       .max(100, { message: ERROR_AUTH_MESSAGES.email.maxLength }),
     code: z
-      .string({ required_error: ERROR_AUTH_MESSAGES.code.required })
+      .string()
+      .nonempty({ message: ERROR_AUTH_MESSAGES.code.required })
       .length(6, { message: ERROR_AUTH_MESSAGES.code.length }),
     newPassword: z
-      .string({ required_error: ERROR_AUTH_MESSAGES.newPassword.required })
+      .string()
+      .nonempty({ message: ERROR_AUTH_MESSAGES.newPassword.required })
       .min(6, { message: ERROR_AUTH_MESSAGES.newPassword.minLength })
       .max(50, { message: ERROR_AUTH_MESSAGES.newPassword.maxLength }),
     confirmNewPassword: z
-      .string({
-        required_error: ERROR_AUTH_MESSAGES.confirmNewPassword.required,
-      })
+      .string()
+      .nonempty({ message: ERROR_AUTH_MESSAGES.confirmNewPassword.required })
       .min(6, { message: ERROR_AUTH_MESSAGES.confirmNewPassword.minLength })
       .max(50, { message: ERROR_AUTH_MESSAGES.confirmNewPassword.maxLength }),
   })

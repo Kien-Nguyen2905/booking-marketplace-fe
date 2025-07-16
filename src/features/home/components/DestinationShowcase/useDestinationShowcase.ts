@@ -30,5 +30,6 @@ export const useDestinationShowcase = () => {
     paginationRef,
     nextBtnRef,
     prevBtnRef,
+    _swiper,
   };
 };

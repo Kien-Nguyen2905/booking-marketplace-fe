@@ -42,7 +42,7 @@ const AccountOrderItem: FC<TAccountOrderItemProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2">
-            <span className="text-sm font-medium">Order #{order.id}</span>
+            <span className="text-sm font-medium"> Order #{order.id}</span>
             <StatusBadge status={order.status || ORDER_STATUS.PENDING} />
             {isPendingBanking && isActive && (
               <div className="inline-flex items-center gap-1 text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">

@@ -1,5 +1,6 @@
 'use client';
 import { ROUTES, TypeOfVerificationCode } from '@/constants';
+import { useAppContext } from '@/context/AppProvider';
 import { useTimeCountdown } from '@/hooks';
 import { handleErrorApi } from '@/lib/helper';
 import { showToast } from '@/lib/toast';
@@ -12,6 +13,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 export const useResetPasswordPage = () => {
+  const { toggleModal } = useAppContext();
   const [email, setEmail] = useState<string | null>('');
   const { mutateAsync: sendOTP, isPending: isLoadingOTP } =
     useSendOTPMutation();
@@ -57,6 +59,7 @@ export const useResetPasswordPage = () => {
           type: 'success',
           message: data.message,
         });
+        toggleModal();
         resetTimer();
         removeEmailLocalStorage();
         router.push(ROUTES.HOME);
@@ -70,6 +73,7 @@ export const useResetPasswordPage = () => {
     router.push(ROUTES.HOME);
     removeEmailLocalStorage();
     resetTimer();
+    toggleModal();
   };
 
   // Handle email initialization and redirect if needed

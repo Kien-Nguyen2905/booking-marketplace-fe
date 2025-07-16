@@ -159,12 +159,12 @@ const PartnerPageDetail = () => {
           <span
             className={`text-xs font-bold ${
               hotel?.status === HOTEL_STATUS.ACTIVE
-                ? 'text-green-800'
+                ? 'text-green-600'
                 : hotel?.status === HOTEL_STATUS.PENDING
-                ? 'text-yellow-800'
+                ? 'text-yellow-600'
                 : hotel?.status === HOTEL_STATUS.INACTIVE
-                ? 'text-red-800'
-                : 'text-gray-800'
+                ? 'text-red-600'
+                : 'text-gray-600'
             }`}
           >
             {hotel?.status}

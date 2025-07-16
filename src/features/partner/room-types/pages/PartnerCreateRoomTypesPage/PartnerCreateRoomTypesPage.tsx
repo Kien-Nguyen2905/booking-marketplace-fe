@@ -68,11 +68,7 @@ const PartnerCreateRoomTypesPage = () => {
       </div>
       <div className="pb-20">
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(handleCreateRoomType, (error) => {
-              console.log(error);
-            })}
-          >
+          <form onSubmit={form.handleSubmit(handleCreateRoomType)}>
             <div className="space-y-4">
               <RHFInput
                 name="type"

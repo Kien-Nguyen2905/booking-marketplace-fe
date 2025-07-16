@@ -29,12 +29,14 @@ export const useRoomForm = (
     useUpdateRoomMutation();
   const { mutateAsync: findOrdersExceedQuantity } =
     useFindOrdersExceedQuantityMutation();
-  
+
   // States for confirmation dialog
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
-  const [pendingValues, setPendingValues] = useState<UpdateRoomBodyType | null>(null);
+  const [pendingValues, setPendingValues] = useState<UpdateRoomBodyType | null>(
+    null,
+  );
   const [exceedingOrders, setExceedingOrders] = useState<any[]>([]);
-  
+
   const form = useForm<CreateRoomBodyType>({
     resolver: zodResolver(CreateRoomBodySchema),
     defaultValues: {
@@ -71,15 +73,16 @@ export const useRoomForm = (
         roomId: room.id,
         quantity: values.quantity,
       });
-      
+
       if (orders?.data?.length > 0) {
         // Store the values and orders for confirmation dialog
         setPendingValues(values);
         setExceedingOrders(orders.data);
         setShowConfirmDialog(true);
+
         return; // Stop execution until confirmation
       }
-      
+
       // If no orders exceed quantity, proceed with update
       await executeRoomUpdate(values);
     } catch (error) {
@@ -105,7 +108,7 @@ export const useRoomForm = (
       handleErrorApi({ error, setError: form.setError });
     }
   };
-  
+
   // Handle confirmation of update despite exceeding orders
   const handleConfirmUpdate = () => {
     if (pendingValues) {
@@ -144,7 +147,6 @@ export const useRoomForm = (
     form,
     handleSubmit,
     isSubmitting: isCreating || isUpdating,
-    // Dialog state and handlers
     showConfirmDialog,
     setShowConfirmDialog,
     exceedingOrders,

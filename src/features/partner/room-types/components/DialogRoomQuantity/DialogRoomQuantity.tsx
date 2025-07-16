@@ -74,7 +74,7 @@ const DialogRoomQuantity: FC<TDialogRoomQuantityProps> = ({
             Cancel
           </Button>
           <Button type="button" className="px-5" onClick={onAddRoomBed}>
-            Add to Bedroom List
+            Add
           </Button>
         </div>
       </DialogContent>

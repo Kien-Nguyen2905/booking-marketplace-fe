@@ -12,7 +12,6 @@ import { useCreatePartnerMutation, useUpdatePartnerMutation } from '@/queries';
 import { useSendOTPMutation } from '@/queries';
 import {
   ERROR_AUTH_MESSAGES,
-  ERROR_PARTNER_MESSAGES,
   ROUTES,
   SUCCESS_MESSAGES,
   TypeOfVerificationCode,
@@ -20,7 +19,6 @@ import {
 import { useTimeCountdown } from '@/hooks';
 import { useBecomePartnerHeader } from '@/layouts/BecomePartnerHeader/useAccommodationHeader';
 import { useEffect, useState } from 'react';
-import { isOnlyDigits } from '@/lib/utils';
 import { useAppContext } from '@/context/AppProvider';
 import { useRouter } from 'next/navigation';
 
@@ -63,13 +61,13 @@ export const usePartnerInformation = ({
 
   const handleCreatePartner = async (value: CreatePartnerBodyType) => {
     try {
-      if (value.idCard && !isOnlyDigits(value.idCard)) {
-        form.setError('idCard', {
-          type: 'server',
-          message: ERROR_PARTNER_MESSAGES.idCard.invalid,
-        });
-        return;
-      }
+      // if (value.idCard && !isOnlyDigits(value.idCard)) {
+      //   form.setError('idCard', {
+      //     type: 'server',
+      //     message: ERROR_PARTNER_MESSAGES.idCard.invalid,
+      //   });
+      //   return;
+      // }
       const { data } = await createPartner(value);
       if (data.data.id) {
         setIsLoadingNavigate(true);
@@ -86,13 +84,13 @@ export const usePartnerInformation = ({
 
   const handleUpdatePartner = async (value: UpdatePartnerBodyType) => {
     try {
-      if (value.idCard && !isOnlyDigits(value.idCard)) {
-        form.setError('idCard', {
-          type: 'server',
-          message: ERROR_PARTNER_MESSAGES.idCard.invalid,
-        });
-        return;
-      }
+      // if (value.idCard && !isOnlyDigits(value.idCard)) {
+      //   form.setError('idCard', {
+      //     type: 'server',
+      //     message: ERROR_PARTNER_MESSAGES.idCard.invalid,
+      //   });
+      //   return;
+      // }
       const { data } = await updatePartner(value);
       if (data.data.id) {
         onNavigateNextStep();

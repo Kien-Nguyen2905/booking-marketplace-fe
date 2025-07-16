@@ -97,8 +97,11 @@ export const convertBirthdayToUTC = (birthday: Date) => {
     .padStart(2, '0')}-${birthday.getDate().toString().padStart(2, '0')}`;
 };
 
-export const setParamsDefault = (params: URLSearchParams) => {
-  params.set('limit', LIMIT);
+export const setParamsDefault = (
+  params: URLSearchParams,
+  limit: string = LIMIT,
+) => {
+  params.set('limit', limit);
   params.set('page', '1');
   const newQueryString = params.toString();
   return newQueryString;
@@ -194,9 +197,10 @@ export const formattedPeopleDisplay = (
 export const getHotelUrl = ({
   hotelId,
   provinceCode,
-  startDate = new Date(),
-  endDate = addDays(new Date(), 1),
+  startDate = addDays(new Date(), 1),
+  endDate = addDays(new Date(), 2),
   adult = 1,
+  child = 0,
   available = 1,
 }: {
   hotelId?: string | number;
@@ -204,6 +208,7 @@ export const getHotelUrl = ({
   startDate?: Date;
   endDate?: Date;
   adult?: number;
+  child?: number;
   available?: number;
 }) => {
   // Base URL - either hotel listing or specific hotel
@@ -216,6 +221,7 @@ export const getHotelUrl = ({
   params.set('start', format(startDate, 'dd-MM-yyyy'));
   params.set('end', format(endDate, 'dd-MM-yyyy'));
   params.set('adult', adult.toString());
+  if (child > 0) params.set('child', child.toString());
   params.set('available', available.toString());
 
   // Add province filter if provided
@@ -478,4 +484,21 @@ export const getChatHistoryLocalStorage = () => {
 
 export const clearChatHistoryLocalStorage = () => {
   localStorage.removeItem(LOCAL_STORAGE.CHAT_HISTORY);
+};
+
+export const setVersionHotelLocalStorage = (
+  code: string,
+  stringify: string,
+) => {
+  localStorage.setItem(`${LOCAL_STORAGE.VERSION_HOTEL}_${code}`, stringify);
+};
+
+export const getVersionHotelLocalStorage = (code: string) => {
+  return JSON.parse(
+    localStorage.getItem(`${LOCAL_STORAGE.VERSION_HOTEL}_${code}`) || '{}',
+  );
+};
+
+export const clearVersionHotelLocalStorage = (code: string) => {
+  localStorage.removeItem(`${LOCAL_STORAGE.VERSION_HOTEL}_${code}`);
 };

@@ -18,15 +18,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import {
-  ButtonBack,
-  ConfirmDialog,
-  RoomCarousel,
-  RoomDetailModal,
-} from '@/components';
+import { ConfirmDialog, RoomCarousel, RoomDetailModal } from '@/components';
 import { RoomForm } from '@/features/partner/room/components';
 import { Separator } from '@/components/ui/separator';
-import { POLICY_TYPE_LIST, ROUTES } from '@/constants';
+import { POLICY_TYPE_LIST } from '@/constants';
 
 const PartnerRoomPage = () => {
   const {
@@ -51,7 +46,6 @@ const PartnerRoomPage = () => {
     return (
       <div className="flex items-center justify-between">
         <div>Please add room types first</div>
-        <ButtonBack link={ROUTES.PARTNER.ROOM_TYPES} />
       </div>
     );
   }
@@ -64,7 +58,7 @@ const PartnerRoomPage = () => {
               <div className="flex items-center justify-between">
                 <h2 className="font-bold text-xl">{room.type}</h2>
                 {room.room.length < POLICY_TYPE_LIST.length && (
-                  <Button onClick={() => onOpenForm(room.id)}>Add Room</Button>
+                  <Button onClick={() => onOpenForm(room.id)}>Add</Button>
                 )}
               </div>
 
@@ -116,7 +110,7 @@ const PartnerRoomPage = () => {
                             </div>
                             {(item?.rangeLimitDate || 0) > 0 && (
                               <span className="text-xs text-gray-500 mt-1">
-                                Limit range booking: {item.rangeLimitDate} days
+                                Limit booking: {item.rangeLimitDate} nights
                               </span>
                             )}
                             {item.notePolicy && (

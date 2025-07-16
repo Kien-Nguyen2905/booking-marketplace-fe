@@ -7,7 +7,6 @@ export const useDatePickerWithRange = (
   disablePastDates = true,
 ) => {
   const [date, setDate] = useState<DateRange | undefined>(defaultValue);
-
   useEffect(() => {
     if (defaultValue) {
       setDate(defaultValue);
@@ -16,7 +15,6 @@ export const useDatePickerWithRange = (
       setDate(undefined);
     }
   }, [defaultValue]);
-
   // Configure disabled days based on prop
   const disabledDays = disablePastDates ? { before: new Date() } : undefined;
 

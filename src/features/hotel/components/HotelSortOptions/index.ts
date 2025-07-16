@@ -1,1 +1,1 @@
-export * from './HotelSortOptions';
+export { default as HotelSortOptions } from './HotelSortOptions';

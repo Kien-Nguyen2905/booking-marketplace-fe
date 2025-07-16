@@ -8,9 +8,11 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useHotelSortOptions } from './useHotelSortOptions';
+import { Button } from '@/components/ui/button';
 
-export const HotelSortOptions = () => {
-  const { selectedSort, onSortChange, sortOptions } = useHotelSortOptions();
+const HotelSortOptions = () => {
+  const { selectedSort, onSortChange, sortOptions, onResetSort } =
+    useHotelSortOptions();
   return (
     <div className="flex items-center justify-end gap-2">
       <span className="text-sm font-medium">Sort by:</span>
@@ -28,6 +30,9 @@ export const HotelSortOptions = () => {
           </SelectGroup>
         </SelectContent>
       </Select>
+      <Button onClick={onResetSort}>Reset</Button>
     </div>
   );
 };
+
+export default HotelSortOptions;

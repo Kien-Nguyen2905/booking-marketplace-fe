@@ -61,7 +61,7 @@ export const useCustomerTable = () => {
       onResetValues();
     }
   }, [pathname, form, searchParams]);
-  console.log(allCustomerData?.data.data);
+
   return {
     isLoading,
     table,

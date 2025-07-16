@@ -14,7 +14,31 @@ export const UpdateMeBodySchema = UserSchema.pick({
   accountNumber: true,
   bankAccount: true,
   bankName: true,
-}).strict();
+})
+  .strict()
+  .superRefine((value, ctx) => {
+    if (value.phoneNumber && !/^[0-9]+$/.test(value.phoneNumber)) {
+      ctx.addIssue({
+        code: 'custom',
+        message: ERROR_AUTH_MESSAGES.phoneNumber.invalidCharacters,
+        path: ['phoneNumber'],
+      });
+    }
+    if (value.phoneNumber && value.phoneNumber.length < 9) {
+      ctx.addIssue({
+        code: 'custom',
+        message: ERROR_AUTH_MESSAGES.phoneNumber.minLength,
+        path: ['phoneNumber'],
+      });
+    }
+    if (value.phoneNumber && value.phoneNumber.length > 20) {
+      ctx.addIssue({
+        code: 'custom',
+        message: ERROR_AUTH_MESSAGES.phoneNumber.maxLength,
+        path: ['phoneNumber'],
+      });
+    }
+  });
 
 export const ChangePasswordBodySchema = UserSchema.pick({
   password: true,

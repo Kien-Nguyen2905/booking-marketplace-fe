@@ -19,9 +19,7 @@ const RecommendedAccommodations = () => {
     activeTab,
     setActiveTab,
     setIsBeginning,
-    isBeginning,
     setIsEnd,
-    isEnd,
     setSwiper,
     hotels,
     nextBtnRef,
@@ -33,7 +31,7 @@ const RecommendedAccommodations = () => {
     <div className="w-full relative pt-8 pb-10">
       <div className="container mx-auto px-4">
         <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-6">
-          The recommended popular accommodations
+          Popular accommodations
         </h2>
         <Tabs
           defaultValue={POPULAR_ACCOMMODATION_LIST[0]?.provinceCode}
@@ -97,6 +95,8 @@ const RecommendedAccommodations = () => {
                           >
                             <Link
                               href={getHotelUrl({
+                                adult: hotel.room?.[0]?.roomType?.adults,
+                                child: hotel.room?.[0]?.roomType?.child,
                                 hotelId: hotel.id || '',
                               })}
                               className="flex flex-col group rounded-lg overflow-hidden border border-gray-200 hover:shadow-md transition-shadow duration-200"
@@ -130,7 +130,7 @@ const RecommendedAccommodations = () => {
                                     rating={hotel.rating}
                                   />
                                 </div>
-                                <span className=" mt-1 text-sm text-gray-500 line-clamp-2">
+                                <span className=" mt-1 text-sm text-gray-500 line-clamp-1">
                                   {hotel.address}
                                 </span>
 
@@ -159,26 +159,22 @@ const RecommendedAccommodations = () => {
                       );
                     })
                   : null}
-                {!isBeginning && (
-                  <Button
-                    ref={prevBtnRef}
-                    variant="outline"
-                    size="icon"
-                    className="absolute left-0 top-[35%] -translate-y-1/2 rounded-full h-10 w-10 bg-white/80 backdrop-blur-sm shadow-md z-10 border-gray-200"
-                  >
-                    <ChevronLeft className="h-5 w-5 text-[var(--blue-primary)]" />
-                  </Button>
-                )}
-                {!isEnd && (
-                  <Button
-                    ref={nextBtnRef}
-                    variant="outline"
-                    size="icon"
-                    className="absolute right-0 top-[35%] -translate-y-1/2 rounded-full h-10 w-10 bg-white/80 backdrop-blur-sm shadow-md z-10 border-gray-200"
-                  >
-                    <ChevronRight className="h-5 w-5 text-[var(--blue-primary)]" />
-                  </Button>
-                )}
+                <Button
+                  ref={prevBtnRef}
+                  variant="outline"
+                  size="icon"
+                  className="absolute left-0 top-[35%] -translate-y-1/2 rounded-full h-10 w-10 bg-white/80 backdrop-blur-sm shadow-md z-10 border-gray-200"
+                >
+                  <ChevronLeft className="h-5 w-5 text-[var(--blue-primary)]" />
+                </Button>
+                <Button
+                  ref={nextBtnRef}
+                  variant="outline"
+                  size="icon"
+                  className="absolute right-0 top-[35%] -translate-y-1/2 rounded-full h-10 w-10 bg-white/80 backdrop-blur-sm shadow-md z-10 border-gray-200"
+                >
+                  <ChevronRight className="h-5 w-5 text-[var(--blue-primary)]" />
+                </Button>
               </Swiper>
               {!hotels ||
                 (hotels.length === 0 && (

@@ -67,7 +67,7 @@ const DishBarChart = ({
       <CardHeader>
         <CardTitle>Ranking Hotels</CardTitle>
         <CardDescription className="text-xs">
-          The ranking of hotels based on the number of orders confirmed
+          The ranking of hotels based on the number of orders
         </CardDescription>
       </CardHeader>
       <CardContent className="my-auto">

@@ -27,7 +27,6 @@ const PartnerProfitLineChart = ({
 }: {
   chartData: { date: string; profit: number }[];
 }) => {
-  console.log(chartData);
   return (
     <Card className="h-full">
       <CardHeader>
@@ -46,7 +45,7 @@ const PartnerProfitLineChart = ({
             margin={{
               top: 12,
               left: 12,
-              right: 12,
+              right: 20,
             }}
           >
             <CartesianGrid vertical={false} />

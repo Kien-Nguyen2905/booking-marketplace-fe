@@ -54,7 +54,7 @@ export const useChatBot = () => {
     }
   }, [messages, isChatOpen]);
 
-  const queryDialogflow = async (text: string) => {
+  const queryDialogFlow = async (text: string) => {
     if (!accessToken) return 'Not found access token';
     try {
       const response = await axios.post(
@@ -92,7 +92,7 @@ export const useChatBot = () => {
     setInput('');
     setIsLoading(true);
     try {
-      const botReply = await queryDialogflow(input);
+      const botReply = await queryDialogFlow(input);
       const botMessage = {
         text: botReply,
         sender: 'bot' as const,

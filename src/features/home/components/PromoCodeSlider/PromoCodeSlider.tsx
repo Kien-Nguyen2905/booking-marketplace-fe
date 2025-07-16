@@ -2,7 +2,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { Copy, Check, Gift, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { usePromoCodeSlider } from '@/features/home/components/PromoCodeSlider/usePromoCodeSlider';
@@ -63,11 +63,15 @@ const PromoCodeSlider = () => {
       </div>
       <div className="relative">
         <Swiper
-          modules={[Navigation, Pagination]}
+          modules={[Navigation, Pagination, Autoplay]}
           pagination={{
             clickable: true,
             el: paginationRef.current,
           }}
+          // autoplay={{
+          //   delay: 700,
+          //   pauseOnMouseEnter: true,
+          // }}
           slidesPerView={'auto'}
           spaceBetween={16}
           className="w-full"

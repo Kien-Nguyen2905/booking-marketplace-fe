@@ -81,7 +81,7 @@ export const useProfileHeader = () => {
         setShowCrop(false);
         const response = await updateProfile({
           fullName: profile?.fullName || '',
-          phoneNumber: profile?.phoneNumber || null,
+          phoneNumber: profile?.phoneNumber || '',
           address: profile?.address || null,
           gender: profile?.gender || null,
           birthday: profile?.birthday || null,

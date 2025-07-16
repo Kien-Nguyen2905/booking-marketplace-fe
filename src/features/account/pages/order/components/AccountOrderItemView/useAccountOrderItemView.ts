@@ -1,5 +1,6 @@
 import {
   ERROR_MESSAGES,
+  MINIMUM_AMOUNT,
   ORDER_STATUS,
   POLICY_TYPE,
   SUCCESS_MESSAGES,
@@ -57,7 +58,8 @@ export const useAccountOrderItemView = (id?: string | number) => {
       }
     try {
       const { data } = await updateMyOrder({
-        status,
+        status:
+          order.totalPrice < MINIMUM_AMOUNT ? ORDER_STATUS.CANCELED : status,
         reason: cancelReason,
       });
       if (data.data.id) {
@@ -73,7 +75,11 @@ export const useAccountOrderItemView = (id?: string | number) => {
 
   useEffect(() => {
     if (!order) return;
-    if (order && order.room.policy === POLICY_TYPE.FREE_CANCELLATION) {
+    if (
+      order &&
+      order.room.policy === POLICY_TYPE.FREE_CANCELLATION &&
+      order.totalPrice >= MINIMUM_AMOUNT
+    ) {
       setActionType(ORDER_STATUS.PENDING_REFUND);
     } else {
       setActionType(ORDER_STATUS.CANCELED);

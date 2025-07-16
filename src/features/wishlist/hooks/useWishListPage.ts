@@ -3,6 +3,8 @@ import { useDeleteWishlistMutation } from '@/queries';
 import { useState } from 'react';
 import { handleErrorApi } from '@/lib/helper';
 import { useAppContext } from '@/context/AppProvider';
+import { showToast } from '@/lib/toast';
+import { SUCCESS_MESSAGES } from '@/constants';
 
 export const useWishListPage = () => {
   const { profile } = useAppContext();
@@ -27,7 +29,13 @@ export const useWishListPage = () => {
   const handleDeleteWishlist = async () => {
     try {
       if (selectedWishlistId) {
-        await deleteWishlist(selectedWishlistId.toString());
+        const { data } = await deleteWishlist(selectedWishlistId.toString());
+        if (data?.data) {
+          showToast({
+            type: 'success',
+            message: SUCCESS_MESSAGES.DELETED,
+          });
+        }
       }
     } catch (error) {
       handleErrorApi({ error });
