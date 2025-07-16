@@ -246,6 +246,14 @@ const PartnerPageDetail = () => {
                 </p>
               </div>
               <div className="flex gap-1">
+                <p className="font-semibold">Latitude:</p>
+                <p>{hotel?.lat}</p>
+              </div>
+              <div className="flex gap-1">
+                <p className="font-semibold">Longitude:</p>
+                <p>{hotel?.lon}</p>
+              </div>
+              <div className="flex gap-1">
                 <p className="font-semibold">Address:</p>
                 <p>{hotel?.address}</p>
               </div>

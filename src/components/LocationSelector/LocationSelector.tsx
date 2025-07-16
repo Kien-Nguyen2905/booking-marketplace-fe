@@ -1,7 +1,7 @@
 'use client';
 import { FC } from 'react';
 import { Input } from '@/components/ui/input';
-import { MapPin, Search } from 'lucide-react';
+import { LocateFixed, MapPin, Search } from 'lucide-react';
 import { TLocationSelectorProps } from '@/components/LocationSelector/type';
 import { useLocationSelector } from '@/components/LocationSelector/useLocationSelector';
 
@@ -13,6 +13,7 @@ const LocationSelector: FC<TLocationSelectorProps> = ({ onChange }) => {
     handleSelectLocation,
     isLoading,
     searchInputRef,
+    onNearHere,
   } = useLocationSelector(onChange);
   return (
     <div className="grid gap-2">
@@ -36,20 +37,35 @@ const LocationSelector: FC<TLocationSelectorProps> = ({ onChange }) => {
               Loading...
             </div>
           ) : filteredProvinces.length > 0 ? (
-            filteredProvinces.map((province) => (
+            <>
               <div
-                key={province.id}
+                key="nearhere"
                 className="flex cursor-pointer items-start p-3 hover:bg-slate-50"
-                onClick={() => handleSelectLocation(province)}
+                onClick={onNearHere}
               >
                 <div className="mt-0.5 mr-3">
-                  <MapPin size={16} className="text-blue-500" />
+                  <LocateFixed size={16} className="text-blue-500" />
                 </div>
                 <div className="flex-1 overflow-hidden">
-                  <div className="font-medium truncate">{province.name}</div>
+                  <div className="font-medium truncate">Near me</div>
                 </div>
               </div>
-            ))
+
+              {filteredProvinces.map((province) => (
+                <div
+                  key={province.id}
+                  className="flex cursor-pointer items-start p-3 hover:bg-slate-50"
+                  onClick={() => handleSelectLocation(province)}
+                >
+                  <div className="mt-0.5 mr-3">
+                    <MapPin size={16} className="text-blue-500" />
+                  </div>
+                  <div className="flex-1 overflow-hidden">
+                    <div className="font-medium truncate">{province.name}</div>
+                  </div>
+                </div>
+              ))}
+            </>
           ) : (
             <div className="p-3 text-center text-sm text-gray-500">
               Not found

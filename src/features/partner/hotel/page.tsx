@@ -105,6 +105,28 @@ const PartnerHotelPage = () => {
             </div>
             <AddressSelection form={form} />
             <RHFInput form={form} label="Address" name="address" required />
+            <div className="">
+              <div className="flex items-start gap-4">
+                <RHFInput
+                  form={form}
+                  label="Latitude"
+                  name="lat"
+                  required
+                  placeholder="Enter your latitude"
+                  className="w-1/2"
+                  type="number"
+                />
+                <RHFInput
+                  form={form}
+                  label="Longitude"
+                  name="lon"
+                  required
+                  placeholder="Enter your longitude"
+                  className="w-1/2"
+                  type="number"
+                />
+              </div>
+            </div>
             <RHFInput
               form={form}
               label="Hotel Description"

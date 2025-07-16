@@ -143,6 +143,12 @@ export const ERROR_HOTEL_MESSAGES = {
   type: {
     required: 'Type is required',
   },
+  lat: {
+    required: 'Latitude is required',
+  },
+  lon: {
+    required: 'Longitude is required',
+  },
 };
 
 export const ERROR_ROOM_TYPE_MESSAGES = {

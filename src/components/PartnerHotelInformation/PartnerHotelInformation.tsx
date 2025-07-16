@@ -20,6 +20,7 @@ import { HOTEL_TYPE_LIST } from '@/constants';
 import React from 'react';
 import { usePartnerHotelInformation } from './usePartnerHotelInformation';
 import { Textarea } from '@/components/ui/textarea';
+import Link from 'next/link';
 
 const PartnerHotelInformation = () => {
   const { form, isLoadingPartner, handleCreateHotel, isLoading, uploader } =
@@ -110,6 +111,38 @@ const PartnerHotelInformation = () => {
                   required
                   placeholder="Enter your address"
                 />
+                <div className="">
+                  <div className="flex items-start gap-4">
+                    <RHFInput
+                      form={form}
+                      label="Latitude"
+                      name="lat"
+                      required
+                      placeholder="Enter your latitude"
+                      className="w-1/2"
+                      type="number"
+                    />
+                    <RHFInput
+                      form={form}
+                      label="Longitude"
+                      name="lon"
+                      required
+                      placeholder="Enter your longitude"
+                      className="w-1/2"
+                      type="number"
+                    />
+                  </div>
+
+                  <Link
+                    href="https://www.google.com/maps/place"
+                    target="_blank"
+                  >
+                    <Button type="button" variant="link" className="pl-0">
+                      Get the latitude and longitude of your hotel with Google
+                      Maps
+                    </Button>
+                  </Link>
+                </div>
                 <MultipleUploading
                   label="Hotel Images"
                   description="Upload at least 3 images"

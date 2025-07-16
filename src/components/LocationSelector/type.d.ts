@@ -5,4 +5,6 @@ export type LocationType = {
   id: number;
   name: string;
   code: number;
+  lat?: number;
+  lon?: number;
 };

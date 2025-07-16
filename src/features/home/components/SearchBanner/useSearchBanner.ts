@@ -100,6 +100,10 @@ export const useSearchBanner = () => {
     if (selectedLocation?.code) {
       query.province = selectedLocation.code;
     }
+    if (selectedLocation?.lat && selectedLocation?.lon) {
+      query.lat = selectedLocation.lat;
+      query.lon = selectedLocation.lon;
+    }
 
     if (selectedDateRange?.from) {
       query.start = format(selectedDateRange.from, 'dd-MM-yyyy');

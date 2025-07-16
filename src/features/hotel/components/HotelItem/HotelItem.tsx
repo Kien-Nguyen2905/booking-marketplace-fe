@@ -9,6 +9,7 @@ import {
   House,
   MapPinned,
   Tag,
+  VenusAndMars,
 } from 'lucide-react';
 import { MAP_HOTEL_TYPE } from '@/constants';
 import { StartRating } from '@/components';
@@ -76,37 +77,47 @@ const HotelItem: FC<THotelItemProps> = ({
                 <MapPinned size={15} />
                 <p className="line-clamp-1">{hotel.address}</p>
               </div>
-              <div className="flex items-center gap-1">
-                {hotel.hotelAmenity.map(
-                  (amenity, index) =>
-                    index < 4 && (
-                      <Badge
-                        variant="secondary"
-                        className="text-[10px]"
-                        key={amenity.amenity.id}
-                      >
-                        {amenity.amenity.name}
-                      </Badge>
-                    ),
-                )}
-                {hotel.hotelAmenity.length > 4 && (
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Badge variant="secondary" className="text-[10px]">
-                        +{hotel.hotelAmenity.length - 4}
-                      </Badge>
-                    </TooltipTrigger>
-                    <TooltipContent className="max-w-[250px] bg-white text-black shadow-md border border-gray-200">
-                      <div className="text-xs p-1">
-                        {hotel.hotelAmenity
-                          .slice(4)
-                          .map((amenity) => amenity.amenity.name)
-                          .join(', ')}
-                      </div>
-                    </TooltipContent>
-                  </Tooltip>
-                )}
-              </div>
+              {(hotel?.distance || 0) > 0 && (
+                <div className="text-sm text-muted-foreground flex items-center gap-2">
+                  <VenusAndMars size={15} />
+                  <p className="line-clamp-1">
+                    {(hotel?.distance || 0).toFixed(2)} km
+                  </p>
+                </div>
+              )}
+              {hotel?.hotelAmenity?.length > 0 && (
+                <div className="flex items-center gap-1">
+                  {hotel?.hotelAmenity?.map(
+                    (amenity, index) =>
+                      index < 4 && (
+                        <Badge
+                          variant="secondary"
+                          className="text-[10px]"
+                          key={amenity.amenity.id}
+                        >
+                          {amenity.amenity.name}
+                        </Badge>
+                      ),
+                  )}
+                  {hotel?.hotelAmenity?.length > 4 && (
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Badge variant="secondary" className="text-[10px]">
+                          +{hotel?.hotelAmenity?.length - 4}
+                        </Badge>
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-[250px] bg-white text-black shadow-md border border-gray-200">
+                        <div className="text-xs p-1">
+                          {hotel.hotelAmenity
+                            .slice(4)
+                            .map((amenity) => amenity.amenity.name)
+                            .join(', ')}
+                        </div>
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
+                </div>
+              )}
               {promotion && promotion?.percentage > 0 && (
                 <div className="text-white mt-4 w-max text-xs rounded-2xl font-semibold flex items-center gap-2 bg-gradient-to-r from-red-600 to-orange-500 p-1 pr-2 cursor-pointer">
                   <BadgePercent size={20} />

@@ -39,6 +39,8 @@ export const HotelSchema = z.object({
     .number({ message: ERROR_HOTEL_MESSAGES.vat.required })
     .min(0, { message: ERROR_HOTEL_MESSAGES.vat.min })
     .max(100, { message: ERROR_HOTEL_MESSAGES.vat.max }),
+  lat: z.number({ message: ERROR_HOTEL_MESSAGES.lat.required }),
+  lon: z.number({ message: ERROR_HOTEL_MESSAGES.lon.required }),
   address: z
     .string()
     .nonempty({ message: ERROR_PARTNER_MESSAGES.address.required }),
@@ -122,6 +124,7 @@ export const GetFindHotelsResSchema = z.object({
       ),
       room: z.array(RoomSchema),
       price: z.number(),
+      distance: z.number().nullable(),
     }),
   ),
   totalItems: z.number(),
@@ -139,6 +142,7 @@ export const FindHotelResSchema = HotelSchema.extend({
   ),
   room: z.array(RoomSchema),
   price: z.number(),
+  distance: z.number().nullable(),
 });
 
 export const CreateHotelBodySchema = HotelSchema.omit({

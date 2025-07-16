@@ -32,6 +32,8 @@ export const usePartnerHotelPage = () => {
       provinceCode: hotel?.provinceCode || 0,
       districtCode: hotel?.districtCode || 0,
       wardCode: hotel?.wardCode || 0,
+      lat: hotel?.lat || 0,
+      lon: hotel?.lon || 0,
       address: hotel?.address || '',
       rating: hotel?.rating || 0,
     },
@@ -50,6 +52,8 @@ export const usePartnerHotelPage = () => {
         provinceCode: hotel?.provinceCode,
         districtCode: hotel?.districtCode,
         wardCode: hotel?.wardCode,
+        lat: Number(hotel?.lat),
+        lon: Number(hotel?.lon),
         address: hotel?.address,
         rating: hotel?.rating,
       });
