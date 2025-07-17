@@ -20,7 +20,11 @@ export const useOrderPartnerTable = () => {
   const [order, setOrder] = useState('');
   const hotelId = partnerProfile?.hotel?.id || 0;
 
-  const { data: allOrderData, isLoading } = useGetOrdersByHotelIdQuery(
+  const {
+    data: allOrderData,
+    isLoading,
+    refetch,
+  } = useGetOrdersByHotelIdQuery(
     `${hotelId}?${searchParams.toString()}` ||
       `${hotelId}?limit=${LIMIT}&page=1`,
   );
@@ -186,5 +190,6 @@ export const useOrderPartnerTable = () => {
     onReset,
     onSearch,
     onCloseModal,
+    refetch,
   };
 };

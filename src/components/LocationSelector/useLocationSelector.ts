@@ -1,6 +1,10 @@
 import { LocationType } from '@/components/LocationSelector/type';
 import { showToast } from '@/lib/toast';
-import { haversineDistance, isInBoundingBox } from '@/lib/utils';
+import {
+  haversineDistance,
+  isInBoundingBox,
+  removeDiacritics,
+} from '@/lib/utils';
 import {
   provincesWithCoordinates,
   TProvincesWithCoordinates,
@@ -23,8 +27,9 @@ export const useLocationSelector = (
     })) || [];
 
   const filteredProvinces = provinces.filter((province) => {
-    const search = searchTerm.toLowerCase();
-    return province.name.toLowerCase().includes(search);
+    const search = removeDiacritics(searchTerm.toLowerCase());
+    const provinceName = removeDiacritics(province.name.toLowerCase());
+    return provinceName.includes(search);
   });
 
   const handleSelectLocation = (province: LocationType) => {

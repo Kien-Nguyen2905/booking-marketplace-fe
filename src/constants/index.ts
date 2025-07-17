@@ -14,3 +14,4 @@ export * from './room';
 export * from './socket';
 export * from './order';
 export * from './refund';
+export * from './messages';

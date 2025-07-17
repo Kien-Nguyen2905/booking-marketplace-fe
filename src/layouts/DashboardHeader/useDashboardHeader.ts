@@ -1,5 +1,6 @@
-import { EVENT, ROUTES } from '@/constants';
+import { EVENT, MESSAGES, ROUTES } from '@/constants';
 import { useAppContext } from '@/context/AppProvider';
+import { useOrderPartnerTable } from '@/features/partner/orders/hooks';
 import { handleErrorApi } from '@/lib/helper';
 import { showToast } from '@/lib/toast';
 import { NotifyType } from '@/models/notify.model';
@@ -12,6 +13,7 @@ import { useState, useRef, useEffect } from 'react';
 
 export const useDashboardHeader = () => {
   const { profile, socket } = useAppContext();
+  const { refetch: refetchOrder } = useOrderPartnerTable();
   const { data, refetch } = useGetNotifiesByRecipientIdQuery('');
   const notifications = data?.data.data.data || [];
   const { mutateAsync: readNotify, isPending } = useReadNotifyMutation();
@@ -79,7 +81,7 @@ export const useDashboardHeader = () => {
     const handleNotification = () => {
       showToast({
         type: 'info',
-        message: 'You have a new notification',
+        message: MESSAGES.NEW_NOTIFICATION,
       });
       refetch();
     };
@@ -87,9 +89,10 @@ export const useDashboardHeader = () => {
     const handleOrder = () => {
       showToast({
         type: 'info',
-        message: 'You have a new order',
+        message: MESSAGES.NEW_ORDER,
       });
       refetch();
+      refetchOrder();
     };
 
     socket.on(EVENT.NOTIFY, handleNotification);

@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 import { useGetAllCouponsQuery } from '@/queries';
 
 export const usePromoCodeSlider = () => {
-  const { data: couponsData } = useGetAllCouponsQuery();
+  const { data: couponsData, isLoading } = useGetAllCouponsQuery();
   const coupons = couponsData?.data.data.data;
   const [copiedCodeId, setCopiedCodeId] = useState<string | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
@@ -43,5 +43,6 @@ export const usePromoCodeSlider = () => {
     setIsEnd,
     setSwiper,
     coupons,
+    isLoading,
   };
 };

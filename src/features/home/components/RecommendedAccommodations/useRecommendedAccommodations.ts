@@ -11,7 +11,8 @@ export const useRecommendedAccommodations = () => {
     POPULAR_ACCOMMODATION_LIST[0]?.provinceCode || '',
   );
 
-  const { data: hotelsData } = useGetHotelsByProvinceCodeQuery(activeTab);
+  const { data: hotelsData, isLoading } =
+    useGetHotelsByProvinceCodeQuery(activeTab);
   const hotels = hotelsData?.data.data || [];
 
   const { data: promotionsData } = useGetPromotionsByValidFromQuery();
@@ -38,5 +39,6 @@ export const useRecommendedAccommodations = () => {
     nextBtnRef,
     prevBtnRef,
     hotels,
+    isLoading,
   };
 };

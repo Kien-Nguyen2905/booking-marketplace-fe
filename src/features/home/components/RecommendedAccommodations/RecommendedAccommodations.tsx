@@ -13,6 +13,7 @@ import { useRecommendedAccommodations } from './useRecommendedAccommodations';
 import { HotelByIdProvinceCodeResType } from '@/models/hotel.model';
 import { formatCurrency, getHotelUrl } from '@/lib/utils';
 import { StartRating } from '@/components';
+import RecommendedAccommodationSkeleton from './RecommendedAccommodationSkeleton';
 
 const RecommendedAccommodations = () => {
   const {
@@ -25,6 +26,7 @@ const RecommendedAccommodations = () => {
     nextBtnRef,
     prevBtnRef,
     promotionToday,
+    isLoading,
   } = useRecommendedAccommodations();
 
   return (
@@ -84,7 +86,23 @@ const RecommendedAccommodations = () => {
                   setIsEnd(swiperInstance.isEnd);
                 }}
               >
-                {activeTab === location.provinceCode && hotels
+                {isLoading
+                  ? // Display skeleton loaders while loading
+                    Array(6)
+                      .fill(0)
+                      .map((_, index) => (
+                        <SwiperSlide key={`skeleton-${index}`}>
+                          <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.3, delay: index * 0.05 }}
+                          >
+                            <RecommendedAccommodationSkeleton />
+                          </motion.div>
+                        </SwiperSlide>
+                      ))
+                  : // Display actual content when loaded
+                  activeTab === location.provinceCode && hotels
                   ? hotels.map((hotel: HotelByIdProvinceCodeResType) => {
                       return (
                         <SwiperSlide key={hotel.id}>
@@ -176,12 +194,13 @@ const RecommendedAccommodations = () => {
                   <ChevronRight className="h-5 w-5 text-[var(--blue-primary)]" />
                 </Button>
               </Swiper>
-              {!hotels ||
-                (hotels.length === 0 && (
-                  <div className="text-center py-10 text-gray-500">
-                    Not found any popular accommodations in {location.name}
-                  </div>
-                ))}
+              {!isLoading &&
+                (!hotels ||
+                  (hotels.length === 0 && (
+                    <div className="text-center py-10 text-gray-500">
+                      Not found any popular accommodations in {location.name}
+                    </div>
+                  )))}
             </TabsContent>
           ))}
         </Tabs>
