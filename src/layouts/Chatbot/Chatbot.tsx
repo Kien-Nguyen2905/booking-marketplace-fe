@@ -22,7 +22,7 @@ const Chatbot = () => {
     return (
       <button
         onClick={() => setIsChatOpen(true)}
-        className="fixed bottom-5 right-5 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-all flex items-center justify-center"
+        className="fixed z-50 bottom-5 right-5 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-all flex items-center justify-center"
       >
         <MessageSquare size={24} />
       </button>

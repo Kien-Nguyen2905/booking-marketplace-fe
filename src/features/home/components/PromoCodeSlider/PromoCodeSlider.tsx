@@ -70,7 +70,7 @@ const PromoCodeSlider = () => {
             el: paginationRef.current,
           }}
           autoplay={{
-            delay: 700,
+            delay: 1000,
             pauseOnMouseEnter: true,
           }}
           slidesPerView={'auto'}
@@ -94,6 +94,17 @@ const PromoCodeSlider = () => {
             setIsBeginning(swiperInstance.isBeginning);
             setIsEnd(swiperInstance.isEnd);
           }}
+          breakpoints={{
+            0: {
+              slidesPerView: 1,
+            },
+            640: {
+              slidesPerView: 2.5,
+            },
+            1024: {
+              slidesPerView: 3.5,
+            },
+          }}
         >
           {isLoading
             ? Array(4)
@@ -101,7 +112,7 @@ const PromoCodeSlider = () => {
                 .map((_, index) => (
                   <SwiperSlide
                     key={`skeleton-${index}`}
-                    className={`max-w-[320px] w-full ${isLoading && 'mr-4'}`}
+                    className={`lg:max-w-[350px] w-full ${isLoading && 'mr-4'}`}
                   >
                     <PromoCodeSliderSkeleton />
                   </SwiperSlide>
@@ -109,31 +120,30 @@ const PromoCodeSlider = () => {
             : coupons &&
               coupons?.length > 0 &&
               coupons?.map((coupon) => (
-                <SwiperSlide key={coupon.id} className="max-w-[320px] w-full">
+                <SwiperSlide
+                  key={coupon.id}
+                  className="lg:max-w-[350px] w-full"
+                >
                   <div className="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
-                    <div className="p-4 border-b border-gray-100">
-                      <div className="flex items-center">
-                        <div className="w-8 h-8 rounded-full flex items-center justify-center mr-3">
-                          <div className="w-full h-full rounded-full flex items-center justify-center bg-[var(--blue-primary)]">
-                            <Gift className="h-5 w-5 text-white" />
-                          </div>
+                    <div className="p-4 border-b border-gray-100 flex items-center">
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center mr-2">
+                        <div className="w-8 h-8 rounded-full flex items-center justify-center bg-[var(--blue-primary)]">
+                          <Gift className="h-5 w-5 text-white" />
                         </div>
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between">
-                            <h3 className="font-medium text-sm">
-                              {coupon.title}
-                            </h3>
-                            <span className="text-xs font-medium text-white bg-red-500 px-2 py-1 rounded-full">
-                              {Math.round(coupon.percentage * 100)}%
-                            </span>
-                          </div>
-                          <p className="text-xs">
-                            Available: {coupon.available}
-                          </p>
-                          <p className="text-xs text-gray-500 truncate line-clamp-1">
-                            {coupon.description}
-                          </p>
+                      </div>
+                      <div className="flex-1 w-full">
+                        <div className="flex items-center justify-between w-full">
+                          <h3 className="font-medium text-sm truncate line-clamp-1">
+                            {coupon.title}
+                          </h3>
+                          <span className="text-xs font-medium text-white bg-red-500 px-2 py-1 rounded-full">
+                            {Math.round(coupon.percentage * 100)}%
+                          </span>
                         </div>
+                        <p className="text-xs">Available: {coupon.available}</p>
+                        <p className="text-xs text-gray-500 truncate line-clamp-1">
+                          {coupon.description}
+                        </p>
                       </div>
                     </div>
                     <div className="p-4 flex items-center justify-between">

@@ -38,12 +38,12 @@ const SearchBanner = () => {
 
   return (
     <div className="w-full relative h-[550px]">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px]">
-        <h1 className="text-center text-3xl font-bold mb-8 text-white drop-shadow-sm">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full md:w-[650px] xl:w-[850px]">
+        <h1 className="text-center text-2xl lg:text-3xl font-bold mb-8 text-white drop-shadow-sm">
           SEE THE WORLD FOR MORE
         </h1>
         <div className="bg-white relative rounded-xl shadow-lg px-6 pt-6 pb-12">
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-3 lg:gap-6">
             <div className="relative" ref={locationContainerRef}>
               <div
                 className={cn(
@@ -178,7 +178,7 @@ const SearchBanner = () => {
               </div>
             </div>
             <Button
-              className="w-[200px] absolute -bottom-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[60px] mx-auto bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-medium text-base shadow-md transition-all"
+              className="w-[200px] absolute -bottom-1/5 md:-bottom-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[60px] mx-auto bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-medium text-base shadow-md transition-all"
               onClick={handleSearch}
               disabled={isLoading}
             >
@@ -194,7 +194,7 @@ const SearchBanner = () => {
           </div>
         </div>
       </div>
-      <div className=" w-full h-full">
+      <div className="w-full h-full">
         <img
           className="min-w-full h-full object-cover"
           src="/images/banner.jpg"

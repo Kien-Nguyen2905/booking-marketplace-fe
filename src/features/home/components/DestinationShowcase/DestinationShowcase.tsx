@@ -56,6 +56,7 @@ const DestinationShowcase = () => {
           spaceBetween={16}
           loop={true}
           breakpoints={{
+            0: { slidesPerView: 1 },
             640: { slidesPerView: 2.2 },
             768: { slidesPerView: 3.2 },
             1024: { slidesPerView: 4.2 },
@@ -81,7 +82,7 @@ const DestinationShowcase = () => {
           }}
         >
           {destinations?.map((destination) => (
-            <SwiperSlide key={destination?.provinceCode}>
+            <SwiperSlide key={destination?.provinceCode} className="w-full">
               <Link
                 href={getHotelUrl({
                   provinceCode: destination?.provinceCode || '',
@@ -118,7 +119,7 @@ const DestinationShowcase = () => {
             ref={prevBtnRef}
             variant="outline"
             size="icon"
-            className="absolute left-0 top-[40%] -translate-y-1/2 rounded-full h-10 w-10 bg-white/80 backdrop-blur-sm shadow-md z-10 border-gray-200"
+            className="absolute hidden lg:flex left-0 top-[40%] -translate-y-1/2 rounded-full h-10 w-10 bg-white/80 backdrop-blur-sm shadow-md z-10 border-gray-200"
           >
             <ChevronLeft className="h-5 w-5 text-[var(--blue-primary)]" />
           </Button>
@@ -127,7 +128,7 @@ const DestinationShowcase = () => {
             ref={nextBtnRef}
             variant="outline"
             size="icon"
-            className="absolute right-0 top-[40%] -translate-y-1/2 rounded-full h-10 w-10 bg-white/80 backdrop-blur-sm shadow-md z-10 border-gray-200"
+            className="absolute hidden lg:flex right-0 top-[40%] -translate-y-1/2 rounded-full h-10 w-10 bg-white/80 backdrop-blur-sm shadow-md z-10 border-gray-200"
           >
             <ChevronRight className="h-5 w-5 text-[var(--blue-primary)]" />
           </Button>

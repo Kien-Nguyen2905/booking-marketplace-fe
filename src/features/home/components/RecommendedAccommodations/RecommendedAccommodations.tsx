@@ -47,7 +47,7 @@ const RecommendedAccommodations = () => {
               <TabsTrigger
                 key={location.provinceCode}
                 value={location.provinceCode}
-                className="px-4 py-2 rounded-md data-[state=active]:bg-[var(--blue-primary)] data-[state=active]:text-white text-gray-700 hover:bg-gray-100 data-[state=active]:hover:bg-[var(--blue-primary)]"
+                className="text-xs lg:text-sm px-2 rounded-sm py-1 lg:px-4 lg:py-2 lg:rounded-md data-[state=active]:bg-[var(--blue-primary)] data-[state=active]:text-white text-gray-700 hover:bg-gray-100 data-[state=active]:hover:bg-[var(--blue-primary)]"
               >
                 {location.name}
               </TabsTrigger>
@@ -180,7 +180,7 @@ const RecommendedAccommodations = () => {
                   ref={prevBtnRef}
                   variant="outline"
                   size="icon"
-                  className="absolute left-0 top-[35%] -translate-y-1/2 rounded-full h-10 w-10 bg-white/80 backdrop-blur-sm shadow-md z-10 border-gray-200"
+                  className="hidden lg:flex absolute left-0 top-[35%] -translate-y-1/2 rounded-full h-10 w-10 bg-white/80 backdrop-blur-sm shadow-md z-10 border-gray-200"
                 >
                   <ChevronLeft className="h-5 w-5 text-[var(--blue-primary)]" />
                 </Button>
@@ -188,7 +188,7 @@ const RecommendedAccommodations = () => {
                   ref={nextBtnRef}
                   variant="outline"
                   size="icon"
-                  className="absolute right-0 top-[35%] -translate-y-1/2 rounded-full h-10 w-10 bg-white/80 backdrop-blur-sm shadow-md z-10 border-gray-200"
+                  className="hidden lg:flex absolute right-0 top-[35%] -translate-y-1/2 rounded-full h-10 w-10 bg-white/80 backdrop-blur-sm shadow-md z-10 border-gray-200"
                 >
                   <ChevronRight className="h-5 w-5 text-[var(--blue-primary)]" />
                 </Button>
