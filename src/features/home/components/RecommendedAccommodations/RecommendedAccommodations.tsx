@@ -1,5 +1,4 @@
 'use client';
-import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import { ChevronLeft, ChevronRight, Tag } from 'lucide-react';

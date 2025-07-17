@@ -1,6 +1,5 @@
 'use client';
 import { GoogleIcon } from '@/icons';
-import React from 'react';
 import { Button } from '@/components/ui/button';
 import { LoginModal } from '@/components/LoginModal';
 import { RegisterModal } from '@/components/RegisterModal';

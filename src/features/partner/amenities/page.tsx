@@ -1,5 +1,4 @@
 'use client';
-import React from 'react';
 import { usePartnerAmenitiesPage } from '@/features/partner/amenities/hooks';
 import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components';

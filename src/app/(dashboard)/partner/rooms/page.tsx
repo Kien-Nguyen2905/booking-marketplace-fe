@@ -1,5 +1,3 @@
-'use client';
-
 import { PartnerRoomPage } from '@/features/partner';
 
 export default function Page() {

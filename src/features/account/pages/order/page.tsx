@@ -1,4 +1,3 @@
-import React from 'react';
 import { useAccountOrderPage } from './hooks/useAccountOrderPage';
 import { AccountOrderItem } from '@/features/account/pages/order/components';
 import { CPagination, RHFInput, RHFPickDate } from '@/components';

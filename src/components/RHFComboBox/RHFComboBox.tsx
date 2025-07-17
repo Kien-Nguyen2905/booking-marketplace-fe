@@ -16,7 +16,6 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { Check, ChevronDown } from 'lucide-react';
-import React from 'react';
 import { FC } from 'react';
 import { TRHFComboBoxProps } from './type';
 import { useRHFComboBox } from '@/components/RHFComboBox/useRHFComboBox';

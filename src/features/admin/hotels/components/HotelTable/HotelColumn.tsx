@@ -22,7 +22,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import React from 'react';
 import Link from 'next/link';
 import {
   HOTEL_STATUS,

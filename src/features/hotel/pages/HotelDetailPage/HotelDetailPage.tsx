@@ -1,5 +1,4 @@
 'use client';
-import React from 'react';
 import { useHotelDetailPage } from '@/features/hotel/hooks';
 import {
   Gallery,

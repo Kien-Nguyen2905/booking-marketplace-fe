@@ -1,4 +1,3 @@
-import React from 'react';
 import { useGetAllDevicesQuery } from '@/queries/useAuth';
 import {
   Table,

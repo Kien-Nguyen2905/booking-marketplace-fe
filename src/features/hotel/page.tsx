@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+
 import { useHotelPage } from './hooks/useHotelPage';
 import {
   HotelItem,

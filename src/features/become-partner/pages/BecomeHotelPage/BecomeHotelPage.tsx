@@ -1,5 +1,4 @@
 import { PartnerHotelInformation } from '@/components';
-import React from 'react';
 
 const BecomeHotelPage = () => {
   return (

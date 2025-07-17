@@ -11,7 +11,6 @@ import { formatCurrency, isDayDiscounted } from '@/lib/utils';
 import { format } from 'date-fns';
 import { BedSingle, Check, AlertTriangle } from 'lucide-react';
 import Image from 'next/image';
-import React from 'react';
 
 const OrderPage = () => {
   const {

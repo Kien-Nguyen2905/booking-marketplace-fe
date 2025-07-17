@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { HOTEL_TYPE, MAP_HOTEL_TYPE, RATING_LIST } from '@/constants';
 import { Label } from '@/components/ui/label';

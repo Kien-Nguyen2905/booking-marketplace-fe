@@ -14,7 +14,6 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { ROOM_BED_TYPE_LIST, ROUTES } from '@/constants';
-import React from 'react';
 import { usePartnerRoomTypeDetailPage } from '@/features/partner/room-types/hooks';
 import { Textarea } from '@/components/ui/textarea';
 import {

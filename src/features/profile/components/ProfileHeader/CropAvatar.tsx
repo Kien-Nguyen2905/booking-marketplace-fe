@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Check, X } from 'lucide-react';
-import React from 'react';
 import ReactCrop from 'react-image-crop';
 import { FC } from 'react';
 import { TCropAvatarProps } from './type';

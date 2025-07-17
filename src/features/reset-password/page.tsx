@@ -3,7 +3,6 @@ import { Loading, LoadingButton, RHFInput } from '@/components';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { useResetPasswordPage } from '@/features/reset-password/hooks';
-import React from 'react';
 import { motion } from 'motion/react';
 import { Card } from '@/components/ui/card';
 import { ArrowLeft, RotateCcw } from 'lucide-react';

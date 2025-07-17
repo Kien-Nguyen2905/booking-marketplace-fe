@@ -14,7 +14,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import React from 'react';
 import { PartnerStatus, ROUTES } from '@/constants';
 import Link from 'next/link';
 

@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { flexRender } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
 import {

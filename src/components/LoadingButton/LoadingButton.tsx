@@ -1,4 +1,3 @@
-import React from 'react';
 import './LoadingButton.css';
 const LoadingButton = () => {
   return (

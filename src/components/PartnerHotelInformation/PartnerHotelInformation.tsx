@@ -17,7 +17,6 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { HOTEL_TYPE_LIST } from '@/constants';
-import React from 'react';
 import { usePartnerHotelInformation } from './usePartnerHotelInformation';
 import { Textarea } from '@/components/ui/textarea';
 import Link from 'next/link';

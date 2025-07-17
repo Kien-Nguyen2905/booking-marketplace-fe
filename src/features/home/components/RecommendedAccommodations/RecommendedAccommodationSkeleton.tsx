@@ -1,4 +1,3 @@
-import React from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export const RecommendedAccommodationSkeleton = () => {
@@ -12,7 +11,7 @@ export const RecommendedAccommodationSkeleton = () => {
           <Skeleton className="h-6 w-20 rounded-lg" />
         </div>
       </div>
-      
+
       {/* Content skeleton */}
       <div className="p-4">
         <div className="pb-2">
@@ -25,13 +24,13 @@ export const RecommendedAccommodationSkeleton = () => {
             ))}
           </div>
         </div>
-        
+
         {/* Address skeleton */}
         <Skeleton className="h-4 w-full mt-1" />
-        
+
         {/* Hotel type skeleton */}
         <Skeleton className="h-4 w-1/3 mt-1" />
-        
+
         {/* Price skeleton */}
         <div className="flex items-baseline mt-2">
           {/* Original price (crossed out) */}

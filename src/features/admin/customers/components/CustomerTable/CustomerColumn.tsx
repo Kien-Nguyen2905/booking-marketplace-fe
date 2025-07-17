@@ -1,6 +1,5 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
-import React from 'react';
 
 declare module '@tanstack/react-table' {
   // eslint-disable-next-line

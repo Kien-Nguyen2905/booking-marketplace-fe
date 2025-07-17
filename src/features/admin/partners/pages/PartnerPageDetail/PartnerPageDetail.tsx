@@ -1,5 +1,4 @@
 'use client';
-import React from 'react';
 import { ButtonBack, Loading, LoadingButton } from '@/components';
 import { usePartnerPageDetail } from '@/features/admin/partners/hooks';
 import { format } from 'date-fns';

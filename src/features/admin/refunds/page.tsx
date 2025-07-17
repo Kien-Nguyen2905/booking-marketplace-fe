@@ -1,13 +1,7 @@
-import React, { Suspense } from 'react';
 import { RefundTable } from './components';
-import { Loading } from '@/components';
 
 const AdminRefundsPage = () => {
-  return (
-    <Suspense fallback={<Loading />}>
-      <RefundTable />
-    </Suspense>
-  );
+  return <RefundTable />;
 };
 
 export default AdminRefundsPage;
