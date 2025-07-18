@@ -35,6 +35,14 @@ export const HotelSidebar = () => {
           onClick={toggleCollapse}
         >
           <h2 className="text-xs font-semibold lg:text-lg">Filter Options</h2>
+          {selectedType && (
+            <h2 className="text-xs font-semibold lg:text-lg">{selectedType}</h2>
+          )}
+          {selectedRating && (
+            <h2 className="text-xs font-semibold lg:text-lg">
+              {selectedRating} star
+            </h2>
+          )}
           {isCollapsed ? (
             <ChevronDown className="h-5 w-5 text-gray-500" />
           ) : (

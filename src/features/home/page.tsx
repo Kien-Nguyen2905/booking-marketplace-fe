@@ -15,7 +15,6 @@ const Homepage = () => {
         <PromoCodeSlider />
       </div>
       <RecommendedAccommodations />
-
       <div className="container mx-auto px-4">
         <DestinationShowcase />
       </div>
