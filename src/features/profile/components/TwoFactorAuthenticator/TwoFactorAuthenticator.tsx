@@ -52,7 +52,7 @@ const TwoFactorAuthenticator = () => {
             <>
               <Button
                 variant="outline"
-                className="w-full sm:w-auto"
+                className="w-max"
                 onClick={() => setShowDisableModal(true)}
                 disabled={isDisabling}
               >
@@ -65,7 +65,7 @@ const TwoFactorAuthenticator = () => {
               </Button>
               <Button
                 variant="outline"
-                className="w-full sm:w-auto"
+                className="w-max"
                 onClick={onShowQRCode}
               >
                 <QrCode className="h-4 w-4 mr-2" />
@@ -75,7 +75,7 @@ const TwoFactorAuthenticator = () => {
           ) : (
             <Button
               variant="outline"
-              className="w-full sm:w-auto"
+              className="w-max"
               onClick={handleEnable2FA}
               disabled={isEnabling}
             >
@@ -94,7 +94,7 @@ const TwoFactorAuthenticator = () => {
             <DialogHeader>
               <DialogTitle>Setup Two-Factor Authentication</DialogTitle>
             </DialogHeader>
-            <div className="space-y-4 py-4">
+            <div className="space-y-4 py-4 ">
               <div className="flex justify-center p-4 bg-slate-50 rounded-lg">
                 {result2FA?.uri ? (
                   <QRCodeSVG
@@ -113,7 +113,7 @@ const TwoFactorAuthenticator = () => {
                   Enter the digit code from your authenticator app
                 </p>
                 {result2FA?.secret && (
-                  <p className="text-lg font-semibold">{result2FA.secret}</p>
+                  <p className="md:text-lg font-semibold">{result2FA.secret}</p>
                 )}
               </div>
             </div>
@@ -125,8 +125,7 @@ const TwoFactorAuthenticator = () => {
             <DialogHeader>
               <DialogTitle>Disable Two-Factor Authentication</DialogTitle>
               <DialogDescription>
-                Enter the 6-digit code from your authenticator app to disable
-                2FA
+                Enter TOTP from your authenticator app
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-4 py-4">

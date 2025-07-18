@@ -63,13 +63,13 @@ const ProfileInfo = () => {
                 )}
               />
             </div>
-            <div className="flex items-start justify-between gap-4">
+            <div className="flex w-full gap-3 flex-col lg:flex-row items-start lg:gap-4">
               <RHFInput
                 form={form}
                 label="Account Number"
                 name="accountNumber"
                 placeholder="Enter your account number"
-                className="w-1/3"
+                className="w-full lg:w-1/3"
               />
               <RHFSelection
                 form={form}
@@ -78,14 +78,14 @@ const ProfileInfo = () => {
                 placeholder="Select bank account"
                 list={BANK_ACCOUNT}
                 isSearch
-                className="w-1/3"
+                className="w-full lg:w-1/3"
               />
               <RHFInput
                 form={form}
                 label="Bank Name"
                 name="bankName"
                 placeholder="Enter your bank name"
-                className="w-1/3"
+                className="w-full lg:w-1/3"
               />
             </div>
             <RHFInput

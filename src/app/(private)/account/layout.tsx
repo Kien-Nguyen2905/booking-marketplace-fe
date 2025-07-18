@@ -16,7 +16,7 @@ export default function AccountLayout({
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-slate-50">
+    <div className="md:min-h-[calc(100vh-4rem)] bg-slate-50">
       <div className="container mx-auto py-6 lg:py-10">
         {/* Mobile Menu Button */}
         <Button
