@@ -30,7 +30,7 @@ const PartnerInformation: FC<TPartnerInformationProps> = ({ partner }) => {
   });
   if (isLoadingNavigate) return <Loading />;
   return (
-    <div>
+    <div className="w-full">
       <Card className="border-0 shadow-none">
         <CardContent>
           <Form {...form}>
@@ -40,15 +40,15 @@ const PartnerInformation: FC<TPartnerInformationProps> = ({ partner }) => {
               )}
               className="space-y-6"
             >
-              <div className="grid gap-6">
-                <div className="flex items-start gap-4">
+              <div className="grid gap-3 lg:gap-6">
+                <div className="flex w-full gap-3 flex-col lg:flex-row items-start lg:gap-4">
                   <RHFInput
                     form={form}
                     label="Full Name"
                     name="fullName"
                     required
                     placeholder="Enter your full name"
-                    className="w-1/3"
+                    className="w-full lg:w-1/3"
                   />
                   <RHFInput
                     form={form}
@@ -56,7 +56,7 @@ const PartnerInformation: FC<TPartnerInformationProps> = ({ partner }) => {
                     name="email"
                     required
                     placeholder="Enter your email"
-                    className="w-1/3"
+                    className="w-full lg:w-1/3"
                   />
                   <RHFInput
                     form={form}
@@ -65,7 +65,7 @@ const PartnerInformation: FC<TPartnerInformationProps> = ({ partner }) => {
                     type="text"
                     required
                     placeholder="Enter otp code"
-                    className="w-1/3"
+                    className="w-full lg:w-1/3"
                     component={
                       <Button
                         onClick={handleSendOTP}
@@ -84,14 +84,14 @@ const PartnerInformation: FC<TPartnerInformationProps> = ({ partner }) => {
                     }
                   />
                 </div>
-                <div className="flex items-start gap-4">
+                <div className="flex w-full gap-3 flex-col lg:flex-row items-start lg:gap-4">
                   <RHFInput
                     form={form}
                     label="Phone number"
                     name="phoneNumber"
                     required
                     placeholder="Enter your phone number"
-                    className="w-1/3"
+                    className="w-full lg:w-1/3"
                   />
                   <RHFInput
                     form={form}
@@ -99,7 +99,7 @@ const PartnerInformation: FC<TPartnerInformationProps> = ({ partner }) => {
                     label="Birthday"
                     required
                     placeholder="Pick your birthday"
-                    className="w-1/3"
+                    className="w-full lg:w-1/3"
                     renderProp={(props: any, field: any) => (
                       <RHFPickDate
                         fromYear={1900}
@@ -116,34 +116,34 @@ const PartnerInformation: FC<TPartnerInformationProps> = ({ partner }) => {
                     required
                     placeholder="Select gender"
                     list={GENDER_VALUE}
-                    className="w-1/3"
+                    className="w-full lg:w-1/3"
                   />
                 </div>
-                <div className="flex items-start gap-4">
+                <div className="flex w-full gap-3 flex-col lg:flex-row items-start lg:gap-4">
                   <RHFInput
                     form={form}
                     label="ID Card"
                     name="idCard"
                     required
                     placeholder="Enter your ID card"
-                    className="w-1/2"
+                    className="w-full lg:w-1/2"
                   />
                   <RHFInput
                     form={form}
                     label="Company Name"
                     name="companyName"
                     placeholder="Enter your company name"
-                    className="w-1/2"
+                    className="w-full lg:w-1/2"
                   />
                 </div>
-                <div className="flex items-start gap-4">
+                <div className="flex w-full gap-3 flex-col lg:flex-row items-start lg:gap-4">
                   <RHFInput
                     form={form}
                     label="Account Number"
                     name="accountNumber"
                     required
                     placeholder="Enter your account number"
-                    className="w-1/3"
+                    className="w-full lg:w-1/3"
                   />
                   <RHFSelection
                     form={form}
@@ -153,7 +153,7 @@ const PartnerInformation: FC<TPartnerInformationProps> = ({ partner }) => {
                     placeholder="Select bank account"
                     list={BANK_ACCOUNT}
                     isSearch
-                    className="w-1/3"
+                    className="w-full lg:w-1/3"
                   />
                   <RHFInput
                     form={form}
@@ -161,7 +161,7 @@ const PartnerInformation: FC<TPartnerInformationProps> = ({ partner }) => {
                     name="bankName"
                     required
                     placeholder="Enter your bank name"
-                    className="w-1/3"
+                    className="w-full lg:w-1/3"
                   />
                 </div>
                 <AddressSelection form={form} />

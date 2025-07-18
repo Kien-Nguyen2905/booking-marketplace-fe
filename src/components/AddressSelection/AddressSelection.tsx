@@ -44,8 +44,8 @@ const AddressSelection: FC<TAddressSelectionProps> = ({
     handleWardChange,
   } = useAddressSelection(form);
   return (
-    <div className="flex justify-between gap-4">
-      <div className="w-1/3">
+    <div className="flex w-full gap-3 flex-col lg:flex-row items-start lg:gap-4">
+      <div className="w-full lg:w-1/3">
         <RHFInput
           form={form}
           label="Province"
@@ -117,7 +117,7 @@ const AddressSelection: FC<TAddressSelectionProps> = ({
           }}
         />
       </div>
-      <div className="w-1/3">
+      <div className="w-full lg:w-1/3">
         <RHFInput
           form={form}
           label="District"
@@ -190,7 +190,7 @@ const AddressSelection: FC<TAddressSelectionProps> = ({
           }}
         />
       </div>
-      <div className="w-1/3">
+      <div className="w-full lg:w-1/3">
         <RHFInput
           form={form}
           label="Ward"

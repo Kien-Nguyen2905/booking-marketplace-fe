@@ -7,7 +7,7 @@ const BecomePartnerPage = () => {
   const { data: partner, isLoading } = useGetPartnerByUserIdQuery(true);
   if (isLoading) return <Loading />;
   return (
-    <div className="container mx-auto px-10 pt-5 pb-100">
+    <div className="container mx-auto lg:px-10 py-3 lg:pt-5 lg:pb-100">
       <PartnerInformation partner={partner?.data?.data} />
     </div>
   );
