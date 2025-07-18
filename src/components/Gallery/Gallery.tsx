@@ -10,11 +10,14 @@ import Slideshow from 'yet-another-react-lightbox/plugins/slideshow';
 import { TGalleryProps } from '@/components/Gallery/type';
 import { useGallery } from '@/components/Gallery/useGallery';
 import Image from 'next/image';
+import { useBreakpoint } from '@/hooks';
 
 const Gallery: FC<TGalleryProps> = ({ images }) => {
   const slides = images.map((src) => ({ src }));
 
   const { openLightbox, open, imageIndex, setOpen } = useGallery();
+
+  const isMdScreen = useBreakpoint('md', 'min');
 
   return (
     <div className="container mx-auto pb-8">
@@ -32,31 +35,39 @@ const Gallery: FC<TGalleryProps> = ({ images }) => {
               className="w-full h-full object-cover"
               fill
             />
-          </div>
-        )}
-
-        {/* Display the next 5 images in the grid */}
-        {images.slice(1, 5).map((image, index) => (
-          <div
-            key={`gallery-image-${index + 1}`}
-            className="relative  overflow-hidden h-full cursor-pointer transform hover:opacity-70 transition-transform duration-800"
-            onClick={() => openLightbox(index + 1)}
-          >
-            <img
-              src={image}
-              alt={`Hotel view ${index + 1}`}
-              className="w-full h-full object-cover"
-            />
-            {/* Add overlay with '+X more' text only to the last image (index 4) */}
-            {index === 3 && images.length > 5 && (
+            {!isMdScreen && (
               <div className="absolute inset-0 bg-transparent bg-opacity-60 flex items-center justify-center">
                 <span className="text-white text-sm font-semibold">
-                  +{images.length - 5} more
+                  +{images.length - 1} more
                 </span>
               </div>
             )}
           </div>
-        ))}
+        )}
+
+        {/* Display the next 5 images in the grid */}
+        {isMdScreen &&
+          images.slice(1, 5).map((image, index) => (
+            <div
+              key={`gallery-image-${index + 1}`}
+              className="relative overflow-hidden h-full cursor-pointer transform hover:opacity-70 transition-transform duration-800"
+              onClick={() => openLightbox(index + 1)}
+            >
+              <img
+                src={image}
+                alt={`Hotel view ${index + 1}`}
+                className="w-full h-full object-cover"
+              />
+              {/* Add overlay with '+X more' text only to the last image (index 4) */}
+              {index === 3 && images.length > 5 && (
+                <div className="absolute inset-0 bg-transparent bg-opacity-60 flex items-center justify-center">
+                  <span className="text-white text-sm font-semibold">
+                    +{images.length - 5} more
+                  </span>
+                </div>
+              )}
+            </div>
+          ))}
       </div>
 
       {/* Lightbox Component */}

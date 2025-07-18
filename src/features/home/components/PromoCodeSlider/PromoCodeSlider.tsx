@@ -23,7 +23,7 @@ const PromoCodeSlider = () => {
     isLoading,
   } = usePromoCodeSlider();
   return (
-    <div className="w-full relative">
+    <div className="w-full relative -z-10">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center -z-10">
           <Gift className="h-6 w-6 text-[var(--blue-primary)] mr-2" />

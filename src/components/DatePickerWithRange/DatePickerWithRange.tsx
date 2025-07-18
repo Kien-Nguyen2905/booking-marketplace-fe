@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 import { Calendar } from '@/components/ui/calendar';
 import { TDatePickerWithRangeProps } from './type';
 import { useDatePickerWithRange } from '@/components/DatePickerWithRange/useDatePickerWithRange';
+import './DatePickerWithRange.css';
 
 const DatePickerWithRange: FC<TDatePickerWithRangeProps> = ({
   onChange,
@@ -19,6 +20,7 @@ const DatePickerWithRange: FC<TDatePickerWithRangeProps> = ({
     <div className="grid gap-2 overflow-auto">
       <div className="w-full p-1 bg-white rounded-md shadow-lg border">
         <Calendar
+          className="custom-calendar"
           initialFocus
           mode="range"
           selected={date}

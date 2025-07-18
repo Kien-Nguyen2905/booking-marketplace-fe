@@ -1,0 +1,18 @@
+.custom-calendar {
+  div {
+    div {
+      table {
+        thead {
+          tr {
+            justify-content: space-between !important;
+          }
+        }
+        tbody {
+          tr {
+            justify-content: space-between !important;
+          }
+        }
+      }
+    }
+  }
+}

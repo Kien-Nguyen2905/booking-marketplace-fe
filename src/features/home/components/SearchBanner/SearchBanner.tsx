@@ -85,7 +85,7 @@ const SearchBanner = () => {
                 </div>
               )}
             </div>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-3 gap-3 lg:gap-6">
               <div
                 className="relative md:col-start-1 md:col-end-3"
                 ref={dateContainerRef}

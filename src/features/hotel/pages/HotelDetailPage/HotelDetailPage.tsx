@@ -159,15 +159,21 @@ const HotelDetailPage = () => {
                       />
                       <div className="w-full flex-1">
                         <div className="grid grid-cols-12 px-4 font-bold py-3 bg-gray-100 rounded-t-lg text-sm border border-gray-200">
-                          <div className="col-span-3 text-left">Policy</div>
-                          <div className="col-span-1 text-center">
+                          <div className="col-span-4 md:col-span-3 text-left">
+                            Policy
+                          </div>
+                          <div className="hidden md:block col-span-1 text-center">
                             Available
                           </div>
-                          <div className="col-span-2 text-right">Capacity</div>
-                          <div className="col-span-3 text-right">
+                          <div className="hidden md:block col-span-2 text-right">
+                            Capacity
+                          </div>
+                          <div className="col-span-5 md:col-span-4 text-right">
                             Price/night
                           </div>
-                          <div className="col-span-3 text-right">Booking</div>
+                          <div className="col-span-3 md:col-span-2 text-right">
+                            Booking
+                          </div>
                         </div>
                         <div className="border-x border-b border-gray-200 rounded-b-lg overflow-hidden">
                           {room.room.map((item, index) => {
@@ -191,18 +197,18 @@ const HotelDetailPage = () => {
                                 availableParam && (
                                 <div
                                   key={index}
-                                  className={`p-4 grid grid-cols-12 items-start hover:bg-gray-50 transition-colors ${
+                                  className={`p-2 md:p-4 grid grid-cols-12 items-start hover:bg-gray-50 transition-colors ${
                                     index !== 0
                                       ? 'border-t border-gray-200'
                                       : ''
                                   }`}
                                 >
-                                  <div className="col-span-3">
+                                  <div className="col-span-4 md:col-span-3">
                                     <div className="flex flex-col gap-1">
                                       <div className="flex items-center">
                                         {item.policy ===
                                         POLICY_TYPE.FREE_CANCELLATION ? (
-                                          <Badge className="bg-green-100 text-green-700 hover:bg-green-100 border-0">
+                                          <Badge className="bg-green-100 text-green-700 hover:bg-green-100 border-0 text-[8px] md:text-[12px]">
                                             <CalendarOff
                                               size={14}
                                               className="mr-1"
@@ -211,7 +217,7 @@ const HotelDetailPage = () => {
                                           </Badge>
                                         ) : item.policy ===
                                           POLICY_TYPE.PAY_AT_HOTEL ? (
-                                          <Badge className="bg-blue-100 text-primary hover:bg-blue-100 border-0">
+                                          <Badge className="bg-blue-100 text-primary hover:bg-blue-100 border-0 text-[8px] md:text-[12px]">
                                             <HandCoins
                                               size={14}
                                               className="mr-1"
@@ -219,7 +225,7 @@ const HotelDetailPage = () => {
                                             Pay at Hotel
                                           </Badge>
                                         ) : (
-                                          <Badge className="bg-amber-100 text-amber-700 hover:bg-amber-100 border-0">
+                                          <Badge className="bg-amber-100 text-amber-700 hover:bg-amber-100 border-0 text-[8px] md:text-[12px]">
                                             <RefreshCwOff
                                               size={14}
                                               className="mr-1"
@@ -235,29 +241,29 @@ const HotelDetailPage = () => {
                                             size={16}
                                             className="text-green-500"
                                           />
-                                          <span className="text-xs">
+                                          <span className="text-[8px] md:text-[12px]">
                                             Get all refund when cancel before
                                             14:00 {startDateParams}
                                           </span>
                                         </div>
                                       )}
                                       {(item?.rangeLimitDate || 0) > 0 && (
-                                        <span className="text-xs text-gray-500 mt-1">
+                                        <span className="text-[8px] md:text-[12px] text-gray-500 mt-1">
                                           Limit booking: {item.rangeLimitDate}{' '}
                                           nights
                                         </span>
                                       )}
                                       {item.notePolicy && (
-                                        <span className="text-xs text-gray-500 mt-1">
+                                        <span className="text-[8px] md:text-[12px] text-gray-500 mt-1">
                                           {item.notePolicy}
                                         </span>
                                       )}
                                     </div>
                                   </div>
-                                  <div className="col-span-1 text-center">
+                                  <div className="hidden md:block col-span-1 text-center">
                                     {availableRoom.availableRooms}
                                   </div>
-                                  <div className="col-span-2 gap-1 flex justify-end">
+                                  <div className="hidden md:flex col-span-2 gap-1 justify-end">
                                     <div className="flex items-center gap-[2px]">
                                       <PeopleIcon />
                                       <span className="text-sm">
@@ -273,15 +279,15 @@ const HotelDetailPage = () => {
                                       </div>
                                     ) : null}
                                   </div>
-                                  <div className="col-span-3">
+                                  <div className="col-span-5 md:col-span-4">
                                     <div className="mb-2 flex flex-col items-end">
                                       {promotion &&
                                         promotion?.percentage > 0 && (
-                                          <div className="text-gray-500 text-xs line-through mb-1">
+                                          <div className="text-gray-500 text-[10px] md:text-[12px] line-through mb-1">
                                             {formatCurrency(item.price)}
                                           </div>
                                         )}
-                                      <div className="text-orange-500 text-lg font-bold">
+                                      <div className="text-orange-500 text-[12px] md:text-lg font-bold">
                                         {formatCurrency(
                                           item.price *
                                             (1 - (promotion?.percentage || 0)),
@@ -289,7 +295,7 @@ const HotelDetailPage = () => {
                                       </div>
                                       {promotion &&
                                         promotion.percentage > 0 && (
-                                          <span className="text-xs text-right font-bold text-red-500">
+                                          <span className="text-[10px] md:text-[12px] text-right font-bold text-red-500">
                                             Sale from{' '}
                                             {format(
                                               promotion.validFrom,
@@ -303,12 +309,12 @@ const HotelDetailPage = () => {
                                             )}
                                           </span>
                                         )}
-                                      <div className="text-xs text-gray-500">
+                                      <div className="text-[8px] md:text-[12px] text-gray-500">
                                         Exclude taxes & fees
                                       </div>
                                     </div>
                                   </div>
-                                  <div className="col-span-3 flex justify-end">
+                                  <div className="col-span-3 md:col-span-2 flex justify-end">
                                     <Button
                                       onClick={() =>
                                         onBookNow(
@@ -317,9 +323,9 @@ const HotelDetailPage = () => {
                                           item.policy,
                                         )
                                       }
-                                      className="bg-orange-500 hover:bg-orange-600"
+                                      className="bg-orange-500 hover:bg-orange-600 w-max"
                                     >
-                                      Book now
+                                      Book
                                     </Button>
                                   </div>
                                 </div>

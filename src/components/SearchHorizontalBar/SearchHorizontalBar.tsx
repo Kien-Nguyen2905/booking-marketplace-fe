@@ -39,10 +39,10 @@ const SearchHorizontalBar = () => {
   } = useSearchBanner();
 
   return (
-    <div className="w-full md:container lg:max-w-none h-max bg-transparent md:bg-white md:border-t md:shadow-lg lg:p-2 md:fixed md:top-[76px] md:left-0 md:right-0 md:z-30">
+    <div className="w-full md:max-auto lg:max-w-none h-max bg-transparent md:bg-white md:border-t md:shadow-lg lg:p-2 md:fixed md:top-[76px] md:left-0 md:right-0 md:z-30">
       <div
         className={`flex h-[80px] px-4 pt-[15px] gap-2 md:gap-0 md:flex-row flex-col items-center justify-between mx-auto relative container ${
-          query.province ? 'w-full' : 'w-[960px]'
+          query.province ? 'w-full' : 'md:w-full lg:w-[960px]'
         }`}
       >
         {/* Location Input */}
@@ -92,15 +92,15 @@ const SearchHorizontalBar = () => {
 
         {/* Date Range Picker */}
         <div
-          className={`relative w-full md:w-[340px] lg:w-[540px] 2xl:w-[34%] ${
-            query.province ? '' : 'w-full'
+          className={`relative w-full md:w-[380px] lg:w-[540px] ${
+            query.province ? '2xl:w-[34%]' : 'w-full'
           }`}
           ref={dateContainerRef}
         >
           <div
             className={cn(
               'flex rounded-lg md:border-x-0 md:rounded-none border items-center bg-white md:border-y p-2 cursor-pointer group transition-all',
-              !query.province && 'border-l rounded-l-lg',
+              !query.province && 'md:border-l md:rounded-l-lg',
             )}
             onClick={handleDateClick}
           >
@@ -139,8 +139,8 @@ const SearchHorizontalBar = () => {
 
         {/* People Selector */}
         <div
-          className={`relative w-full md:w-[290px] lg:w-[270px] 2xl:w-[22%] ${
-            query.province ? '' : 'w-[490px]'
+          className={`relative w-full md:w-[290px] lg:w-[270px] ${
+            query.province ? '2xl:w-[22%]' : 'w-[490px]'
           }`}
           ref={peopleContainerRef}
         >
@@ -194,7 +194,7 @@ const SearchHorizontalBar = () => {
             <Loader2 className="h-5 w-5 animate-spin" />
           ) : (
             <>
-              <Search className="mr-2 md:mr-1 lg:mr-2 h-4 w-4 md:hidden" />
+              <Search className="mr-2 md:mr-1 lg:mr-2 h-4 w-4 md:hidden lg:block" />
               SEARCH
             </>
           )}

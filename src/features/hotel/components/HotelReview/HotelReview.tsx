@@ -33,7 +33,7 @@ const HotelReview: FC<THotelReviewProps> = ({ reviewData = [] }) => {
       <div className="space-y-6">
         {displayedReviews.map((review) => (
           <Card key={review.id} className="shadow-sm border-gray-200">
-            <CardContent className="p-5 flex gap-10">
+            <CardContent className="p-5 flex flex-col lg:flex-row lg:gap-10">
               {/* Review header with user info */}
               <div className="flex justify-between items-start w-[340px] mb-4">
                 <div className="flex items-start gap-3">

@@ -29,22 +29,22 @@ const RoomDetailModal: FC<TRoomDetailModalProps> = ({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       {roomType && (
-        <DialogContent className="!max-w-5xl !max-h-[90vh] overflow-hidden">
+        <DialogContent className=" lg:!max-w-5xl !max-h-[90vh] overflow-hidden">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-gray-800">
               {roomType.type} Room
             </DialogTitle>
           </DialogHeader>
-          <div className="mt-4 flex flex-col lg:flex-row gap-6">
+          <div className="mt-4 flex flex-col items-center lg:items-start lg:flex-row gap-6">
             {/* Room Images Gallery */}
-            <div className="relative h-max w-[600px] rounded-md overflow-hidden">
+            <div className="relative h-max lg:w-[600px] w-[300px] md:w-[420px] rounded-md overflow-hidden">
               {/* Main Swiper with images */}
-              <div className="mb-2 w-full h-full">
+              <div className="mb-2 w-full">
                 <Swiper
                   modules={[Navigation, Pagination, Thumbs]}
                   navigation
                   pagination={{ clickable: true }}
-                  className="h-[400px] w-full swiper-hotel-room-card rounded-md"
+                  className="h-[250px] lg:h-[400px] w-full swiper-hotel-room-card rounded-md"
                   loop={roomType.images.length > 1}
                   grabCursor
                   thumbs={{
@@ -96,7 +96,7 @@ const RoomDetailModal: FC<TRoomDetailModalProps> = ({
               </div>
             </div>
             {/* Room Details Section */}
-            <div className="flex-1 flex flex-col justify-between">
+            <div className="flex-1 flex w-full flex-col justify-between">
               <div className="space-y-4 overflow-y-auto pr-2 max-h-[400px] custom-scrollbar">
                 <div>
                   <h3 className="text-lg font-semibold mb-2">Room Capacity</h3>
