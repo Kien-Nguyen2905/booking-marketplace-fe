@@ -55,14 +55,14 @@ const AccountOrderItemView: FC<TAccountOrderItemViewProps> = ({
               Booking
             </h2>
 
-            <div className="grid grid-cols-3 grid-rows-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 grid-rows-2 gap-1 md:gap-4">
               <div className="grid-span-1 text-sm font-medium">
                 <h3 className="font-bold text-lg">Customer</h3>
                 <div className="flex gap-1">
                   <p>Name: </p>
                   <p>{order?.customer?.fullName}</p>
                 </div>
-                <div className="flex gap-1">
+                <div className="flex gap-1 flex-wrap">
                   <p>Email: </p>
                   <p>{order?.customer?.email}</p>
                 </div>
@@ -77,7 +77,7 @@ const AccountOrderItemView: FC<TAccountOrderItemViewProps> = ({
                   <p>Name: </p>
                   <p>{order?.hotel?.name}</p>
                 </div>
-                <div className="flex gap-1">
+                <div className="flex gap-1 flex-wrap">
                   <p>Address: </p>
                   <p>{order?.hotel?.address}</p>
                 </div>

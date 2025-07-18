@@ -58,8 +58,8 @@ const AccountOrderPage = () => {
             onOpenChange={onCloseReview}
           />
         )}
-        <div className="flex pb-5 justify-between items-center">
-          <div className="flex items-center w-[520px] gap-2">
+        <div className="flex gap-4 md:gap-2 flex-col md:flex-row pb-5 justify-between items-center">
+          <div className="flex items-center w-full md:w-[520px] gap-2">
             <RHFInput
               form={formQuery}
               name="dateFrom"
@@ -110,7 +110,7 @@ const AccountOrderPage = () => {
                     value={field.value}
                     {...props}
                   >
-                    <SelectTrigger className="w-[120px]">
+                    <SelectTrigger className="w-[150px] md:w-[120px]">
                       <SelectValue placeholder="Payment" />
                     </SelectTrigger>
                     <SelectContent>
