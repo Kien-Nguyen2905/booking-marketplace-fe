@@ -1,3 +1,4 @@
+'use client';
 import { Card, CardContent } from '@/components/ui/card';
 import { THotelItemProps } from '@/features/hotel/components/HotelItem/type';
 import React, { FC } from 'react';
@@ -31,11 +32,11 @@ const HotelItem: FC<THotelItemProps> = ({
 }) => {
   return (
     <Link href={`${ROUTES.HOTEL}/${hotel.id}?${queryStringDetail}`}>
-      <Card>
-        <CardContent className="flex items-start justify-between">
-          <div className="flex gap-3">
+      <Card className="mx-5 md:mx-0">
+        <CardContent className="flex lg:flex-row flex-col items-start justify-between">
+          <div className="flex-col md:flex-row flex gap-3 w-full lg:flex-1">
             {/* Image */}
-            <div className="grid grid-cols-3 grid-rows-3 gap-1 w-[250px] h-[200px] overflow-hidden rounded-l-lg">
+            <div className="grid grid-cols-3 grid-rows-3 gap-1 w-full md:w-[250px] h-[200px] overflow-hidden rounded-l-lg">
               <div className="col-span-3 relative row-span-2">
                 <Image
                   src={hotel.images[0]}
@@ -65,7 +66,7 @@ const HotelItem: FC<THotelItemProps> = ({
               )}
             </div>
             {/* Info */}
-            <div className="space-y-3 max-w-[410px]">
+            <div className="space-y-3 max-w-[310px] md:max-w-full xl:max-w-[410px] lg:max-w-[270px]">
               <h2 className="font-bold text-xl">{hotel.name}</h2>
               <div className="flex items-center gap-2">
                 <Badge className="text-primary" variant="outline">
@@ -86,7 +87,7 @@ const HotelItem: FC<THotelItemProps> = ({
                 </div>
               )}
               {hotel?.hotelAmenity?.length > 0 && (
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 flex-wrap">
                   {hotel?.hotelAmenity?.map(
                     (amenity, index) =>
                       index < 4 && (
@@ -119,21 +120,21 @@ const HotelItem: FC<THotelItemProps> = ({
                 </div>
               )}
               {promotion && promotion?.percentage > 0 && (
-                <div className="text-white mt-4 w-max text-xs rounded-2xl font-semibold flex items-center gap-2 bg-gradient-to-r from-red-600 to-orange-500 p-1 pr-2 cursor-pointer">
-                  <BadgePercent size={20} />
+                <div className="text-white mt-4 text-xs rounded-2xl font-semibold flex items-center gap-2 bg-gradient-to-r from-red-600 to-orange-500 p-1 pr-2 cursor-pointer">
+                  <BadgePercent size={20} className="flex-shrink-0" />
                   {promotion?.title} from{' '}
-                  {format(promotion?.validFrom, 'dd-MM-yyyy')} to{' '}
-                  {format(promotion?.validUntil, 'dd-MM-yyyy')}
+                  {format(promotion?.validFrom, 'dd-MM-yy')} to{' '}
+                  {format(promotion?.validUntil, 'dd-MM-yy')}
                 </div>
               )}
             </div>
           </div>
-          <div className="flex flex-col items-end gap-2">
-            <div className="text-primary p-1 cursor-pointer">
+          <div className="flex justify-between pt-2 md:pt-0 lg:flex-col items-end gap-2 w-full lg:max-w-[200px]">
+            <div className="hidden lg:block text-primary p-1 cursor-pointer">
               <CalendarFold />
             </div>
             <div className="text-right">
-              <div className="mb-2 flex flex-col items-end">
+              <div className="lg:mb-2 flex flex-col items-start lg:items-end">
                 {promotion && promotion?.percentage > 0 && (
                   <div className="text-gray-500 text-sm line-through mb-1">
                     {formatCurrency(hotel.room[0]?.price)}
@@ -149,7 +150,7 @@ const HotelItem: FC<THotelItemProps> = ({
                 </div>
               </div>
             </div>
-            <Button className="bg-orange-500 hover:bg-orange-600">
+            <Button className="bg-orange-500 hover:bg-orange-600 md:h-12 lg:h-9 ">
               Book now
             </Button>
           </div>

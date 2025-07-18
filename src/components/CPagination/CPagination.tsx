@@ -143,8 +143,8 @@ const CPagination: FC<TCPaginationProps> = ({
   }
 
   return (
-    <div className="flex justify-between items-center">
-      <div className="text-sm text-gray-500">
+    <div className="flex justify-center md:justify-between items-center">
+      <div className="hidden md:block text-sm text-gray-500">
         Showing {itemsPerPage * (currentPage - 1) + 1} to{' '}
         {Math.min(itemsPerPage * currentPage, totalItems)} of {totalItems} items
       </div>

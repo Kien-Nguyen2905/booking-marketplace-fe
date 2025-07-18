@@ -173,9 +173,9 @@ export const formattedDateDisplay = (
     return format(selectedDateRange.from, 'dd MMM yyyy');
   }
 
-  return `${format(selectedDateRange.from, 'dd MMM yyyy')} - ${format(
+  return `${format(selectedDateRange.from, 'dd MMM yy')} - ${format(
     selectedDateRange.to,
-    'dd MMM yyyy',
+    'dd MMM yy',
   )}`;
 };
 

@@ -13,13 +13,13 @@ const HotelPage = () => {
   const { hotels, pagination, isLoading, queryStringDetail, promotion } =
     useHotelPage();
   return (
-    <div className="pt-[130px] container mx-auto">
-      <div className="w-full justify-end flex mb-4">
+    <div className="container mx-auto pt-[200px] md:pt-[100px] lg:pt-[130px] ">
+      <div className="w-full justify-center md:justify-end flex mb-4 px-4">
         <HotelSortOptions />
       </div>
-      <div className="flex">
+      <div className="flex gap-4 flex-col md:gap-0 md:flex-row w-full">
         <HotelSidebar />
-        <div className="flex-1 space-y-4">
+        <div className="flex-1 space-y-4 w-full">
           {isLoading ? (
             Array.from({ length: 3 }).map((_, index) => (
               <HotelItemSkeleton key={index} />
@@ -45,7 +45,7 @@ const HotelPage = () => {
               />
             </div>
           ) : (
-            <span className="pt-1">Not found hotels</span>
+            <div className="pb-10">Not found hotels</div>
           )}
         </div>
       </div>
