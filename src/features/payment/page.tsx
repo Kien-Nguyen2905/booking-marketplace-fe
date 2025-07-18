@@ -9,7 +9,7 @@ const PaymentPage = () => {
 
   // Determine timer color based on remaining time
   const timerColor = useMemo(() => {
-    if (timeRemaining === null) return 'text-textGrey';
+    if (timeRemaining === null) return 'text-slate-600';
     if (timeRemaining <= 60) return 'text-red-600';
     if (timeRemaining <= 300) return 'text-amber-500';
     return 'text-blue-600';
@@ -45,8 +45,7 @@ const PaymentPage = () => {
 
         <div className="mt-6">
           <p className="text-sm text-red-600">
-            Your payment will automatically cancel after 20 minutes if not
-            completed
+            Your payment will automatically cancel after times if not completed
           </p>
         </div>
       </div>

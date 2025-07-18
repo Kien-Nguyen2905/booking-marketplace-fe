@@ -51,8 +51,8 @@ const OrderPage = () => {
   }
 
   return (
-    <div className="space-y-4 container mx-auto py-20 flex gap-20 items-start">
-      <div className="w-full flex-1 space-y-4">
+    <div className="gap-4 pt-4 container mx-auto lg:py-20 flex lg:flex-row flex-col-reverse lg:gap-10 xl:gap-20 items-center justify-center lg:items-start">
+      <div className="max-w-[462px] xl:max-w-full flex-1 space-y-4 pb-4">
         <Card>
           <CardContent className="space-y-10">
             <h2 className="text-2xl font-bold">Contact Information</h2>
@@ -176,8 +176,8 @@ const OrderPage = () => {
             </Form>
           </CardContent>
         </Card>
-        <div className="space-y-4 h-full gap-10 flex">
-          <Card className="w-1/2 h-full">
+        <div className="space-y-4 h-full xl:gap-10 flex xl:flex-row flex-col">
+          <Card className="xl:w-1/2 w-full h-full">
             <CardContent>
               <Form {...formCoupon}>
                 <form
@@ -204,7 +204,7 @@ const OrderPage = () => {
               </Form>
             </CardContent>
           </Card>
-          <Card className="w-1/2 h-full">
+          <Card className="xl:w-1/2 w-full h-full">
             <CardContent>
               <Form {...formPoint}>
                 <form
@@ -236,7 +236,6 @@ const OrderPage = () => {
               {booking?.available > 1 ? `${booking?.available} x ` : ''}
               {roomType?.type}
             </h2>
-
             <div className="border-b pb-3">
               <div className="flex justify-between items-center">
                 <p>Price</p>
@@ -414,7 +413,7 @@ const OrderPage = () => {
           </Button>
         </div>
       </div>
-      <div className="w-[440px] space-y-4">
+      <div className="max-w-full lg:max-w-[440px] space-y-4">
         <Card className="overflow-hidden border-gray-200 pt-0 shadow-md">
           <CardContent className="p-0">
             <div className="relative h-[200px] w-full">
