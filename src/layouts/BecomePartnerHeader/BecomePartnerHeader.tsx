@@ -28,14 +28,14 @@ const BecomePartnerHeader: FC<TBecomePartnerHeaderProps> = ({ className }) => {
             </Link>
           </div>
           <div className="flex items-center justify-end h-full">
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-2 md:gap-5">
               <Link
                 href={ROUTES.BECOME_PARTNER.PARTNER}
                 className="flex items-center gap-2"
               >
                 <div
                   className={cn(
-                    'w-10 h-10 rounded-full border-2 flex items-center justify-center',
+                    'w-6 h-6 md:w-10 md:h-10 rounded-full border-2 flex items-center justify-center',
                     step === 1 && 'bg-primary text-white border-primary',
                   )}
                 >
@@ -43,14 +43,14 @@ const BecomePartnerHeader: FC<TBecomePartnerHeaderProps> = ({ className }) => {
                 </div>
                 <span className="font-medium">Partner</span>
               </Link>
-              <div className="border-t border-black w-16"></div>
+              <div className="border-t border-black w-8 md:w-16"></div>
               <Link
                 href={partner ? ROUTES.BECOME_PARTNER.HOTEL : '#'}
                 className="flex items-center gap-2"
               >
                 <div
                   className={cn(
-                    'w-10 h-10 rounded-full border-2 flex items-center justify-center',
+                    'w-6 h-6 md:w-10 md:h-10 rounded-full border-2 flex items-center justify-center',
                     step === 2 && 'bg-primary text-white border-primary',
                   )}
                 >

@@ -28,7 +28,7 @@ const PartnerHotelInformation = () => {
   if (isLoadingPartner) return <Loading />;
 
   return (
-    <div>
+    <div className="w-full">
       <Card className="border-0 shadow-none">
         <CardContent>
           <Form {...form}>
@@ -36,15 +36,15 @@ const PartnerHotelInformation = () => {
               onSubmit={form.handleSubmit(handleCreateHotel)}
               className="space-y-6"
             >
-              <div className="grid gap-6">
-                <div className="flex items-start gap-4">
+              <div className="grid gap-3 lg:gap-6">
+                <div className="flex w-full gap-3 flex-col lg:flex-row items-start lg:gap-4">
                   <RHFInput
                     form={form}
                     label="Hotel Name"
                     name="name"
                     required
                     placeholder="Enter your hotel name"
-                    className="w-1/2"
+                    className="w-full"
                   />
                   <RHFInput
                     form={form}
@@ -52,10 +52,10 @@ const PartnerHotelInformation = () => {
                     name="hotelPhoneNumber"
                     required
                     placeholder="Enter your hotel phone"
-                    className="w-1/2"
+                    className="w-full"
                   />
                 </div>
-                <div className="flex items-start gap-4">
+                <div className="flex w-full gap-3 flex-col lg:flex-row items-start lg:gap-4">
                   <RHFSelection
                     form={form}
                     label="Type"
@@ -63,7 +63,7 @@ const PartnerHotelInformation = () => {
                     list={HOTEL_TYPE_LIST}
                     placeholder="Enter your hotel type"
                     required
-                    className="w-1/2"
+                    className="w-full lg:w-1/2"
                     isSearch
                   />
                   <RHFInput
@@ -71,7 +71,7 @@ const PartnerHotelInformation = () => {
                     label="VAT (%)"
                     name="vat"
                     required
-                    className="w-1/2"
+                    className="w-full lg:w-1/2"
                     type="number"
                     min={0}
                   />
@@ -110,33 +110,35 @@ const PartnerHotelInformation = () => {
                   required
                   placeholder="Enter your address"
                 />
-                <div className="">
-                  <div className="flex items-start gap-4">
-                    <RHFInput
-                      form={form}
-                      label="Latitude"
-                      name="lat"
-                      required
-                      placeholder="Enter your latitude"
-                      className="w-1/2"
-                      type="number"
-                    />
-                    <RHFInput
-                      form={form}
-                      label="Longitude"
-                      name="lon"
-                      required
-                      placeholder="Enter your longitude"
-                      className="w-1/2"
-                      type="number"
-                    />
-                  </div>
+                <div className="flex w-full gap-3 flex-col lg:gap-4">
+                  <RHFInput
+                    form={form}
+                    label="Latitude"
+                    name="lat"
+                    required
+                    placeholder="Enter your latitude"
+                    className="w-full"
+                    type="number"
+                  />
+                  <RHFInput
+                    form={form}
+                    label="Longitude"
+                    name="lon"
+                    required
+                    placeholder="Enter your longitude"
+                    className="w-full"
+                    type="number"
+                  />
 
                   <Link
                     href="https://www.google.com/maps/place"
                     target="_blank"
                   >
-                    <Button type="button" variant="link" className="pl-0">
+                    <Button
+                      type="button"
+                      variant="link"
+                      className="text-[10px] lg:text-base pl-0"
+                    >
                       Get the latitude and longitude of your hotel with Google
                       Maps
                     </Button>
