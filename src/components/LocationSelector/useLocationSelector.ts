@@ -1,4 +1,5 @@
 import { LocationType } from '@/components/LocationSelector/type';
+import { POPULAR_ACCOMMODATION_LIST } from '@/constants';
 import { showToast } from '@/lib/toast';
 import {
   haversineDistance,
@@ -8,7 +9,7 @@ import {
 import {
   provincesWithCoordinates,
   TProvincesWithCoordinates,
-} from '@/mocks/mockDistanceProvice';
+} from '@/mocks/mockDistanceProvince';
 import { useGetProvincesQuery } from '@/queries';
 import { useEffect, useRef, useState } from 'react';
 
@@ -19,12 +20,26 @@ export const useLocationSelector = (
   const [searchTerm, setSearchTerm] = useState('');
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-  const provinces =
+  const modifiedProvinces =
     provincesData?.data?.data?.map((province) => ({
       id: province.code,
       name: province.name,
       code: province.code,
     })) || [];
+
+  const popularProvinces = modifiedProvinces.filter((province) => {
+    return POPULAR_ACCOMMODATION_LIST.some((popularProvince) => {
+      return province.code === Number(popularProvince.provinceCode);
+    });
+  });
+
+  const notInPopularProvinces = modifiedProvinces.filter((province) => {
+    return !popularProvinces.some((popularProvince) => {
+      return province.code === popularProvince.code;
+    });
+  });
+
+  const provinces = [...popularProvinces.reverse(), ...notInPopularProvinces];
 
   const filteredProvinces = provinces.filter((province) => {
     const search = removeDiacritics(searchTerm.toLowerCase());
@@ -123,6 +138,8 @@ export const useLocationSelector = (
       }, 100);
     }
   }, []);
+
+  console.log(provinces);
   return {
     provinces,
     filteredProvinces,

@@ -40,7 +40,7 @@ export const MAP_HOTEL_TYPE = {
   RESORT: 'Resort',
 };
 
-export const COUNT_DESTINATION_LIST = [79, 48, 1, 56, 68, 49, 91];
+export const COUNT_DESTINATION_LIST = [79, 77, 48, 1, 56, 68, 49];
 
 export const DESTINATIONS = [
   {
@@ -49,6 +49,13 @@ export const DESTINATIONS = [
     accommodations: 0,
     imageUrl:
       'https://images.unsplash.com/photo-1583417319070-4a69db38a482?q=80&w=500&h=500&auto=format&fit=crop',
+  },
+  {
+    provinceCode: 77,
+    name: 'Vũng Tàu',
+    accommodations: 0,
+    imageUrl:
+      'https://images.unsplash.com/photo-1676438859721-5508a3ca00db?q=80&w=3174&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     provinceCode: 48,
@@ -84,13 +91,6 @@ export const DESTINATIONS = [
     accommodations: 0,
     imageUrl:
       'https://plus.unsplash.com/premium_photo-1690960644375-6f2399a08ebc?q=80&w=3132&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  },
-  {
-    provinceCode: 91,
-    name: 'Kiên Giang',
-    accommodations: 0,
-    imageUrl:
-      'https://images.unsplash.com/photo-1676438859721-5508a3ca00db?q=80&w=3174&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
 ];
 
