@@ -55,7 +55,20 @@ export const useSearchBanner = () => {
   };
 
   const handleDateClick = () => {
-    setActiveSelector(activeSelector === 'date' ? null : 'date');
+    const newActiveSelector = activeSelector === 'date' ? null : 'date';
+    setActiveSelector(newActiveSelector);
+    
+    // Find PromoCodeSlider div using querySelector
+    const promoCodeSliderDiv = document.querySelector('[data-promo-code-slider]') as HTMLDivElement;
+    console.log('promoCodeSliderDiv', promoCodeSliderDiv);
+    
+    if (promoCodeSliderDiv) {
+      if (newActiveSelector === 'date') {
+        promoCodeSliderDiv.classList.add('-z-10');
+      } else {
+        promoCodeSliderDiv.classList.remove('-z-10');
+      }
+    }
   };
 
   const handlePeopleClick = () => {
@@ -84,6 +97,11 @@ export const useSearchBanner = () => {
 
   const closeSelectors = () => {
     setActiveSelector(null);
+    // Remove -z-10 class when closing selectors
+    const promoCodeSliderDiv = document.querySelector('[data-promo-code-slider]') as HTMLDivElement;
+    if (promoCodeSliderDiv) {
+      promoCodeSliderDiv.classList.remove('-z-10');
+    }
   };
 
   const handleSearch = () => {
