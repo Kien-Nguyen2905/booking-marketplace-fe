@@ -3,31 +3,33 @@ import {
   GetUserProfileResType,
   LoginBodyType,
 } from '@/models';
-import { SetStateAction } from 'react';
+import { TProvincesResponse } from '@/services/address/addressServices';
 import { Socket } from 'socket.io-client';
 
-export type TMainContextProviderProps = {
+export type TAppContextProps = {
   isOpenModal: boolean;
-  setIsOpenModal: SetStateAction;
   toggleModal: () => void;
   isCollapsed: boolean;
-  setIsCollapsed: SetStateAction;
   toggleSidebar: () => void;
   isAuthenticated: boolean;
-  setIsAuthenticated: SetStateAction<boolean>;
+  setIsAuthenticated: (value: boolean) => void;
   role: string;
-  setRole: SetStateAction<string>;
+  setRole: (role: string) => void;
   payloadLogin: LoginBodyType | null;
-  setPayloadLogin: SetStateAction<LoginBodyType | null>;
+  setPayloadLogin: (payloadLogin: LoginBodyType | null) => void;
   email: string;
-  setEmail: SetStateAction<string>;
+  setEmail: (value: string) => void;
   profile: GetUserProfileResType | null;
-  setProfile: SetStateAction<GetUserProfileResType | null>;
+  setProfile: (profile: GetUserProfileResType | null) => void;
   isPendingPartner: boolean;
-  setIsPendingPartner: SetStateAction<boolean>;
+  setIsPendingPartner: (value: boolean) => void;
   partnerProfile: GetPartnerByUserIdResType | null;
+  setPartnerProfile: (partnerProfile: GetPartnerByUserIdResType | null) => void;
   socket: Socket | undefined;
-  setSocket: SetStateAction<Socket | undefined>;
+  setSocket: (socket: Socket | undefined) => void;
   mode: 'login' | 'register' | 'password';
-  setMode: SetStateAction<'login' | 'register' | 'password'>;
+  setMode: (mode: 'login' | 'register' | 'password') => void;
+  provinces: TProvincesResponse[];
+  setProvinces: (provinces: TProvincesResponse[]) => void;
+  isProvincesLoading: boolean;
 };

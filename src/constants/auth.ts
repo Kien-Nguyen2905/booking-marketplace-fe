@@ -16,3 +16,17 @@ export const ROLE_NAME = {
 };
 
 export const PRIVATE_MANAGEMENT = Object.values(ROLE_NAME);
+
+export const MODAL_MODES = {
+  LOGIN: 'login',
+  REGISTER: 'register',
+  PASSWORD: 'password',
+} as const;
+
+export type ModalModeType = (typeof MODAL_MODES)[keyof typeof MODAL_MODES];
+
+export const modeTitles: Record<string, string> = {
+  login: 'Login',
+  register: 'Register',
+  password: 'Forgot Password',
+} as const;

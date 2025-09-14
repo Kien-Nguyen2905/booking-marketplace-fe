@@ -1,5 +1,6 @@
 import { LocationType } from '@/components/LocationSelector/type';
 import { POPULAR_ACCOMMODATION_LIST } from '@/constants';
+import { useAppContext } from '@/context/AppProvider';
 import { showToast } from '@/lib/toast';
 import {
   haversineDistance,
@@ -10,18 +11,17 @@ import {
   provincesWithCoordinates,
   TProvincesWithCoordinates,
 } from '@/mocks/mockDistanceProvince';
-import { useGetProvincesQuery } from '@/queries';
 import { useEffect, useRef, useState } from 'react';
 
 export const useLocationSelector = (
   onChange?: (location: LocationType) => void,
 ) => {
-  const { data: provincesData, isLoading } = useGetProvincesQuery();
+  const { provinces, isProvincesLoading } = useAppContext();
   const [searchTerm, setSearchTerm] = useState('');
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const modifiedProvinces =
-    provincesData?.data?.data?.map((province) => ({
+    provinces?.map((province) => ({
       id: province.code,
       name: province.name,
       code: province.code,
@@ -39,9 +39,10 @@ export const useLocationSelector = (
     });
   });
 
-  const provinces = [...popularProvinces.reverse(), ...notInPopularProvinces];
-
-  const filteredProvinces = provinces.filter((province) => {
+  const filteredProvinces = [
+    ...popularProvinces.reverse(),
+    ...notInPopularProvinces,
+  ].filter((province) => {
     const search = removeDiacritics(searchTerm.toLowerCase());
     const provinceName = removeDiacritics(province.name.toLowerCase());
     return provinceName.includes(search);
@@ -139,12 +140,11 @@ export const useLocationSelector = (
     }
   }, []);
 
-  console.log(provinces);
   return {
-    provinces,
+    provinces: [...popularProvinces.reverse(), ...notInPopularProvinces],
     filteredProvinces,
     handleSelectLocation,
-    isLoading,
+    isLoading: isProvincesLoading,
     searchInputRef,
     searchTerm,
     setSearchTerm,

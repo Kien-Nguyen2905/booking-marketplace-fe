@@ -15,8 +15,8 @@ import { useRouter } from 'next/navigation';
 import { useTimeCountdown } from '@/hooks/useTimeCountdown';
 import { clearPaymentTimer } from '@/lib/utils';
 
-// Banking payment timeout: 20 minutes in seconds
-const PAYMENT_DURATION = 2 * 60;
+// Banking payment timeout: 20 minutes
+const PAYMENT_DURATION = 20 * 60;
 
 export const usePaymentPage = () => {
   const router = useRouter();

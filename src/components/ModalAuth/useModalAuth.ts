@@ -1,3 +1,4 @@
+import { MODAL_MODES, ModalModeType } from '@/constants';
 import { useAppContext } from '@/context/AppProvider';
 import { useRouter } from 'next/navigation';
 
@@ -5,7 +6,7 @@ export const useModalAuth = () => {
   const { toggleModal, isOpenModal, mode, setMode } = useAppContext();
   const router = useRouter();
 
-  const switchMode = (mode: 'login' | 'register' | 'password') => {
+  const switchMode = (mode: ModalModeType) => {
     setMode(mode);
   };
 
@@ -14,25 +15,22 @@ export const useModalAuth = () => {
   };
 
   const onLoginGoogle = () => {
-    setMode('login');
+    setMode(MODAL_MODES.LOGIN);
     router.push('/login-google');
   };
 
-  // Open auth modal in login mode
   const openLoginModal = () => {
-    setMode('login');
+    setMode(MODAL_MODES.LOGIN);
     toggleModal();
   };
 
-  // Open auth modal in register mode
   const openRegisterModal = () => {
-    setMode('register');
+    setMode(MODAL_MODES.REGISTER);
     toggleModal();
   };
 
-  // Open forget password modal in register mode
   const openForgotPasswordModal = () => {
-    setMode('password');
+    setMode(MODAL_MODES.PASSWORD);
     toggleModal();
   };
 

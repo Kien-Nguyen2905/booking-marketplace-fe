@@ -11,16 +11,11 @@ import {
 } from '@/components/ui/dialog';
 import { useModalAuth } from './useModalAuth';
 import { ForgotPassword } from '@/components/ForgotPassword';
-const modeTitles: Record<string, string> = {
-  login: 'Login',
-  register: 'Register',
-  password: 'Forgot Password',
-};
+import { MODAL_MODES, modeTitles } from '@/constants';
 
 const ModalAuth = () => {
   const { isOpenModal, closeModal, mode, switchMode, onLoginGoogle } =
     useModalAuth();
-
   return (
     <Dialog open={isOpenModal} onOpenChange={closeModal}>
       <DialogContent className="sm:max-w-[510px] overflow-y-auto">
@@ -46,8 +41,8 @@ const ModalAuth = () => {
             </>
           )}
 
-          {mode === 'register' && <RegisterModal />}
-          {mode === 'password' && <ForgotPassword />}
+          {mode === MODAL_MODES.REGISTER && <RegisterModal />}
+          {mode === MODAL_MODES.PASSWORD && <ForgotPassword />}
         </div>
 
         <div className="relative my-2">
@@ -69,7 +64,7 @@ const ModalAuth = () => {
 
         <div className="text-center mt-2">
           <p className="text-sm text-gray-600">
-            {mode === 'login' ? (
+            {mode === MODAL_MODES.LOGIN ? (
               <>Do not have an account? </>
             ) : (
               <>Already have an account? </>
@@ -77,11 +72,15 @@ const ModalAuth = () => {
             <button
               type="button"
               onClick={() =>
-                switchMode(mode === 'login' ? 'register' : 'login')
+                switchMode(
+                  mode === MODAL_MODES.LOGIN
+                    ? MODAL_MODES.REGISTER
+                    : MODAL_MODES.LOGIN,
+                )
               }
               className="font-medium text-primary hover:text-primary/80"
             >
-              {mode === 'login' ? 'Register' : 'Login'}
+              {mode === MODAL_MODES.LOGIN ? 'Register' : 'Login'}
             </button>
           </p>
         </div>
