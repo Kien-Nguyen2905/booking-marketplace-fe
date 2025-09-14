@@ -38,11 +38,12 @@ import {
 } from '@/components/ui/popover';
 import { usePartnerCreateRoomTypesPage } from '@/features/partner/room-types/hooks';
 import { DialogRoomQuantity } from '@/features/partner/room-types/components';
+import { useUploadMultipleImages } from '@/hooks';
 
 const PartnerCreateRoomTypesPage = () => {
+  const uploader = useUploadMultipleImages(4);
   const {
     form,
-    uploader,
     openAmenity,
     setOpenAmenity,
     openRoom,
@@ -58,7 +59,7 @@ const PartnerCreateRoomTypesPage = () => {
     dialogRoomQuantityProps,
     onRemoveRoomBed,
     onSelectRoomBed,
-  } = usePartnerCreateRoomTypesPage();
+  } = usePartnerCreateRoomTypesPage(uploader);
 
   return (
     <div className="">

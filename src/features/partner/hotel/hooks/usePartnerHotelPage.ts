@@ -10,11 +10,10 @@ import { HOTEL_STATUS, HOTEL_TYPE, SUCCESS_MESSAGES } from '@/constants';
 import { useUpdateHotelMutation } from '@/queries';
 import { handleErrorApi } from '@/lib/helper';
 import { showToast } from '@/lib/toast';
-import { useMultipleUploading } from '@/components/MultipleUploading/useMultipleUploading';
+import { TUploader } from '@/hooks/useUploadMultipleImages';
 
-export const usePartnerHotelPage = () => {
+export const usePartnerHotelPage = (uploader: TUploader) => {
   const { partnerProfile } = useAppContext();
-  const uploader = useMultipleUploading(3);
   const hotel = partnerProfile?.hotel;
   const { mutateAsync } = useUpdateHotelMutation(hotel?.id || '');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -92,6 +91,5 @@ export const usePartnerHotelPage = () => {
     hotel,
     handleUpdateHotel,
     isSubmitting,
-    uploader,
   };
 };

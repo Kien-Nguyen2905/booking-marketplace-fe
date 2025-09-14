@@ -17,10 +17,12 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { usePartnerHotelPage } from './hooks/usePartnerHotelPage';
+import { useUploadMultipleImages } from '@/hooks';
 
 const PartnerHotelPage = () => {
-  const { form, hotel, handleUpdateHotel, isSubmitting, uploader } =
-    usePartnerHotelPage();
+  const uploader = useUploadMultipleImages(3);
+  const { form, hotel, handleUpdateHotel, isSubmitting } =
+    usePartnerHotelPage(uploader);
   if (!hotel) {
     return <Loading />;
   }

@@ -20,10 +20,13 @@ import { HOTEL_TYPE_LIST } from '@/constants';
 import { usePartnerHotelInformation } from './usePartnerHotelInformation';
 import { Textarea } from '@/components/ui/textarea';
 import Link from 'next/link';
+import { useUploadMultipleImages } from '@/hooks';
 
 const PartnerHotelInformation = () => {
-  const { form, isLoadingPartner, handleCreateHotel, isLoading, uploader } =
-    usePartnerHotelInformation();
+  const uploader = useUploadMultipleImages(3);
+
+  const { form, isLoadingPartner, handleCreateHotel, isLoading } =
+    usePartnerHotelInformation(uploader);
 
   if (isLoadingPartner) return <Loading />;
 

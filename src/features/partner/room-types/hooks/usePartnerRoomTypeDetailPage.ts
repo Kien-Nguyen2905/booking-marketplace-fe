@@ -1,4 +1,3 @@
-import { useMultipleUploading } from '@/components/MultipleUploading/useMultipleUploading';
 import { useParams } from 'next/navigation';
 import {
   useDeleteFilesMutation,
@@ -28,12 +27,12 @@ import {
 import { handleErrorApi } from '@/lib/helper';
 import { showToast } from '@/lib/toast';
 import { useRouter } from 'next/navigation';
+import { TUploader } from '@/hooks/useUploadMultipleImages';
 
-export const usePartnerRoomTypeDetailPage = () => {
+export const usePartnerRoomTypeDetailPage = (uploader: TUploader) => {
   const params = useParams();
   const router = useRouter();
   const id = params.id as string;
-  const uploader = useMultipleUploading(4);
   const { data: roomTypeData } = useGetRoomTypeByIdQuery(id);
   const roomType = roomTypeData?.data.data;
 
@@ -276,7 +275,6 @@ export const usePartnerRoomTypeDetailPage = () => {
   };
 
   return {
-    uploader,
     form,
     amenities,
     roomBeds,

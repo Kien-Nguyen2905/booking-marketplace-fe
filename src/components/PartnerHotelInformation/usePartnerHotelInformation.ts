@@ -12,11 +12,10 @@ import { useRouter } from 'next/navigation';
 import { useCreateHotelMutation, useGetPartnerByUserIdQuery } from '@/queries';
 import { setPartnerLocalStorage } from '@/lib/utils';
 import { useAppContext } from '@/context/AppProvider';
-import { useMultipleUploading } from '@/components/MultipleUploading/useMultipleUploading';
+import { TUploader } from '@/hooks/useUploadMultipleImages';
 
-export const usePartnerHotelInformation = () => {
+export const usePartnerHotelInformation = (uploader: TUploader) => {
   const { setIsPendingPartner, isPendingPartner } = useAppContext();
-  const uploader = useMultipleUploading(3);
   const { data, isLoading: isLoadingPartner } =
     useGetPartnerByUserIdQuery(true);
   const partner = data?.data.data;
@@ -103,6 +102,5 @@ export const usePartnerHotelInformation = () => {
     isLoadingPartner,
     handleCreateHotel,
     isLoading,
-    uploader,
   };
 };

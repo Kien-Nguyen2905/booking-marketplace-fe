@@ -1,12 +1,4 @@
-import { ImageListType } from 'react-images-uploading';
-
-export type TUploader = {
-  images: ImageListType;
-  onImageChange: (imageList: ImageListType) => void;
-  error?: string | undefined;
-  setImages?: (images: ImageListType) => void;
-  maxNumber?: number;
-};
+import { TUploader } from '@/hooks/useUploadMultipleImages';
 
 export type TMultipleUploadingProps = {
   label?: string;
@@ -27,6 +19,7 @@ export type TItemExist = {
   isExist: boolean;
   file: File | null;
 };
+
 export type TUseMultipleUploading = {
   maxNumber?: number;
 };

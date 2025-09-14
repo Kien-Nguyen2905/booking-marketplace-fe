@@ -39,10 +39,11 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { DialogRoomQuantity } from '@/features/partner/room-types/components';
+import { useUploadMultipleImages } from '@/hooks';
 
 const PartnerRoomTypeDetailPage = () => {
+  const uploader = useUploadMultipleImages(4);
   const {
-    uploader,
     form,
     amenities,
     roomBeds,
@@ -68,7 +69,7 @@ const PartnerRoomTypeDetailPage = () => {
     roomType,
     showDeleteConfirm,
     setShowDeleteConfirm,
-  } = usePartnerRoomTypeDetailPage();
+  } = usePartnerRoomTypeDetailPage(uploader);
   if (!roomType?.id) {
     return (
       <div className="flex items-center justify-between">

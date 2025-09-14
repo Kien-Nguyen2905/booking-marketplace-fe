@@ -1,4 +1,3 @@
-import { useMultipleUploading } from '@/components/MultipleUploading/useMultipleUploading';
 import {
   ERROR_MESSAGES,
   RoomBedType,
@@ -23,12 +22,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import { TUploader } from '@/hooks/useUploadMultipleImages';
 
-export const usePartnerCreateRoomTypesPage = () => {
+export const usePartnerCreateRoomTypesPage = (uploader: TUploader) => {
   const { partnerProfile } = useAppContext();
   const hotelId = partnerProfile?.hotel?.id || 0;
   const router = useRouter();
-  const uploader = useMultipleUploading(4);
   const { mutateAsync: createRoomType } = useCreateRoomTypeMutation();
   const { mutateAsync: createRoomBed } = useCreateRoomBedMutation();
   const { mutateAsync: createRoomTypeAmenities } =
@@ -202,7 +201,6 @@ export const usePartnerCreateRoomTypesPage = () => {
 
   return {
     form,
-    uploader,
     openAmenity,
     setOpenAmenity,
     openRoom,
