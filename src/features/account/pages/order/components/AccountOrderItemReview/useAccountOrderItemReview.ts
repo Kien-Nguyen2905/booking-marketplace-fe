@@ -60,7 +60,7 @@ export const useAccountOrderItemReview = (
       orderId: selectedOrder.id,
       hotelId: selectedOrder.hotelId,
     });
-  }, [selectedOrder]);
+  }, [selectedOrder, form]);
 
   return { form, handleCreateReview, handleRatingChange, isSubmitting };
 };

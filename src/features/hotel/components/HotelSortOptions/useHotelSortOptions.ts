@@ -46,7 +46,7 @@ export const useHotelSortOptions = () => {
         setSelectedSort(sortKey);
       }
     }
-  }, [searchParams]);
+  }, [searchParams, router, orderBy, order]);
 
   return {
     selectedSort,

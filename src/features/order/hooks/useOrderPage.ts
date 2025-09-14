@@ -27,7 +27,7 @@ import {
   CreateCustomerBodyType,
 } from '@/models/customer.model';
 import { differenceInDays, parse } from 'date-fns';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 import { addDays, set } from 'date-fns';
 import { showToast } from '@/lib/toast';
 import { useAppContext } from '@/context/AppProvider';
@@ -73,13 +73,19 @@ export const useOrderPage = () => {
   const promotionToday = promotionsData?.data.data.todayPromotions;
   const promotionNotToday = promotionsData?.data.data.promotions[0];
   const promotion = promotionToday || promotionNotToday;
-  const checkIn =
-    (booking?.startDate &&
-      parse(booking.startDate, 'dd-MM-yyyy', new Date())) ||
-    new Date();
-  const checkOut =
-    (booking?.endDate && parse(booking.endDate, 'dd-MM-yyyy', new Date())) ||
-    new Date();
+  const checkIn = useMemo(() => {
+    return (
+      (booking?.startDate &&
+        parse(booking.startDate, 'dd-MM-yyyy', new Date())) ||
+      new Date()
+    );
+  }, [booking]);
+  const checkOut = useMemo(() => {
+    return (
+      (booking?.endDate && parse(booking.endDate, 'dd-MM-yyyy', new Date())) ||
+      new Date()
+    );
+  }, [booking]);
 
   const nights = checkIn && checkOut ? differenceInDays(checkOut, checkIn) : 0;
 
@@ -356,26 +362,6 @@ export const useOrderPage = () => {
   const maximumCheckInTime = checkIn
     ? set(addDays(new Date(checkIn), 1), { hours: 12, minutes: 0, seconds: 0 })
     : null;
-
-  // const simulateTwoOrders = async (values: CreateCustomerBodyType) => {
-  //   try {
-  //     // Gọi handleCreateOrder hai lần với cùng values
-  //     const results = await Promise.all([
-  //       handleCreateOrder(values), // Đơn hàng 1
-  //       handleCreateOrder(values), // Đơn hàng 2
-  //     ]);
-  //     showToast({
-  //       type: 'success',
-  //       message: 'Both orders processed. Check results for details.',
-  //     });
-  //   } catch (error) {
-  //     showToast({
-  //       type: 'error',
-  //       message: 'Simultaneous order failed',
-  //     });
-  //     return null;
-  //   }
-  // };
 
   return {
     booking,

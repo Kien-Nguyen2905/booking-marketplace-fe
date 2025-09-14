@@ -13,6 +13,7 @@ import { StartRating } from '@/components';
 import { getHotelUrl } from '@/lib/utils';
 import Link from 'next/link';
 import { TWishlistItemProps } from '@/features/wishlist/components/WishlistItem/type';
+import Image from 'next/image';
 
 const WishlistItem: FC<TWishlistItemProps> = ({
   wishlist,
@@ -43,11 +44,13 @@ const WishlistItem: FC<TWishlistItemProps> = ({
             href={getHotelUrl({
               hotelId: wishlist.hotelId || '',
             })}
+            className="w-full h-48"
           >
-            <img
+            <Image
               src={wishlist.hotel.images[0]}
               alt={wishlist.hotel.name}
-              className="w-full h-48 object-cover"
+              className="w-full h-full object-cover"
+              layout="fill"
             />
           </Link>
         </CardHeader>

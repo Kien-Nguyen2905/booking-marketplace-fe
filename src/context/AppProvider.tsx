@@ -141,7 +141,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
       }
       setSocket(generateSocketInstance());
     }
-  }, [profileData, isAuthenticated]);
+  }, [profileData, isAuthenticated, role]);
 
   // Handle navigation based on role
   useEffect(() => {

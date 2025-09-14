@@ -83,7 +83,7 @@ export const usePaymentPage = () => {
       }
       // If a timer exists, the useTimeCountdown hook will use that automatically
     }
-  }, [order, router, isActive, startTimer]);
+  }, [order, orderId, router, isActive, startTimer]);
   return {
     order,
     timeRemaining,

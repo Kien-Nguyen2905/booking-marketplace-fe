@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { LocationSelector, PeopleSelector } from '@/components';
 import { Search, MapPin, Calendar, Users, X, Loader2 } from 'lucide-react';
 import { useSearchBanner } from './useSearchBanner';
+import Image from 'next/image';
 // Dynamically import DatePickerWithRange to avoid SSR issues
 const DatePickerWithRange = dynamic(
   () => import('@/components/DatePickerWithRange/DatePickerWithRange'),
@@ -195,10 +196,11 @@ const SearchBanner = () => {
         </div>
       </div>
       <div className="w-full h-full">
-        <img
-          className="min-w-full h-full object-cover"
+        <Image
+          className="min-w-full h-full object-cover -z-10"
           src="/images/banner.jpg"
           alt="Featured accommodation"
+          layout="fill"
         />
       </div>
     </div>

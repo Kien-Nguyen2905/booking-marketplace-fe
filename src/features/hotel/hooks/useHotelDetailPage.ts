@@ -212,7 +212,7 @@ export const useHotelDetailPage = () => {
         router.push(ROUTES.HOME);
       }
     }
-  }, [hotel, startDateParams, endDateParams]);
+  }, [hotel, startDateParams, endDateParams, router]);
 
   return {
     hotelId: id,

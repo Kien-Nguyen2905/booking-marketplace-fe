@@ -268,7 +268,7 @@ export const usePromotionTable = () => {
         validUntil: new Date(selectedPromotion.validUntil),
       });
     }
-  }, [selectedPromotion]);
+  }, [selectedPromotion, form]);
 
   useEffect(() => {
     if (
