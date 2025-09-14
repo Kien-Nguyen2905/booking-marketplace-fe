@@ -32,4 +32,5 @@ export type TAppContextProps = {
   provinces: TProvincesResponse[];
   setProvinces: (provinces: TProvincesResponse[]) => void;
   isProvincesLoading: boolean;
+  clearAllLogout: () => void;
 };

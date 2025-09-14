@@ -10,11 +10,13 @@ import { TAppContextProps } from '@/context/type';
 import { useLogout } from '@/hooks';
 import { generateSocketInstance } from '@/lib/socket';
 import {
+  clearAllLocalStorage,
   getAccessTokenLocalStorage,
   getEmailLocalStorage,
   getPartnerLocalStorage,
   getRoleLocalStorage,
   removePartnerLocalStorage,
+  removeRoleNameCookies,
 } from '@/lib/utils';
 import {
   GetPartnerByUserIdResType,
@@ -63,6 +65,7 @@ const defaultContext: TAppContextProps = {
   provinces: [],
   setProvinces: () => null,
   isProvincesLoading: false,
+  clearAllLogout: () => null,
 };
 
 const AppContext = createContext<TAppContextProps>(defaultContext);
@@ -159,6 +162,15 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [error, handleLogout]);
 
+  const clearAllLogout = () => {
+    setIsAuthenticated(false);
+    setProfile(null);
+    setRole('');
+    clearAllLocalStorage();
+    removeRoleNameCookies();
+    router.push(ROUTES.HOME);
+  };
+
   const contextValue = {
     isOpenModal,
     toggleModal,
@@ -185,6 +197,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
     provinces,
     setProvinces,
     isProvincesLoading,
+    clearAllLogout,
   };
 
   return (
