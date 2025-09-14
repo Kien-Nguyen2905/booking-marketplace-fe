@@ -2,27 +2,15 @@
 
 import { ROUTES } from '@/constants';
 import { useGetPartnerByUserIdQuery } from '@/queries';
-import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import { useBecomePartnerStep } from '@/hooks';
 
 export const useBecomePartnerHeader = () => {
   const { data: partner } = useGetPartnerByUserIdQuery(true);
+  const { step, setStep, onNavigateNextStep } = useBecomePartnerStep();
+
   const router = useRouter();
-  const pathname = usePathname();
-  const [step, setStep] = useState(1);
-
-  const onNavigateNextStep = () => {
-    setStep(2);
-    router.push(ROUTES.BECOME_PARTNER.HOTEL);
-  };
-
-  useEffect(() => {
-    if (pathname === ROUTES.BECOME_PARTNER.PARTNER) {
-      setStep(1);
-    } else if (pathname === ROUTES.BECOME_PARTNER.HOTEL) {
-      setStep(2);
-    }
-  }, [pathname]);
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const timer = setTimeout(() => {
@@ -33,6 +21,7 @@ export const useBecomePartnerHeader = () => {
       return () => clearTimeout(timer);
     }
   }, [partner, router]);
+
   return {
     step,
     setStep,

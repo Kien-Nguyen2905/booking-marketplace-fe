@@ -107,10 +107,6 @@ export const setParamsDefault = (
   return newQueryString;
 };
 
-export const isOnlyDigits = (input: string): boolean => {
-  return /^\d+$/.test(input);
-};
-
 export const isValidNumberString = (input: string): boolean => {
   return /^(0|[1-9]\d*)$/.test(input);
 };

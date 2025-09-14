@@ -16,8 +16,7 @@ import {
   SUCCESS_MESSAGES,
   TypeOfVerificationCode,
 } from '@/constants';
-import { useTimeCountdown } from '@/hooks';
-import { useBecomePartnerHeader } from '@/layouts/BecomePartnerHeader/useAccommodationHeader';
+import { useBecomePartnerStep, useTimeCountdown } from '@/hooks';
 import { useEffect, useState } from 'react';
 import { useAppContext } from '@/context/AppProvider';
 import { useRouter } from 'next/navigation';
@@ -28,7 +27,7 @@ export const usePartnerInformation = ({
   partner?: GetPartnerByUserIdResType;
 }) => {
   const { isPendingPartner } = useAppContext();
-  const { onNavigateNextStep } = useBecomePartnerHeader();
+  const { onNavigateNextStep } = useBecomePartnerStep();
   const { mutateAsync: sendOTP, isPending: isLoadingOTP } =
     useSendOTPMutation();
   const { time, startTimer } = useTimeCountdown();
@@ -61,13 +60,6 @@ export const usePartnerInformation = ({
 
   const handleCreatePartner = async (value: CreatePartnerBodyType) => {
     try {
-      // if (value.idCard && !isOnlyDigits(value.idCard)) {
-      //   form.setError('idCard', {
-      //     type: 'server',
-      //     message: ERROR_PARTNER_MESSAGES.idCard.invalid,
-      //   });
-      //   return;
-      // }
       const { data } = await createPartner(value);
       if (data.data.id) {
         setIsLoadingNavigate(true);
@@ -84,13 +76,6 @@ export const usePartnerInformation = ({
 
   const handleUpdatePartner = async (value: UpdatePartnerBodyType) => {
     try {
-      // if (value.idCard && !isOnlyDigits(value.idCard)) {
-      //   form.setError('idCard', {
-      //     type: 'server',
-      //     message: ERROR_PARTNER_MESSAGES.idCard.invalid,
-      //   });
-      //   return;
-      // }
       const { data } = await updatePartner(value);
       if (data.data.id) {
         onNavigateNextStep();
